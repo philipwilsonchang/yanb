@@ -9,4 +9,5 @@ import (
 func main() {
 	db, _ := sql.Open("sqlite3", "test.db")
 	fmt.Printf("%T", db)
+	//HelloWorld
 }
