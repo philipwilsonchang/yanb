@@ -1,2 +1,4 @@
 testdb/
 .DS_Store
+*.swp
+server/server
