@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 	chargetime timestamp NOT NULL,
 	vendor text NOT NULL,
 	value real NOT NULL,
-	category text DEFAULT 'uncategorized' NOT NULL 
+	category text DEFAULT 'uncategorized' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS budgets (
@@ -13,6 +13,10 @@ CREATE TABLE IF NOT EXISTS budgets (
 	timeframe text NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS vendorstocategories (
+        vendor PRIMARY KEY text NOT NULL,
+        category text NOT NULL
+);
 
 
 -- TRANSACTION FUNCTIONS --
@@ -38,7 +42,7 @@ CREATE FUNCTION addTransaction(id text, cardid text, chargetime text, vendor tex
 	$_$;
 
 CREATE FUNCTION modifyTransaction(id text, cardid text, chargetime text, vendor text, value real, category text) RETURNS void AS $_$
-	UPDATE transactions SET cardid = $2, chargetime = $3, vendor = $4, value = $5, category = $6 WHERE id = $1 
+	UPDATE transactions SET cardid = $2, chargetime = $3, vendor = $4, value = $5, category = $6 WHERE id = $1
 	$_$;
 */
 

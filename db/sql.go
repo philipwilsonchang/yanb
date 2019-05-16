@@ -150,6 +150,33 @@ func ModifyTransaction(id uuid.UUID, cardid string, chargeTime time.Time, vendor
 	return nil
 }
 
+// AddVendorCategory adds a vendor/category pairing to the table
+func AddVendorCategory(vendor string, category string) error {
+	statement, err := db.Prepare("INSERT INTO vendortocategories(vendor, category) VALUES (?, ?)")
+	if err != nil {
+		return err
+	}
+
+	_, err = statement.Exec(vendor, category)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// CheckVendorCategory sees if a vendor has been categorized before in the table
+func CheckVendorCategory(vendor string) (string, error) {
+	var category string
+
+	row := db.QueryRow("SELECT category FROM vendortocategories WHERE vendor = ?", vendor)
+	err := row.Scan(&category)
+	if err != nil {
+		return "", err
+	}
+
+	return category, nil
+}
+
 // GetAllBudgetCategories spits out the entire budget table
 func GetAllBudgetCategories() ([][]string, error) {
 	var results [][]string
