@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/philipwilsonchang/budgetapp/dbfuncs"
 	"net/http"
 )
 
@@ -36,7 +37,8 @@ func main() {
 }
 
 func getAllTransactionsHandler(c *gin.Context) {
-
+	transactions = dbfuncs.GetAllTransactions()
+	c.JSON(200, transactions)
 }
 
 func getAllUncategorizedTransactionsHandler(c *gin.Context) {
