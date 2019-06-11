@@ -3,3 +3,4 @@ testdb/
 *.swp
 server/server
 node_modules/
+vendor/

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/philipwilsonchang/budgetapp/dbfuncs"
+	"github.com/philipwilsonchang/budgetapp/db"
 	"net/http"
 )
 
@@ -22,8 +22,8 @@ func main() {
 	{
 		transactions.GET("/", getAllTransactionsHandler)
 		transactions.GET("/uncategorized", getAllUncategorizedTransactionsHandler)
-		transactions.GET("/:category", getAllTransactionsInCategoryHandler)
-		transactions.GET("/:timestamp", getAllTransactionsAfterDateTimeHandler)
+		transactions.GET("/category/:category", getAllTransactionsInCategoryHandler)
+		transactions.GET("/timestamp/:timestamp", getAllTransactionsAfterDateTimeHandler)
 		transactions.POST("/:chargeid", postNewTransactionHandler)
 		transactions.PUT("/:chargeid", modifyTransactionHandler)
 	}
@@ -37,7 +37,7 @@ func main() {
 }
 
 func getAllTransactionsHandler(c *gin.Context) {
-	transactions = dbfuncs.GetAllTransactions()
+	transactions, _ := dbfuncs.GetAllTransactions()
 	c.JSON(200, transactions)
 }
 
@@ -46,7 +46,7 @@ func getAllUncategorizedTransactionsHandler(c *gin.Context) {
 }
 
 func getAllTransactionsInCategoryHandler(c *gin.Context) {
-	category := c.Param("category")
+	// category := c.Param("category")
 }
 
 func getAllTransactionsAfterDateTimeHandler(c *gin.Context) {
