@@ -12,6 +12,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	dbfuncs.Start("testdb/test.db")
 	router := gin.Default()
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -37,12 +38,21 @@ func main() {
 }
 
 func getAllTransactionsHandler(c *gin.Context) {
-	transactions, _ := dbfuncs.GetAllTransactions()
+	transactions, err := dbfuncs.GetAllTransactions()
+	if err != nil {
+		fmt.Printf("Error getting all transactions: %+v\n", err)
+		c.JSON(500, err)
+	}
 	c.JSON(200, transactions)
 }
 
 func getAllUncategorizedTransactionsHandler(c *gin.Context) {
-
+	transactions, err := dbfuncs.GetAllDanglingTransactions()
+	if err != nil {
+		fmt.Printf("Error getting uncategorized transactions: %+v\n", err)
+		c.JSON(500, err)
+	}
+	c.JSON(200, transactions)
 }
 
 func getAllTransactionsInCategoryHandler(c *gin.Context) {
