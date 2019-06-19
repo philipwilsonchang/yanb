@@ -14,32 +14,32 @@ func DBtest(write bool) {
 
 	if write {
 		fmt.Println("Adding transactions...")
-		err := AddTransaction(uuid.New(), "chase", time.Now(), "google", 16.05, "grocery")
+		err := AddTransaction(&Transaction{uuid.New(), "chase", time.Now(), "google", 16.05, "grocery"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
 
-		err = AddTransaction(uuid.New(), "discover", time.Now(), "wholefoods", 17.99, "food")
+		err = AddTransaction(&Transaction{uuid.New(), "discover", time.Now(), "wholefoods", 17.99, "food"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
 
-		err = AddTransaction(uuid.New(), "chase", time.Now(), "toysrus", 1.05, "uncategorized")
+		err = AddTransaction(&Transaction{uuid.New(), "chase", time.Now(), "toysrus", 1.05, "uncategorized"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
 
-		err = AddTransaction(uuid.New(), "discover", time.Now(), "lego", 7.99, "food")
+		err = AddTransaction(&Transaction{uuid.New(), "discover", time.Now(), "lego", 7.99, "food"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
 
-		err = AddTransaction(uuid.New(), "chase", time.Now(), "jennis", 6.08, "toys")
+		err = AddTransaction(&Transaction{uuid.New(), "chase", time.Now(), "jennis", 6.08, "toys"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
 
-		err = AddTransaction(uuid.New(), "discover", time.Now(), "harristeeter", 13.49, "taxes")
+		err = AddTransaction(&Transaction{uuid.New(), "discover", time.Now(), "harristeeter", 13.49, "taxes"})
 		if err != nil {
 			fmt.Printf("Error: %+v\n", err)
 		}
