@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS budgets (
 );
 
 CREATE TABLE IF NOT EXISTS vendorstocategories (
-        vendor PRIMARY KEY text NOT NULL,
+        vendor text PRIMARY KEY NOT NULL,
         category text NOT NULL
 );
 

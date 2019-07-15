@@ -15,6 +15,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	dbfuncs.Start("testdb/test.db")
+	// dbfuncs.DBtest(true)
 	router := gin.Default()
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
