@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { LibraryContext } from './App'
 
-const BooksTable = () => {
+const TransactionTable = () => {
   const {state, dispatch} = useContext(LibraryContext);
 
   return (
@@ -29,4 +29,4 @@ const BooksTable = () => {
   );
 };
 
-export default BooksTable
+export default TransactionTable
