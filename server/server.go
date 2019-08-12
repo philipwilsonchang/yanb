@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/philipwilsonchang/budgetapp/db"
+	"github.com/philipwilsonchang/budgetapp/gmail"
 	"net/http"
 	"time"
 )
@@ -14,31 +15,34 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	dbfuncs.Start("testdb/test.db")
-	// dbfuncs.DBtest(true)
-	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	transactions := router.Group("/transactions")
-	{
-		transactions.GET("/", getAllTransactionsHandler)
-		transactions.GET("/uncategorized", getAllUncategorizedTransactionsHandler)
-		transactions.GET("/category/:category", getAllTransactionsInCategoryHandler)
-		transactions.GET("/timestamp/:starttime/:endtime", getAllTransactionsAfterDateTimeHandler)
-		transactions.POST("/:chargeid", postNewTransactionHandler)
-		transactions.PUT("/:chargeid", modifyTransactionHandler)
-	}
-	budget := router.Group("/budget")
-	{
-		budget.GET("/", getAllBudgetCategoriesHandler)
-		budget.POST("/:category", insertNewCategoryHandler)
-		budget.PUT("/:category", modifyCategoryHandler)
-	}
-	router.POST("/category/:catname/:vendorname", newCategoryVendorHandler)
-	router.Run() // listen and serve on 0.0.0.0:8080
+	// Start gmail service
+	go run gmail.startService()
+	
+	// dbfuncs.Start("testdb/test.db")
+	// // dbfuncs.DBtest(true)
+	// router := gin.Default()
+	// router.GET("/ping", func(c *gin.Context) {
+	// 	c.JSON(200, gin.H{
+	// 		"message": "pong",
+	// 	})
+	// })
+	// transactions := router.Group("/transactions")
+	// {
+	// 	transactions.GET("/", getAllTransactionsHandler)
+	// 	transactions.GET("/uncategorized", getAllUncategorizedTransactionsHandler)
+	// 	transactions.GET("/category/:category", getAllTransactionsInCategoryHandler)
+	// 	transactions.GET("/timestamp/:starttime/:endtime", getAllTransactionsAfterDateTimeHandler)
+	// 	transactions.POST("/:chargeid", postNewTransactionHandler)
+	// 	transactions.PUT("/:chargeid", modifyTransactionHandler)
+	// }
+	// budget := router.Group("/budget")
+	// {
+	// 	budget.GET("/", getAllBudgetCategoriesHandler)
+	// 	budget.POST("/:category", insertNewCategoryHandler)
+	// 	budget.PUT("/:category", modifyCategoryHandler)
+	// }
+	// router.POST("/category/:catname/:vendorname", newCategoryVendorHandler)
+	// router.Run() // listen and serve on 0.0.0.0:8080
 }
 
 func getAllTransactionsHandler(c *gin.Context) {

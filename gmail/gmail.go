@@ -69,23 +69,26 @@ func saveToken(path string, token *oauth2.Token) {
         json.NewEncoder(f).Encode(token)
 }
 
-// func main() {
-//         b, err := ioutil.ReadFile("credentials.json")
-//         if err != nil {
-//                 log.Fatalf("Unable to read client secret file: %v", err)
-//         }
+func startService() {
+        fmt.Printf("Reading credentials file...\n")
+        b, err := ioutil.ReadFile("credentials.json")
+        if err != nil {
+                log.Fatalf("Unable to read client secret file: %v", err)
+        }
 
-//         // If modifying these scopes, delete your previously saved token.json.
-//         config, err := google.ConfigFromJSON(b, gmail.GmailReadonlyScope)
-//         if err != nil {
-//                 log.Fatalf("Unable to parse client secret file to config: %v", err)
-//         }
-//         client := getClient(config)
+        // If modifying these scopes, delete your previously saved token.json.
+        fmt.Printf("Creating Gmail client object...\n")
+        config, err := google.ConfigFromJSON(b, gmail.GmailReadonlyScope)
+        if err != nil {
+                log.Fatalf("Unable to parse client secret file to config: %v", err)
+        }
+        client := getClient(config)
 
-//         srv, err := gmail.New(client)
-//         if err != nil {
-//                 log.Fatalf("Unable to retrieve Gmail client: %v", err)
-//         }
+        fmt.Printf("Initialziing Gmail client object...\n")
+        srv, err := gmail.New(client)
+        if err != nil {
+                log.Fatalf("Unable to retrieve Gmail client: %v", err)
+        }
 
 //         user := "me"
 //         r, err := srv.Users.Labels.List(user).Do()
@@ -100,4 +103,4 @@ func saveToken(path string, token *oauth2.Token) {
 //         for _, l := range r.Labels {
 //                 fmt.Printf("- %s\n", l.Name)
 //         }
-// }
+}
