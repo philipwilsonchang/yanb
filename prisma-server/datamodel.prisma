@@ -1,0 +1,31 @@
+enum TimeFrame {
+  WEEKLY
+  BIWEEKLY
+  SEMIMONTHLY
+  MONTHLY
+}
+
+type FixedCostCategory {
+  id: ID! @id
+  name: String! @unique
+  amount: Float!
+}
+
+type FlexCostCategory {
+  id: ID! @id
+  name: String! @unique
+  limit: Float!
+}
+
+type Income {
+  id: ID! @id
+  frequency: DateTime!
+  amount: Float!
+}
+
+type Cost {
+  id: ID! @id
+  amount: Float!
+  createdAt: DateTime! @createdAt 
+  category: FlexCostCategory!
+}

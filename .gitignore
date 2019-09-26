@@ -7,3 +7,4 @@ vendor/
 credentials.json
 token.json
 apikeys/
+prisma-data/
