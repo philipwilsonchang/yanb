@@ -2,6 +2,7 @@ import React from 'react';
 
 import CategoryDisplay from './components/CategoryDisplay';
 import FixedSpendingList, { Cost } from './components/FixedSpendingList';
+import FlexCategoryList, { FlexCategory } from './components/FlexCategoryList';
 import IncomeInput from './components/IncomeInput';
 import SpendingAdder from './components/SpendingAdder';
 
@@ -18,6 +19,12 @@ const testCategories = [
   'Food',
   'Groceries',
   'Fun'
+];
+
+const testFlexCategories: FlexCategory[] = [
+  {name: 'Food', limit: 400 },
+  {name: 'Groceries', limit: 400},
+  {name: 'Fun', limit: 200}
 ];
 
 const App: React.FC = () => {
@@ -46,6 +53,16 @@ const App: React.FC = () => {
       changeAmount={(amt) => console.log("Change amount:", amt)}
       submitFunc={() => console.log("SUBMIT")}
     />
+    <br />
+    <FlexCategoryList 
+      categories={testFlexCategories}
+      newName={'Tax'}
+      newLimit={150.45}
+      changeNewName={(name) => console.log("CHANGE NAME:", name)}
+      changeNewLimit={(limit) => console.log("CHANGE AMOUNT:", limit)}
+      removeCategory={(name) => console.log("REMOVE", name)}
+      submitCategory={() => console.log("SUBMIT CATEGORY")}
+     />
     </div>
   );
 }

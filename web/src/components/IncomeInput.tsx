@@ -19,7 +19,7 @@ export enum IncomeInterval {
 	Biweekly = "Biweekly",
 	Semimonthly = "Semi-monthly",
 	Monthly = "Monthly"
-}
+};
 
 const IncomeInput: React.FC<IIncomeInputProps> = ({ income, interval, changeIncome, changeInterval }) => {
 	return (
