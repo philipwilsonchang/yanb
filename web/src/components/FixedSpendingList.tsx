@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FixedSpendingList: React.FC = () => {
-	return ();
+	return (<div></div>);
 };
 
 export default FixedSpendingList;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const IncomeInputContainer: React.FC = () => {
-	return ();
+	return (<div />);
 };
 
 export default IncomeInputContainer;

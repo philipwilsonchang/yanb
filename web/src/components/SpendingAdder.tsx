@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SpendingAdder: React.FC = () => {
-	return ();
+	return (<div />);
 };
 
 export default SpendingAdder;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const IncomeInput: React.FC = () => {
-	return ();
+	return (<div />);
 };
 
 export default IncomeInput;
