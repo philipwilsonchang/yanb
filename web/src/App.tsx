@@ -3,6 +3,7 @@ import React from 'react';
 import CategoryDisplay from './components/CategoryDisplay';
 import FixedSpendingList, { Cost } from './components/FixedSpendingList';
 import IncomeInput from './components/IncomeInput';
+import SpendingAdder from './components/SpendingAdder';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -13,14 +14,38 @@ const testList: Cost[] = [
   {name: "Item C", amount: 400}
 ];
 
+const testCategories = [
+  'Food',
+  'Groceries',
+  'Fun'
+];
+
 const App: React.FC = () => {
   return ( 
     <div style={{ width: '75%' }}>
     <CategoryDisplay name="Test" limit={300} spent={200} />
     <br />
-    <FixedSpendingList costs={testList} removeCost={(name) => console.log("REMOVE", name)} addCost={(name, amount) => console.log("ADD", name, amount)} />
+    <FixedSpendingList 
+      costs={testList} 
+      newName='New Cost'
+      newAmount={89.70}
+      changeNewName={(name) => console.log("CHANGE NAME:", name)}
+      changeNewAmount={(amount) => console.log("CHANGE AMOUNT:", amount)}
+      removeCost={(name) => console.log("REMOVE", name)} 
+      submitCost={() => console.log("SUBMIT FIXED COST")} />
     <br />
     <IncomeInput income={30000} interval='Weekly' changeIncome={(amount) => console.log("Change income:", amount)} changeInterval={(interval) => console.log("Change interval:", interval)}/>
+    <br />
+    <SpendingAdder 
+      categories={testCategories} 
+      selectedCategory='Fun' 
+      categoryLimit={200} 
+      categorySpent={150} 
+      amount={20.54} 
+      changeCategory={(cat) => console.log("Change category:", cat)}
+      changeAmount={(amt) => console.log("Change amount:", amt)}
+      submitFunc={() => console.log("SUBMIT")}
+    />
     </div>
   );
 }

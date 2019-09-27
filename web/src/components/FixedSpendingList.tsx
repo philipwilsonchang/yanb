@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FormControl, FormControlProps } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -15,14 +15,15 @@ export type Cost = {
 
 interface IFixedSpendingListProps {
 	costs: Cost[],
+	newName: string,
+	newAmount: number,
+	changeNewName(name: string): void,
+	changeNewAmount(amount: number): void, 
 	removeCost(name: string): void,
-	addCost(name: string, amount: number): void
+	submitCost(): void
 };
 
-const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, removeCost, addCost }) => {
-	const [newName, setNewName] = useState("");
-	const [newAmount, setNewAmount] = useState(0);
-
+const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, newAmount, changeNewName, changeNewAmount, removeCost, submitCost }) => {
 	return (
 		<Card>
 			<Card.Header>Fixed Monthly Costs</Card.Header>
@@ -54,12 +55,12 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, removeCos
 			    	<Col>
 			      	</Col>
 				    <Col>
-				        <Form.Control placeholder="Cost name" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => setNewName(e.currentTarget.value as string)}/>
+				        <Form.Control placeholder="Cost name" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewName(e.currentTarget.value as string)}/>
 				    </Col>
 				    <Col>
-				        <Form.Control placeholder="Cost amount" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => setNewAmount(parseFloat(e.currentTarget.value as string))}/>
+				        <Form.Control placeholder="Cost amount" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewAmount(parseFloat(e.currentTarget.value as string))}/>
 				    </Col>
-				    <Button variant="outline-success" onClick={() => addCost(newName, newAmount)}>
+				    <Button variant="outline-success" onClick={submitCost}>
 			      		<FaPlusCircle />
 			      	</Button>
 			    </Form.Row>
