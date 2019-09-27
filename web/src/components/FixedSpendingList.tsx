@@ -24,7 +24,7 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, removeCos
 	const [newAmount, setNewAmount] = useState(0);
 
 	return (
-		<Card style={{ width: '75%'}}>
+		<Card>
 			<Card.Header>Fixed Monthly Costs</Card.Header>
 			<Card.Body>
 			<Table striped bordered hover>

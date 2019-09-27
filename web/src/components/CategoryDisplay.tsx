@@ -26,12 +26,13 @@ const CategoryDisplay: React.FC<ICategoryDisplayProps> = ({ name, limit, spent }
 	}
 	
 	return (
-		<Card style={{ width: '50%' }}>
+		<Card>
 			<Card.Header>{name}</Card.Header>
 			<Card.Body className='card text-center'>
 				<ProgressBar variant={setWarning(barLevel)} now={barLevel}/>
 			</Card.Body>
 			<Card.Body className='card text-right'>
+				<Card.Text><i>Remaining:</i> <b>${(limit - spent).toFixed(2)}</b></Card.Text>
 				<Card.Text><i>Spent:</i> <b>${spent.toFixed(2)}</b>   |   <i>Limit:</i> <b>${limit.toFixed(2)}</b></Card.Text>
 			</Card.Body>
 		</Card>
