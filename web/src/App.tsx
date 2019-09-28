@@ -29,7 +29,8 @@ const testFlexCategories: FlexCategory[] = [
 
 const App: React.FC = () => {
   return ( 
-    <div style={{ width: '75%' }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ width: '90%' }}>
     <CategoryDisplay name="Test" limit={300} spent={200} />
     <br />
     <FixedSpendingList 
@@ -63,6 +64,7 @@ const App: React.FC = () => {
       removeCategory={(name) => console.log("REMOVE", name)}
       submitCategory={() => console.log("SUBMIT CATEGORY")}
      />
+    </div>
     </div>
   );
 }

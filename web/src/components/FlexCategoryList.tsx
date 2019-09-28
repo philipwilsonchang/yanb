@@ -52,8 +52,6 @@ const FlexCategoryList: React.FC<IFlexCategoryListProps> = ({ categories, newNam
 			</Table>
 			<Form>
 			    <Form.Row>
-			    	<Col>
-			      	</Col>
 				    <Col>
 				        <Form.Control placeholder="Category name" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewName(e.currentTarget.value as string)}/>
 				    </Col>

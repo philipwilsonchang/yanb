@@ -27,20 +27,18 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 			<Card.Header>Add Spending Record</Card.Header>
 			<Card.Body className='card text-right'>
 				<Row>
+					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeCategory(e)}>
+					    <Dropdown.Toggle variant="success" id="dropdown-basic">
+					    	{selectedCategory}
+					    </Dropdown.Toggle>
+					    <Dropdown.Menu>
+					    	{categories.map(cat => (
+					    		<Dropdown.Item key={cat} eventKey={cat}>{cat}</Dropdown.Item>
+					    	))}
+					    </Dropdown.Menu>
+					</Dropdown>
 					<Col>
-						<Dropdown onSelect={(e: any) => changeCategory(e)}>
-						    <Dropdown.Toggle variant="success" id="dropdown-basic">
-						    	{selectedCategory}
-						    </Dropdown.Toggle>
-						    <Dropdown.Menu>
-						    	{categories.map(cat => (
-						    		<Dropdown.Item key={cat} eventKey={cat}>{cat}</Dropdown.Item>
-						    	))}
-						    </Dropdown.Menu>
-						</Dropdown>
-					</Col>
-					<Col>
-						<Form.Control value={`$${amount.toFixed(2)}`} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))}/>
+						<Form.Control value={amount.toFixed(2)} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))}/>
 					</Col>
 				</Row>
 				<br />

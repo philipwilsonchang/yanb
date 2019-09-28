@@ -52,8 +52,6 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 			</Table>
 			<Form>
 			    <Form.Row>
-			    	<Col>
-			      	</Col>
 				    <Col>
 				        <Form.Control placeholder="Cost name" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewName(e.currentTarget.value as string)}/>
 				    </Col>
