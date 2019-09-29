@@ -8,13 +8,10 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 
-export type FlexCategory = {
-	name: string,
-	limit: number
-};
+import { FlexCostCategory } from '../prisma-client';
 
 interface IFlexCategoryListProps {
-	categories: FlexCategory[],
+	categories: FlexCostCategory[],
 	newName: string,
 	newLimit: number,
 	changeNewName(name: string): void,

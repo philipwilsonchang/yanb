@@ -14,7 +14,7 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 
 	const prisma = new Prisma({
 		endpoint: api
-	})
+	});
 
 	// Query costList on mount
 	useEffect(() => {
