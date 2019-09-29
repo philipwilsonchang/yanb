@@ -55,7 +55,7 @@ const FlexCategoryList: React.FC<IFlexCategoryListProps> = ({ categories, newNam
 				    <Col>
 				        <Form.Control placeholder="Category limit" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewLimit(parseFloat(e.currentTarget.value as string))}/>
 				    </Col>
-				    <Button variant="outline-success" onClick={submitCategory}>
+				    <Button style={{ margin: '0px 5px 0px 0px' }} variant="outline-success" onClick={submitCategory}>
 			      		<FaPlusCircle />
 			      	</Button>
 			    </Form.Row>

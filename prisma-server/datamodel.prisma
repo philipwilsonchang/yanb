@@ -1,8 +1,8 @@
 enum TimeFrame {
-  WEEKLY
-  BIWEEKLY
-  SEMIMONTHLY
-  MONTHLY
+  Weekly
+  Biweekly
+  Semimonthly
+  Monthly
 }
 
 type FixedCostCategory {
@@ -19,7 +19,7 @@ type FlexCostCategory {
 
 type Income {
   id: ID! @id
-  frequency: DateTime!
+  frequency: TimeFrame!
   amount: Float!
 }
 

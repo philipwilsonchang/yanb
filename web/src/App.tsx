@@ -1,11 +1,11 @@
 import React from 'react';
 
 import CategoryDisplay from './components/CategoryDisplay';
-import IncomeInput from './components/IncomeInput';
 import SpendingAdder from './components/SpendingAdder';
 
 import FixedSpendingListContainer from './containers/FixedSpendingListContainer';
 import FlexSpendingListContainer from './containers/FlexCategoryListContainer';
+import IncomeInputContainer from './containers/IncomeInputContainer';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -26,9 +26,9 @@ const App: React.FC = () => {
         <br />
         <FlexSpendingListContainer api={prismaAPI} />
         <br />
-        <CategoryDisplay name="Test" limit={300} spent={200} />
+        <IncomeInputContainer api={prismaAPI} />
         <br />
-        <IncomeInput income={30000} interval='Weekly' changeIncome={(amount) => console.log("Change income:", amount)} changeInterval={(interval) => console.log("Change interval:", interval)}/>
+        <CategoryDisplay name="Test" limit={300} spent={200} />
         <br />
         <SpendingAdder 
           categories={testCategories} 

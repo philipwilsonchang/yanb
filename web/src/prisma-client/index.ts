@@ -258,6 +258,8 @@ export type FlexCostCategoryOrderByInput =
   | "limit_ASC"
   | "limit_DESC";
 
+export type TimeFrame = "Weekly" | "Biweekly" | "Semimonthly" | "Monthly";
+
 export type IncomeOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -422,14 +424,10 @@ export interface IncomeWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  frequency?: Maybe<DateTimeInput>;
-  frequency_not?: Maybe<DateTimeInput>;
-  frequency_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  frequency_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  frequency_lt?: Maybe<DateTimeInput>;
-  frequency_lte?: Maybe<DateTimeInput>;
-  frequency_gt?: Maybe<DateTimeInput>;
-  frequency_gte?: Maybe<DateTimeInput>;
+  frequency?: Maybe<TimeFrame>;
+  frequency_not?: Maybe<TimeFrame>;
+  frequency_in?: Maybe<TimeFrame[] | TimeFrame>;
+  frequency_not_in?: Maybe<TimeFrame[] | TimeFrame>;
   amount?: Maybe<Float>;
   amount_not?: Maybe<Float>;
   amount_in?: Maybe<Float[] | Float>;
@@ -514,17 +512,17 @@ export interface FlexCostCategoryUpdateManyMutationInput {
 
 export interface IncomeCreateInput {
   id?: Maybe<ID_Input>;
-  frequency: DateTimeInput;
+  frequency: TimeFrame;
   amount: Float;
 }
 
 export interface IncomeUpdateInput {
-  frequency?: Maybe<DateTimeInput>;
+  frequency?: Maybe<TimeFrame>;
   amount?: Maybe<Float>;
 }
 
 export interface IncomeUpdateManyMutationInput {
-  frequency?: Maybe<DateTimeInput>;
+  frequency?: Maybe<TimeFrame>;
   amount?: Maybe<Float>;
 }
 
@@ -876,13 +874,13 @@ export interface AggregateFlexCostCategorySubscription
 
 export interface Income {
   id: ID_Output;
-  frequency: DateTimeOutput;
+  frequency: TimeFrame;
   amount: Float;
 }
 
 export interface IncomePromise extends Promise<Income>, Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<DateTimeOutput>;
+  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
@@ -890,7 +888,7 @@ export interface IncomeSubscription
   extends Promise<AsyncIterator<Income>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  frequency: () => Promise<AsyncIterator<DateTimeOutput>>;
+  frequency: () => Promise<AsyncIterator<TimeFrame>>;
   amount: () => Promise<AsyncIterator<Float>>;
 }
 
@@ -898,7 +896,7 @@ export interface IncomeNullablePromise
   extends Promise<Income | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<DateTimeOutput>;
+  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
@@ -1140,7 +1138,7 @@ export interface IncomeSubscriptionPayloadSubscription
 
 export interface IncomePreviousValues {
   id: ID_Output;
-  frequency: DateTimeOutput;
+  frequency: TimeFrame;
   amount: Float;
 }
 
@@ -1148,7 +1146,7 @@ export interface IncomePreviousValuesPromise
   extends Promise<IncomePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<DateTimeOutput>;
+  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
@@ -1156,7 +1154,7 @@ export interface IncomePreviousValuesSubscription
   extends Promise<AsyncIterator<IncomePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  frequency: () => Promise<AsyncIterator<DateTimeOutput>>;
+  frequency: () => Promise<AsyncIterator<TimeFrame>>;
   amount: () => Promise<AsyncIterator<Float>>;
 }
 

@@ -1,46 +1,52 @@
 import React from 'react';
 
 import { FormControl, FormControlProps } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
+import { Income, TimeFrame } from '../prisma-client';
+
 interface IIncomeInputProps {
-	income: number,
-	interval: string,
-	changeIncome(amount: number): void,
-	changeInterval(interval: string): void
+	income: Income,
+	changeAmount(amount: number): void,
+	changeFrequency(interval: TimeFrame): void,
+	submitIncome(): void
 };
 
 export enum IncomeInterval {
 	Weekly = "Weekly",
 	Biweekly = "Biweekly",
-	Semimonthly = "Semi-monthly",
+	Semimonthly = "Semimonthly",
 	Monthly = "Monthly"
 };
 
-const IncomeInput: React.FC<IIncomeInputProps> = ({ income, interval, changeIncome, changeInterval }) => {
+const IncomeInput: React.FC<IIncomeInputProps> = ({ income, changeAmount, changeFrequency, submitIncome }) => {
 	return (
 		<Card>
 			<Card.Header>Income</Card.Header>
 			<Card.Body className='card text-right'>
 				<Row>
-					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeInterval(e)}>
+					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeFrequency(e)}>
 					    <Dropdown.Toggle variant="success" id="dropdown-basic">
-					    	{interval}
+					    	{income.frequency}
 					    </Dropdown.Toggle>
 					    <Dropdown.Menu>
 						    <Dropdown.Item eventKey={IncomeInterval.Weekly}>Weekly</Dropdown.Item>
 						    <Dropdown.Item eventKey={IncomeInterval.Biweekly}>Biweekly</Dropdown.Item>
-						    <Dropdown.Item eventKey={IncomeInterval.Semimonthly}>Semi-monthly</Dropdown.Item>
+						    <Dropdown.Item eventKey={IncomeInterval.Semimonthly}>Semimonthly</Dropdown.Item>
 						    <Dropdown.Item eventKey={IncomeInterval.Monthly}>Monthly</Dropdown.Item>
 					    </Dropdown.Menu>
 					</Dropdown>
 					<Col>
-						<Form.Control value={income.toFixed(2)} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeIncome(parseFloat(e.currentTarget.value as string))}/>
+						<Form.Control value={income.amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
 					</Col>
+					<Button style={{ margin: '0px 15px 0px 0px' }} variant="success" onClick={submitIncome}>
+			      		Submit
+			      	</Button>
 				</Row>
 			</Card.Body>
 		</Card>

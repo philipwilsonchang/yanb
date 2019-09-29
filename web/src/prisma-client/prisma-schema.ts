@@ -381,7 +381,7 @@ input FlexCostCategoryWhereUniqueInput {
 
 type Income {
   id: ID!
-  frequency: DateTime!
+  frequency: TimeFrame!
   amount: Float!
 }
 
@@ -393,7 +393,7 @@ type IncomeConnection {
 
 input IncomeCreateInput {
   id: ID
-  frequency: DateTime!
+  frequency: TimeFrame!
   amount: Float!
 }
 
@@ -413,7 +413,7 @@ enum IncomeOrderByInput {
 
 type IncomePreviousValues {
   id: ID!
-  frequency: DateTime!
+  frequency: TimeFrame!
   amount: Float!
 }
 
@@ -436,12 +436,12 @@ input IncomeSubscriptionWhereInput {
 }
 
 input IncomeUpdateInput {
-  frequency: DateTime
+  frequency: TimeFrame
   amount: Float
 }
 
 input IncomeUpdateManyMutationInput {
-  frequency: DateTime
+  frequency: TimeFrame
   amount: Float
 }
 
@@ -460,14 +460,10 @@ input IncomeWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  frequency: DateTime
-  frequency_not: DateTime
-  frequency_in: [DateTime!]
-  frequency_not_in: [DateTime!]
-  frequency_lt: DateTime
-  frequency_lte: DateTime
-  frequency_gt: DateTime
-  frequency_gte: DateTime
+  frequency: TimeFrame
+  frequency_not: TimeFrame
+  frequency_in: [TimeFrame!]
+  frequency_not_in: [TimeFrame!]
   amount: Float
   amount_not: Float
   amount_in: [Float!]
@@ -552,5 +548,12 @@ type Subscription {
   fixedCostCategory(where: FixedCostCategorySubscriptionWhereInput): FixedCostCategorySubscriptionPayload
   flexCostCategory(where: FlexCostCategorySubscriptionWhereInput): FlexCostCategorySubscriptionPayload
   income(where: IncomeSubscriptionWhereInput): IncomeSubscriptionPayload
+}
+
+enum TimeFrame {
+  Weekly
+  Biweekly
+  Semimonthly
+  Monthly
 }
 `

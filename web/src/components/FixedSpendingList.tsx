@@ -55,7 +55,7 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 				    <Col>
 				        <Form.Control placeholder="Cost amount" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeNewAmount(parseFloat(e.currentTarget.value as string))}/>
 				    </Col>
-				    <Button variant="outline-success" onClick={submitCost}>
+				    <Button style={{ margin: '0px 5px 0px 0px' }} variant="outline-success" onClick={submitCost}>
 			      		<FaPlusCircle />
 			      	</Button>
 			    </Form.Row>
