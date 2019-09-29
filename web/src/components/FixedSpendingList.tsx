@@ -8,13 +8,10 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 
-export type Cost = {
-	name: string,
-	amount: number
-};
+import { FixedCostCategory } from "../prisma-client"
 
 interface IFixedSpendingListProps {
-	costs: Cost[],
+	costs: FixedCostCategory[],
 	newName: string,
 	newAmount: number,
 	changeNewName(name: string): void,
