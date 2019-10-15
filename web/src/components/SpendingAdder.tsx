@@ -9,41 +9,48 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import CategoryDisplay from './CategoryDisplay';
+import { FlexCostCategory } from '../prisma-client';
 
 interface ISpendingAdderProps {
-	categories: string[],
-	selectedCategory: string,
-	categoryLimit: number,
+	categories: FlexCostCategory[],
+	selectedCategory: FlexCostCategory,
 	categorySpent: number,
-	changeCategory(category: string): void,
+	changeCategory(category: FlexCostCategory): void,
 	amount: number,
 	changeAmount(newAmount: number): void,
 	submitFunc(): void,
 }
 
-const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCategory, categoryLimit, categorySpent, changeCategory, amount, changeAmount, submitFunc }) => {
+const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCategory, categorySpent, changeCategory, amount, changeAmount, submitFunc }) => {
 	return (
 		<Card>
 			<Card.Header>Add Spending Record</Card.Header>
 			<Card.Body className='card text-right'>
 				<Row>
-					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeCategory(e)}>
+					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeCategory(categories.filter(cat => (cat.name === e))[0])}>
 					    <Dropdown.Toggle variant="success" id="dropdown-basic">
-					    	{selectedCategory}
+					    	{selectedCategory.name}
 					    </Dropdown.Toggle>
 					    <Dropdown.Menu>
 					    	{categories.map(cat => (
-					    		<Dropdown.Item key={cat} eventKey={cat}>{cat}</Dropdown.Item>
+					    		<Dropdown.Item key={cat.id} eventKey={cat.name}>{cat.name}</Dropdown.Item>
 					    	))}
 					    </Dropdown.Menu>
 					</Dropdown>
 					<Col>
-						<Form.Control value={amount.toFixed(2)} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))}/>
+						<Form.Control value={amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))}/>
 					</Col>
 				</Row>
 				<br />
-				<CategoryDisplay name={selectedCategory} limit={categoryLimit} spent={categorySpent} />
-				<br />
+				{(selectedCategory.name !== undefined) && (
+					<div>
+						<CategoryDisplay 
+							name={selectedCategory.name} 
+							limit={selectedCategory.limit} 
+							spent={categorySpent} />
+						<br />
+					</div>
+				)}
 				<Button variant="success" onClick={submitFunc}>Submit</Button>
 			</Card.Body>
 		</Card>
