@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
+import CategoryHUDContainer from './containers/CategoryHUDContainer';
 import FixedSpendingListContainer from './containers/FixedSpendingListContainer';
 import FlexSpendingListContainer from './containers/FlexCategoryListContainer';
 import IncomeInputContainer from './containers/IncomeInputContainer';
@@ -30,6 +31,12 @@ const App: React.FC = () => {
     // </div>
     <Tabs id="app" activeKey={tabKey} onSelect={(k: string) => setTabKey(k)}>
       <Tab id="flex-summary" eventKey="flex-summary" title="Summary">
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '90%' }}>
+            <br />
+            <CategoryHUDContainer api={prismaAPI} />
+          </div>
+        </div>
       </Tab>
       <Tab id="flex-add" eventKey="flex-add" title="Add Spending">
         <div style={{ display: 'flex', justifyContent: 'center' }}>
