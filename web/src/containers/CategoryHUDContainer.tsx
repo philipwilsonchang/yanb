@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import CategoryDisplay from '../components/CategoryDisplay';
-import { FlexCostCategory, Prisma } from '../prisma-client';
+import { Prisma } from '../prisma-client';
+import { useGlobalState } from '../state/useGlobalState';
+import { ActionType } from '../state/reducer';
+import { SpentFlexCostCategory } from '../state/stateTypes';
 
 interface ICategoryHUDContainerProps {
 	api: string,
 };
 
-type SpentToCategory = {
-	categoryName: string,
-	spent: number
-};
-
-interface SpentFlexCostCategory extends FlexCostCategory {
-	spent?: number
-}
-
 const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => {
-	const [categoryList, setCategoryList] = useState([] as FlexCostCategory[]);
-	const [spentCategoryList, setSpentCategoryList] = useState([] as SpentFlexCostCategory[]);
+	const { state, dispatch } = useGlobalState();
+	const { categoryList } = state;
 
 	const prisma = new Prisma({
 		endpoint: api
@@ -26,18 +20,24 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 
 	// Get all categories on component mount
 	useEffect(() => {
+		const today = new Date();
+		const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+		const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
 		const getCategoryList = async () => {
 			const categories = await prisma.flexCostCategories();
 			if (categories.length >= 1) {
-				setCategoryList(categories);
+				categories.forEach(async (category) => {
+					const spent = await getCategorySpent(category.name, firstDay, lastDay);
+					dispatch({
+						type: ActionType.AddFlexCategory,
+						payload: {...category, spent: spent } as SpentFlexCostCategory
+					});
+
+				});
 			}
 		};
 
-		getCategoryList();
-	}, []);
-
-	// Get all spent value of all categories when categoryList updates
-	useEffect(() => {
 		const getCategorySpent = async (name: string, firstDay: Date, lastDay: Date) => {
 			const costs = await prisma.costs({ where: { category: { name: name }, createdAt_gte: firstDay.toISOString(), createdAt_lte: lastDay.toISOString()}});
 			if (costs.length === 0) {
@@ -48,24 +48,12 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 			}
 		};
 
-		const getSpentList = async () => {
-			const updatedSpentList = [...categoryList] as SpentFlexCostCategory[];
-			const today = new Date();
-			const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-			const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-			updatedSpentList.forEach( async (category) => {
-				category.spent = await getCategorySpent(category.name, firstDay, lastDay);
-				setSpentCategoryList(updatedSpentList);
-			});
-		};
-
-		getSpentList();
-	}, [categoryList])
+		getCategoryList();
+	}, []);
 
 	return (
 		<div>
-			{spentCategoryList.map((category) => (
+			{categoryList.map((category) => (
 				<div key={category.name}>
 					<br />
 					<CategoryDisplay 

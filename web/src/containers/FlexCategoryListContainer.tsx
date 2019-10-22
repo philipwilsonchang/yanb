@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import FlexCategoryList from '../components/FlexCategoryList';
-import { FlexCostCategory, Prisma } from '../prisma-client';
+import { Prisma } from '../prisma-client';
+import { useGlobalState } from '../state/useGlobalState';
+import { ActionType } from '../state/reducer';
 
 interface IFlexCategoryListContainerProps {
 	api: string
 };
 
 const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ api }) => {
-	const [costList, setCostList] = useState([] as FlexCostCategory[]);
+	const { state, dispatch } = useGlobalState();
+	const { categoryList } = state;
 	const [newCostName, setNewCostName] = useState("");
 	const [newCostLimit, setNewCostLimit] = useState(0);
 
@@ -16,33 +19,27 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 		endpoint: api
 	});
 
-	// Query costList on mount
-	useEffect(() => {
-		const fetchCostList = async () => {
-			const currentCostList = await prisma.flexCostCategories();
-			setCostList(currentCostList);
-		};
-
-		fetchCostList();
-	}, [])
-
 	const removeCostFromList = async (name: string) => {
-		const newCostList = costList.filter(cost => cost.name !== name);
-		setCostList(newCostList);
 		await prisma.deleteFlexCostCategory({ name: name });
+		dispatch({
+			type: ActionType.DeleteFlexCategory,
+			payload: name
+		});
 	};
 
 	const addNewCostToList = async () => {
 		if (newCostName !== "" && newCostLimit !== 0) {
-			const result = await prisma.createFlexCostCategory({ name: newCostName, limit: newCostLimit });
-			const newCostList = [...costList, result];
-			setCostList(newCostList);
+			await prisma.createFlexCostCategory({ name: newCostName, limit: newCostLimit });
+			dispatch({
+				type: ActionType.AddFlexCategory,
+				payload: { name: newCostName, limit: newCostLimit, spent: 0 }
+			});
 		}
 	};
 
 	return (
 		<FlexCategoryList
-			categories={costList}
+			categories={categoryList}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}

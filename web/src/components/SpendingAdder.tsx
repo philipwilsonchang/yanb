@@ -42,7 +42,7 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 					</Col>
 				</Row>
 				<br />
-				{(selectedCategory.name !== undefined) && (
+				{(selectedCategory.id !== "abc") && (
 					<div>
 						<CategoryDisplay 
 							name={selectedCategory.name} 

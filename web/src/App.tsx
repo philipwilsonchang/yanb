@@ -9,6 +9,8 @@ import FlexSpendingListContainer from './containers/FlexCategoryListContainer';
 import IncomeInputContainer from './containers/IncomeInputContainer';
 import SpendingAdderContainer from './containers/SpendingAdderContainer';
 
+import { StateProvider } from './state/useGlobalState';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -18,47 +20,38 @@ const App: React.FC = () => {
   const [tabKey, setTabKey] = useState('flex-summary');
 
   return ( 
-    // <div style={{ display: 'flex', justifyContent: 'center' }}>
-    //   <div style={{ width: '90%' }}>
-    //     <SpendingAdderContainer api={prismaAPI} />
-    //     <br />
-    //     <FixedSpendingListContainer api={prismaAPI} />
-    //     <br />
-    //     <FlexSpendingListContainer api={prismaAPI} />
-    //     <br />
-    //     <IncomeInputContainer api={prismaAPI} />
-    //   </div>
-    // </div>
-    <Tabs id="app" activeKey={tabKey} onSelect={(k: string) => setTabKey(k)}>
-      <Tab id="flex-summary" eventKey="flex-summary" title="Summary">
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '90%' }}>
-            <br />
-            <CategoryHUDContainer api={prismaAPI} />
+    <StateProvider>
+      <Tabs id="app" activeKey={tabKey} onSelect={(k: string) => setTabKey(k)}>
+        <Tab id="flex-summary" eventKey="flex-summary" title="Summary">
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '90%' }}>
+              <br />
+              <CategoryHUDContainer api={prismaAPI} />
+            </div>
           </div>
-        </div>
-      </Tab>
-      <Tab id="flex-add" eventKey="flex-add" title="Add Spending">
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '90%' }}>
-            <br />
-            <SpendingAdderContainer api={prismaAPI} />
+        </Tab>
+        <Tab id="flex-add" eventKey="flex-add" title="Add Spending">
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '90%' }}>
+              <br />
+              <SpendingAdderContainer api={prismaAPI} />
+            </div>
           </div>
-        </div>
-      </Tab>
-      <Tab id="budget" eventKey="budget" title="Modify Budget">
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '90%' }}>
-            <br />
-            <IncomeInputContainer api={prismaAPI} />
-            <br />
-            <FixedSpendingListContainer api={prismaAPI} />
-            <br />
-            <FlexSpendingListContainer api={prismaAPI} />
-           </div>
-        </div>
-      </Tab>
-    </Tabs>
+        </Tab>
+        <Tab id="budget" eventKey="budget" title="Modify Budget">
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '90%' }}>
+              <br />
+              <IncomeInputContainer api={prismaAPI} />
+              <br />
+              <FixedSpendingListContainer api={prismaAPI} />
+              <br />
+              <FlexSpendingListContainer api={prismaAPI} />
+             </div>
+          </div>
+        </Tab>
+      </Tabs>
+    </StateProvider>
   );
 }
 

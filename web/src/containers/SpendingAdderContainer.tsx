@@ -1,50 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
 import SpendingAdder from '../components/SpendingAdder';
-import { FlexCostCategory, Prisma } from '../prisma-client';
+import { Prisma } from '../prisma-client';
+import { useGlobalState } from '../state/useGlobalState';
+import { ActionType } from '../state/reducer';
+import { SpentFlexCostCategory } from '../state/stateTypes';
 
 interface ISpendingAdderContainerProps {
 	api: string,
 };
 
+const dummyCategory: SpentFlexCostCategory = {
+	id: 'abc',
+	name: "Select category...",
+	limit: 0,
+	spent: 0
+};
+
 const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api }) => {
-	const [categoryList, setCategoryList] = useState([] as FlexCostCategory[]);
+	const { state, dispatch } = useGlobalState();
+	const { categoryList } = state;	
 	const [amount, setAmount] = useState(0);
-	const [spent, setSpent] = useState(0);
-	const [selectedCategory, setSelectedCategory] = useState({} as FlexCostCategory);
+	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
 	const prisma = new Prisma({
 		endpoint: api
 	});
-
-	useEffect(() => {
-		const getCategoryList = async () => {
-			const categories = await prisma.flexCostCategories();
-			if (categories.length >= 1) {
-				setCategoryList(categories);
-				setSelectedCategory(categories[0]);
-			}
-		};
-
-		getCategoryList();
-	}, []);
-
-	useEffect(() => {
-		getCategorySpent(selectedCategory.name, new Date());
-	}, [selectedCategory]);
-
-	const getCategorySpent = async (name: string, selectedMonth: Date) => {
-		const firstDay = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), 1);
-		const lastDay = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 0);
-
-		const costs = await prisma.costs({ where: { category: { name: name }, createdAt_gte: firstDay.toISOString(), createdAt_lte: lastDay.toISOString()}});
-		if (costs.length === 0) {
-			setSpent(0);
-		} else {
-			const spentToDate = costs.reduce((acc, cost) => ({...acc, amount: acc.amount + cost.amount }));
-			setSpent(spentToDate.amount);
-		}
-	};
 
 	const submitSpending = async () => {
 		await prisma.createCost({ 
@@ -53,6 +34,10 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 				connect: { 
 					name: selectedCategory.name }
 			}
+		});
+		dispatch({
+			type: ActionType.AddFlexCost,
+			payload: { name: selectedCategory.name, amount: amount }
 		});
 		clearInput();
 	};
@@ -67,7 +52,7 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 			categories={categoryList}
 			selectedCategory={selectedCategory}
 			amount={amount}
-			categorySpent={spent}
+			categorySpent={selectedCategory.spent || 0}
 			changeCategory={setSelectedCategory}
 			changeAmount={setAmount}
 			submitFunc={submitSpending}
