@@ -11,7 +11,9 @@ import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import { FixedCostCategory } from "../prisma-client"
 
 interface IFixedSpendingListProps {
+	budgetedAmount: number,
 	costs: FixedCostCategory[],
+	monthlyIncome: number,
 	newName: string,
 	newAmount: number,
 	changeNewName(name: string): void,
@@ -20,11 +22,11 @@ interface IFixedSpendingListProps {
 	submitCost(): void
 };
 
-const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, newAmount, changeNewName, changeNewAmount, removeCost, submitCost }) => {
+const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, newAmount, changeNewName, changeNewAmount, removeCost, submitCost, monthlyIncome, budgetedAmount }) => {
 	return (
 		<Card>
 			<Card.Header>Fixed Monthly Costs</Card.Header>
-			<Card.Body>
+			<Card.Body className='card text-right'>
 			<Table striped bordered hover>
 			  <thead>
 			    <tr>
@@ -60,6 +62,8 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 			      	</Button>
 			    </Form.Row>
 			</Form>
+			<br />
+			<Card.Text><i>Remaining:</i> <b>${(monthlyIncome - budgetedAmount).toFixed(2)}</b>   |   <i>Total:</i> <b>${budgetedAmount.toFixed(2)}</b></Card.Text>
 			</Card.Body>
 		</Card>
 	);

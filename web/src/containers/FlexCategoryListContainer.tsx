@@ -11,13 +11,25 @@ interface IFlexCategoryListContainerProps {
 
 const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ api }) => {
 	const { state, dispatch } = useGlobalState();
-	const { categoryList } = state;
+	const { budgetedAmount, categoryList, income } = state;
 	const [newCostName, setNewCostName] = useState("");
 	const [newCostLimit, setNewCostLimit] = useState(0);
 
 	const prisma = new Prisma({
 		endpoint: api
 	});
+
+	let monthlyIncome: number;
+	switch (income.frequency) {
+		case "Weekly":
+			monthlyIncome = income.amount * 4;
+		case "Monthly":
+			monthlyIncome = income.amount;
+		case "Biweekly" || "Semimomthly":
+			monthlyIncome = income.amount * 2;
+		default:
+			monthlyIncome = income.amount;
+	}
 
 	const removeCostFromList = async (name: string) => {
 		await prisma.deleteFlexCostCategory({ name: name });
@@ -39,7 +51,9 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 
 	return (
 		<FlexCategoryList
+			budgetedAmount={budgetedAmount}
 			categories={categoryList}
+			monthlyIncome={monthlyIncome}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}

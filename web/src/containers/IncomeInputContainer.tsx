@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 
 import IncomeInput, { IncomeInterval } from '../components/IncomeInput';
 import { Prisma, Income, TimeFrame } from '../prisma-client';
+import { useGlobalState } from '../state/useGlobalState';
+import { ActionType } from '../state/reducer';
 
 interface IIncomeInputContainer {
 	api: string
 };
 
 const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
-	const [income, setIncome] = useState({ id: 'asdf', amount: 0, frequency: IncomeInterval.Monthly } as Income);
+	const { state, dispatch } = useGlobalState();
+	const { income } = state;
 
 	const prisma = new Prisma({
 		endpoint: api
@@ -19,9 +22,15 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 		const fetchIncomeAndInterval = async () => {
 			const currentIncomes = await prisma.incomes();
 			if (currentIncomes.length >= 1) {
-				setIncome(currentIncomes[0]);
+				dispatch({
+					type: ActionType.ChangeIncome,
+					payload: currentIncomes[0]
+				});
 			} else {
-				setIncome({ id: 'asdf', amount: 0, frequency: IncomeInterval.Monthly } as Income);
+				dispatch({
+					type: ActionType.ChangeIncome,
+					payload: { id: 'placeholder', amount: 0, frequency: IncomeInterval.Monthly } as Income
+				});
 			} 
 		};
 
@@ -29,11 +38,17 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 	}, [])
 
 	const changeAmount = (amount: number) => {
-		setIncome({...income, amount: amount });
+		dispatch({
+			type: ActionType.ChangeIncome,
+			payload: {...income, amount: amount}
+		});
 	};
 
 	const changeFrequency = (interval: TimeFrame) => {
-		setIncome({...income, frequency: interval });
+		dispatch({
+			type: ActionType.ChangeIncome,
+			payload: {...income, frequency: interval}
+		});
 	};
 
 	const submitIncome = async () => {
