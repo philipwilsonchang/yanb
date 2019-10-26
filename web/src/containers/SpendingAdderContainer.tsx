@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import SpendingAdder from '../components/SpendingAdder';
 import { Prisma } from '../prisma-client';

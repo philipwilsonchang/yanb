@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import FixedSpendingList from '../components/FixedSpendingList';
-import { FixedCostCategory, Prisma, TimeFrame } from '../prisma-client';
+import { Prisma } from '../prisma-client';
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 
@@ -23,10 +23,16 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 	switch (income.frequency) {
 		case "Weekly":
 			monthlyIncome = income.amount * 4;
+			break;
 		case "Monthly":
 			monthlyIncome = income.amount;
-		case "Biweekly" || "Semimomthly":
+			break;
+		case "Biweekly":
 			monthlyIncome = income.amount * 2;
+			break;
+		case "Semimonthly":
+			monthlyIncome = income.amount * 2;
+			break;
 		default:
 			monthlyIncome = income.amount;
 	}

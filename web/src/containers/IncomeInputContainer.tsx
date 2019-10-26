@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import IncomeInput, { IncomeInterval } from '../components/IncomeInput';
 import { Prisma, Income, TimeFrame } from '../prisma-client';

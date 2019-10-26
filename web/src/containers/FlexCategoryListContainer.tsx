@@ -23,10 +23,13 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 	switch (income.frequency) {
 		case "Weekly":
 			monthlyIncome = income.amount * 4;
+			break;
 		case "Monthly":
 			monthlyIncome = income.amount;
+			break;
 		case "Biweekly" || "Semimomthly":
 			monthlyIncome = income.amount * 2;
+			break;
 		default:
 			monthlyIncome = income.amount;
 	}
