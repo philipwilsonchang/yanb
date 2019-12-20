@@ -27,5 +27,25 @@ type Cost {
   id: ID! @id
   amount: Float!
   createdAt: DateTime! @createdAt 
+  month: Int!
+  year: Int!
   category: FlexCostCategory!
+}
+
+type FinancialMonth {
+  id: ID! @id
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean! @default(value: false)
+}
+
+type SavingsGoal {
+  id: ID! @id
+  name: String!
+  updatedAt: DateTime! @updatedAt
+  goalAmount: Float!
+  currentAmount: Float!
 }
