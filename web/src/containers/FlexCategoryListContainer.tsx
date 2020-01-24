@@ -19,21 +19,6 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 		endpoint: api
 	});
 
-	let monthlyIncome: number;
-	switch (income.frequency) {
-		case "Weekly":
-			monthlyIncome = income.amount * 4;
-			break;
-		case "Monthly":
-			monthlyIncome = income.amount;
-			break;
-		case "Biweekly" || "Semimomthly":
-			monthlyIncome = income.amount * 2;
-			break;
-		default:
-			monthlyIncome = income.amount;
-	}
-
 	const removeCostFromList = async (name: string) => {
 		await prisma.deleteFlexCostCategory({ name: name });
 		dispatch({
@@ -56,7 +41,7 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
 			categories={categoryList}
-			monthlyIncome={monthlyIncome}
+			monthlyIncome={income.amount}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}

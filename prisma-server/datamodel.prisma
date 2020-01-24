@@ -1,10 +1,3 @@
-enum TimeFrame {
-  Weekly
-  Biweekly
-  Semimonthly
-  Monthly
-}
-
 type FixedCostCategory {
   id: ID! @id
   name: String! @unique
@@ -17,18 +10,23 @@ type FlexCostCategory {
   limit: Float!
 }
 
-type Income {
+type RollingCostCategory {
   id: ID! @id
-  frequency: TimeFrame!
+  name: String! @unique
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+type MonthlyIncome {
+  id: ID! @id
   amount: Float!
 }
 
 type Cost {
   id: ID! @id
   amount: Float!
+  description: String!
   createdAt: DateTime! @createdAt 
-  month: Int!
-  year: Int!
   category: FlexCostCategory!
 }
 
@@ -40,12 +38,4 @@ type FinancialMonth {
   totalCost: Float!
   remainder: Float!
   closed: Boolean! @default(value: false)
-}
-
-type SavingsGoal {
-  id: ID! @id
-  name: String!
-  updatedAt: DateTime! @updatedAt
-  goalAmount: Float!
-  currentAmount: Float!
 }

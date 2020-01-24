@@ -17,9 +17,13 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   cost: (where?: CostWhereInput) => Promise<boolean>;
+  financialMonth: (where?: FinancialMonthWhereInput) => Promise<boolean>;
   fixedCostCategory: (where?: FixedCostCategoryWhereInput) => Promise<boolean>;
   flexCostCategory: (where?: FlexCostCategoryWhereInput) => Promise<boolean>;
-  income: (where?: IncomeWhereInput) => Promise<boolean>;
+  monthlyIncome: (where?: MonthlyIncomeWhereInput) => Promise<boolean>;
+  rollingCostCategory: (
+    where?: RollingCostCategoryWhereInput
+  ) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -60,6 +64,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CostConnectionPromise;
+  financialMonth: (
+    where: FinancialMonthWhereUniqueInput
+  ) => FinancialMonthNullablePromise;
+  financialMonths: (args?: {
+    where?: FinancialMonthWhereInput;
+    orderBy?: FinancialMonthOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<FinancialMonth>;
+  financialMonthsConnection: (args?: {
+    where?: FinancialMonthWhereInput;
+    orderBy?: FinancialMonthOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FinancialMonthConnectionPromise;
   fixedCostCategory: (
     where: FixedCostCategoryWhereUniqueInput
   ) => FixedCostCategoryNullablePromise;
@@ -102,25 +127,48 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => FlexCostCategoryConnectionPromise;
-  income: (where: IncomeWhereUniqueInput) => IncomeNullablePromise;
-  incomes: (args?: {
-    where?: IncomeWhereInput;
-    orderBy?: IncomeOrderByInput;
+  monthlyIncome: (
+    where: MonthlyIncomeWhereUniqueInput
+  ) => MonthlyIncomeNullablePromise;
+  monthlyIncomes: (args?: {
+    where?: MonthlyIncomeWhereInput;
+    orderBy?: MonthlyIncomeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Income>;
-  incomesConnection: (args?: {
-    where?: IncomeWhereInput;
-    orderBy?: IncomeOrderByInput;
+  }) => FragmentableArray<MonthlyIncome>;
+  monthlyIncomesConnection: (args?: {
+    where?: MonthlyIncomeWhereInput;
+    orderBy?: MonthlyIncomeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => IncomeConnectionPromise;
+  }) => MonthlyIncomeConnectionPromise;
+  rollingCostCategory: (
+    where: RollingCostCategoryWhereUniqueInput
+  ) => RollingCostCategoryNullablePromise;
+  rollingCostCategories: (args?: {
+    where?: RollingCostCategoryWhereInput;
+    orderBy?: RollingCostCategoryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<RollingCostCategory>;
+  rollingCostCategoriesConnection: (args?: {
+    where?: RollingCostCategoryWhereInput;
+    orderBy?: RollingCostCategoryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => RollingCostCategoryConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -143,6 +191,28 @@ export interface Prisma {
   }) => CostPromise;
   deleteCost: (where: CostWhereUniqueInput) => CostPromise;
   deleteManyCosts: (where?: CostWhereInput) => BatchPayloadPromise;
+  createFinancialMonth: (
+    data: FinancialMonthCreateInput
+  ) => FinancialMonthPromise;
+  updateFinancialMonth: (args: {
+    data: FinancialMonthUpdateInput;
+    where: FinancialMonthWhereUniqueInput;
+  }) => FinancialMonthPromise;
+  updateManyFinancialMonths: (args: {
+    data: FinancialMonthUpdateManyMutationInput;
+    where?: FinancialMonthWhereInput;
+  }) => BatchPayloadPromise;
+  upsertFinancialMonth: (args: {
+    where: FinancialMonthWhereUniqueInput;
+    create: FinancialMonthCreateInput;
+    update: FinancialMonthUpdateInput;
+  }) => FinancialMonthPromise;
+  deleteFinancialMonth: (
+    where: FinancialMonthWhereUniqueInput
+  ) => FinancialMonthPromise;
+  deleteManyFinancialMonths: (
+    where?: FinancialMonthWhereInput
+  ) => BatchPayloadPromise;
   createFixedCostCategory: (
     data: FixedCostCategoryCreateInput
   ) => FixedCostCategoryPromise;
@@ -187,22 +257,48 @@ export interface Prisma {
   deleteManyFlexCostCategories: (
     where?: FlexCostCategoryWhereInput
   ) => BatchPayloadPromise;
-  createIncome: (data: IncomeCreateInput) => IncomePromise;
-  updateIncome: (args: {
-    data: IncomeUpdateInput;
-    where: IncomeWhereUniqueInput;
-  }) => IncomePromise;
-  updateManyIncomes: (args: {
-    data: IncomeUpdateManyMutationInput;
-    where?: IncomeWhereInput;
+  createMonthlyIncome: (data: MonthlyIncomeCreateInput) => MonthlyIncomePromise;
+  updateMonthlyIncome: (args: {
+    data: MonthlyIncomeUpdateInput;
+    where: MonthlyIncomeWhereUniqueInput;
+  }) => MonthlyIncomePromise;
+  updateManyMonthlyIncomes: (args: {
+    data: MonthlyIncomeUpdateManyMutationInput;
+    where?: MonthlyIncomeWhereInput;
   }) => BatchPayloadPromise;
-  upsertIncome: (args: {
-    where: IncomeWhereUniqueInput;
-    create: IncomeCreateInput;
-    update: IncomeUpdateInput;
-  }) => IncomePromise;
-  deleteIncome: (where: IncomeWhereUniqueInput) => IncomePromise;
-  deleteManyIncomes: (where?: IncomeWhereInput) => BatchPayloadPromise;
+  upsertMonthlyIncome: (args: {
+    where: MonthlyIncomeWhereUniqueInput;
+    create: MonthlyIncomeCreateInput;
+    update: MonthlyIncomeUpdateInput;
+  }) => MonthlyIncomePromise;
+  deleteMonthlyIncome: (
+    where: MonthlyIncomeWhereUniqueInput
+  ) => MonthlyIncomePromise;
+  deleteManyMonthlyIncomes: (
+    where?: MonthlyIncomeWhereInput
+  ) => BatchPayloadPromise;
+  createRollingCostCategory: (
+    data: RollingCostCategoryCreateInput
+  ) => RollingCostCategoryPromise;
+  updateRollingCostCategory: (args: {
+    data: RollingCostCategoryUpdateInput;
+    where: RollingCostCategoryWhereUniqueInput;
+  }) => RollingCostCategoryPromise;
+  updateManyRollingCostCategories: (args: {
+    data: RollingCostCategoryUpdateManyMutationInput;
+    where?: RollingCostCategoryWhereInput;
+  }) => BatchPayloadPromise;
+  upsertRollingCostCategory: (args: {
+    where: RollingCostCategoryWhereUniqueInput;
+    create: RollingCostCategoryCreateInput;
+    update: RollingCostCategoryUpdateInput;
+  }) => RollingCostCategoryPromise;
+  deleteRollingCostCategory: (
+    where: RollingCostCategoryWhereUniqueInput
+  ) => RollingCostCategoryPromise;
+  deleteManyRollingCostCategories: (
+    where?: RollingCostCategoryWhereInput
+  ) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -215,15 +311,21 @@ export interface Subscription {
   cost: (
     where?: CostSubscriptionWhereInput
   ) => CostSubscriptionPayloadSubscription;
+  financialMonth: (
+    where?: FinancialMonthSubscriptionWhereInput
+  ) => FinancialMonthSubscriptionPayloadSubscription;
   fixedCostCategory: (
     where?: FixedCostCategorySubscriptionWhereInput
   ) => FixedCostCategorySubscriptionPayloadSubscription;
   flexCostCategory: (
     where?: FlexCostCategorySubscriptionWhereInput
   ) => FlexCostCategorySubscriptionPayloadSubscription;
-  income: (
-    where?: IncomeSubscriptionWhereInput
-  ) => IncomeSubscriptionPayloadSubscription;
+  monthlyIncome: (
+    where?: MonthlyIncomeSubscriptionWhereInput
+  ) => MonthlyIncomeSubscriptionPayloadSubscription;
+  rollingCostCategory: (
+    where?: RollingCostCategorySubscriptionWhereInput
+  ) => RollingCostCategorySubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -239,8 +341,26 @@ export type CostOrderByInput =
   | "id_DESC"
   | "amount_ASC"
   | "amount_DESC"
+  | "description_ASC"
+  | "description_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
+
+export type FinancialMonthOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "income_ASC"
+  | "income_DESC"
+  | "totalCost_ASC"
+  | "totalCost_DESC"
+  | "remainder_ASC"
+  | "remainder_DESC"
+  | "closed_ASC"
+  | "closed_DESC";
 
 export type FixedCostCategoryOrderByInput =
   | "id_ASC"
@@ -258,15 +378,21 @@ export type FlexCostCategoryOrderByInput =
   | "limit_ASC"
   | "limit_DESC";
 
-export type TimeFrame = "Weekly" | "Biweekly" | "Semimonthly" | "Monthly";
-
-export type IncomeOrderByInput =
+export type MonthlyIncomeOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "frequency_ASC"
-  | "frequency_DESC"
   | "amount_ASC"
   | "amount_DESC";
+
+export type RollingCostCategoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "monthlyLimit_ASC"
+  | "monthlyLimit_DESC"
+  | "totalLimit_ASC"
+  | "totalLimit_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -297,6 +423,20 @@ export interface CostWhereInput {
   amount_lte?: Maybe<Float>;
   amount_gt?: Maybe<Float>;
   amount_gte?: Maybe<Float>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -353,6 +493,72 @@ export interface FlexCostCategoryWhereInput {
   NOT?: Maybe<FlexCostCategoryWhereInput[] | FlexCostCategoryWhereInput>;
 }
 
+export type FinancialMonthWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface FinancialMonthWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  month?: Maybe<Int>;
+  month_not?: Maybe<Int>;
+  month_in?: Maybe<Int[] | Int>;
+  month_not_in?: Maybe<Int[] | Int>;
+  month_lt?: Maybe<Int>;
+  month_lte?: Maybe<Int>;
+  month_gt?: Maybe<Int>;
+  month_gte?: Maybe<Int>;
+  year?: Maybe<Int>;
+  year_not?: Maybe<Int>;
+  year_in?: Maybe<Int[] | Int>;
+  year_not_in?: Maybe<Int[] | Int>;
+  year_lt?: Maybe<Int>;
+  year_lte?: Maybe<Int>;
+  year_gt?: Maybe<Int>;
+  year_gte?: Maybe<Int>;
+  income?: Maybe<Float>;
+  income_not?: Maybe<Float>;
+  income_in?: Maybe<Float[] | Float>;
+  income_not_in?: Maybe<Float[] | Float>;
+  income_lt?: Maybe<Float>;
+  income_lte?: Maybe<Float>;
+  income_gt?: Maybe<Float>;
+  income_gte?: Maybe<Float>;
+  totalCost?: Maybe<Float>;
+  totalCost_not?: Maybe<Float>;
+  totalCost_in?: Maybe<Float[] | Float>;
+  totalCost_not_in?: Maybe<Float[] | Float>;
+  totalCost_lt?: Maybe<Float>;
+  totalCost_lte?: Maybe<Float>;
+  totalCost_gt?: Maybe<Float>;
+  totalCost_gte?: Maybe<Float>;
+  remainder?: Maybe<Float>;
+  remainder_not?: Maybe<Float>;
+  remainder_in?: Maybe<Float[] | Float>;
+  remainder_not_in?: Maybe<Float[] | Float>;
+  remainder_lt?: Maybe<Float>;
+  remainder_lte?: Maybe<Float>;
+  remainder_gt?: Maybe<Float>;
+  remainder_gte?: Maybe<Float>;
+  closed?: Maybe<Boolean>;
+  closed_not?: Maybe<Boolean>;
+  AND?: Maybe<FinancialMonthWhereInput[] | FinancialMonthWhereInput>;
+  OR?: Maybe<FinancialMonthWhereInput[] | FinancialMonthWhereInput>;
+  NOT?: Maybe<FinancialMonthWhereInput[] | FinancialMonthWhereInput>;
+}
+
 export type FixedCostCategoryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   name?: Maybe<String>;
@@ -405,11 +611,11 @@ export type FlexCostCategoryWhereUniqueInput = AtLeastOne<{
   name?: Maybe<String>;
 }>;
 
-export type IncomeWhereUniqueInput = AtLeastOne<{
+export type MonthlyIncomeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface IncomeWhereInput {
+export interface MonthlyIncomeWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -424,10 +630,6 @@ export interface IncomeWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  frequency?: Maybe<TimeFrame>;
-  frequency_not?: Maybe<TimeFrame>;
-  frequency_in?: Maybe<TimeFrame[] | TimeFrame>;
-  frequency_not_in?: Maybe<TimeFrame[] | TimeFrame>;
   amount?: Maybe<Float>;
   amount_not?: Maybe<Float>;
   amount_in?: Maybe<Float[] | Float>;
@@ -436,14 +638,70 @@ export interface IncomeWhereInput {
   amount_lte?: Maybe<Float>;
   amount_gt?: Maybe<Float>;
   amount_gte?: Maybe<Float>;
-  AND?: Maybe<IncomeWhereInput[] | IncomeWhereInput>;
-  OR?: Maybe<IncomeWhereInput[] | IncomeWhereInput>;
-  NOT?: Maybe<IncomeWhereInput[] | IncomeWhereInput>;
+  AND?: Maybe<MonthlyIncomeWhereInput[] | MonthlyIncomeWhereInput>;
+  OR?: Maybe<MonthlyIncomeWhereInput[] | MonthlyIncomeWhereInput>;
+  NOT?: Maybe<MonthlyIncomeWhereInput[] | MonthlyIncomeWhereInput>;
+}
+
+export type RollingCostCategoryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface RollingCostCategoryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  monthlyLimit?: Maybe<Float>;
+  monthlyLimit_not?: Maybe<Float>;
+  monthlyLimit_in?: Maybe<Float[] | Float>;
+  monthlyLimit_not_in?: Maybe<Float[] | Float>;
+  monthlyLimit_lt?: Maybe<Float>;
+  monthlyLimit_lte?: Maybe<Float>;
+  monthlyLimit_gt?: Maybe<Float>;
+  monthlyLimit_gte?: Maybe<Float>;
+  totalLimit?: Maybe<Float>;
+  totalLimit_not?: Maybe<Float>;
+  totalLimit_in?: Maybe<Float[] | Float>;
+  totalLimit_not_in?: Maybe<Float[] | Float>;
+  totalLimit_lt?: Maybe<Float>;
+  totalLimit_lte?: Maybe<Float>;
+  totalLimit_gt?: Maybe<Float>;
+  totalLimit_gte?: Maybe<Float>;
+  AND?: Maybe<RollingCostCategoryWhereInput[] | RollingCostCategoryWhereInput>;
+  OR?: Maybe<RollingCostCategoryWhereInput[] | RollingCostCategoryWhereInput>;
+  NOT?: Maybe<RollingCostCategoryWhereInput[] | RollingCostCategoryWhereInput>;
 }
 
 export interface CostCreateInput {
   id?: Maybe<ID_Input>;
   amount: Float;
+  description: String;
   category: FlexCostCategoryCreateOneInput;
 }
 
@@ -460,6 +718,7 @@ export interface FlexCostCategoryCreateInput {
 
 export interface CostUpdateInput {
   amount?: Maybe<Float>;
+  description?: Maybe<String>;
   category?: Maybe<FlexCostCategoryUpdateOneRequiredInput>;
 }
 
@@ -482,6 +741,35 @@ export interface FlexCostCategoryUpsertNestedInput {
 
 export interface CostUpdateManyMutationInput {
   amount?: Maybe<Float>;
+  description?: Maybe<String>;
+}
+
+export interface FinancialMonthCreateInput {
+  id?: Maybe<ID_Input>;
+  month: Int;
+  year: Int;
+  income: Float;
+  totalCost: Float;
+  remainder: Float;
+  closed?: Maybe<Boolean>;
+}
+
+export interface FinancialMonthUpdateInput {
+  month?: Maybe<Int>;
+  year?: Maybe<Int>;
+  income?: Maybe<Float>;
+  totalCost?: Maybe<Float>;
+  remainder?: Maybe<Float>;
+  closed?: Maybe<Boolean>;
+}
+
+export interface FinancialMonthUpdateManyMutationInput {
+  month?: Maybe<Int>;
+  year?: Maybe<Int>;
+  income?: Maybe<Float>;
+  totalCost?: Maybe<Float>;
+  remainder?: Maybe<Float>;
+  closed?: Maybe<Boolean>;
 }
 
 export interface FixedCostCategoryCreateInput {
@@ -510,20 +798,36 @@ export interface FlexCostCategoryUpdateManyMutationInput {
   limit?: Maybe<Float>;
 }
 
-export interface IncomeCreateInput {
+export interface MonthlyIncomeCreateInput {
   id?: Maybe<ID_Input>;
-  frequency: TimeFrame;
   amount: Float;
 }
 
-export interface IncomeUpdateInput {
-  frequency?: Maybe<TimeFrame>;
+export interface MonthlyIncomeUpdateInput {
   amount?: Maybe<Float>;
 }
 
-export interface IncomeUpdateManyMutationInput {
-  frequency?: Maybe<TimeFrame>;
+export interface MonthlyIncomeUpdateManyMutationInput {
   amount?: Maybe<Float>;
+}
+
+export interface RollingCostCategoryCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  monthlyLimit: Float;
+  totalLimit: Float;
+}
+
+export interface RollingCostCategoryUpdateInput {
+  name?: Maybe<String>;
+  monthlyLimit?: Maybe<Float>;
+  totalLimit?: Maybe<Float>;
+}
+
+export interface RollingCostCategoryUpdateManyMutationInput {
+  name?: Maybe<String>;
+  monthlyLimit?: Maybe<Float>;
+  totalLimit?: Maybe<Float>;
 }
 
 export interface CostSubscriptionWhereInput {
@@ -535,6 +839,26 @@ export interface CostSubscriptionWhereInput {
   AND?: Maybe<CostSubscriptionWhereInput[] | CostSubscriptionWhereInput>;
   OR?: Maybe<CostSubscriptionWhereInput[] | CostSubscriptionWhereInput>;
   NOT?: Maybe<CostSubscriptionWhereInput[] | CostSubscriptionWhereInput>;
+}
+
+export interface FinancialMonthSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<FinancialMonthWhereInput>;
+  AND?: Maybe<
+    | FinancialMonthSubscriptionWhereInput[]
+    | FinancialMonthSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | FinancialMonthSubscriptionWhereInput[]
+    | FinancialMonthSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | FinancialMonthSubscriptionWhereInput[]
+    | FinancialMonthSubscriptionWhereInput
+  >;
 }
 
 export interface FixedCostCategorySubscriptionWhereInput {
@@ -577,15 +901,41 @@ export interface FlexCostCategorySubscriptionWhereInput {
   >;
 }
 
-export interface IncomeSubscriptionWhereInput {
+export interface MonthlyIncomeSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IncomeWhereInput>;
-  AND?: Maybe<IncomeSubscriptionWhereInput[] | IncomeSubscriptionWhereInput>;
-  OR?: Maybe<IncomeSubscriptionWhereInput[] | IncomeSubscriptionWhereInput>;
-  NOT?: Maybe<IncomeSubscriptionWhereInput[] | IncomeSubscriptionWhereInput>;
+  node?: Maybe<MonthlyIncomeWhereInput>;
+  AND?: Maybe<
+    MonthlyIncomeSubscriptionWhereInput[] | MonthlyIncomeSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    MonthlyIncomeSubscriptionWhereInput[] | MonthlyIncomeSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    MonthlyIncomeSubscriptionWhereInput[] | MonthlyIncomeSubscriptionWhereInput
+  >;
+}
+
+export interface RollingCostCategorySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<RollingCostCategoryWhereInput>;
+  AND?: Maybe<
+    | RollingCostCategorySubscriptionWhereInput[]
+    | RollingCostCategorySubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | RollingCostCategorySubscriptionWhereInput[]
+    | RollingCostCategorySubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | RollingCostCategorySubscriptionWhereInput[]
+    | RollingCostCategorySubscriptionWhereInput
+  >;
 }
 
 export interface NodeNode {
@@ -595,12 +945,14 @@ export interface NodeNode {
 export interface Cost {
   id: ID_Output;
   amount: Float;
+  description: String;
   createdAt: DateTimeOutput;
 }
 
 export interface CostPromise extends Promise<Cost>, Fragmentable {
   id: () => Promise<ID_Output>;
   amount: () => Promise<Float>;
+  description: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   category: <T = FlexCostCategoryPromise>() => T;
 }
@@ -610,6 +962,7 @@ export interface CostSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   amount: () => Promise<AsyncIterator<Float>>;
+  description: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   category: <T = FlexCostCategorySubscription>() => T;
 }
@@ -619,6 +972,7 @@ export interface CostNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   amount: () => Promise<Float>;
+  description: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   category: <T = FlexCostCategoryPromise>() => T;
 }
@@ -726,6 +1080,108 @@ export interface AggregateCostPromise
 
 export interface AggregateCostSubscription
   extends Promise<AsyncIterator<AggregateCost>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface FinancialMonth {
+  id: ID_Output;
+  month: Int;
+  year: Int;
+  income: Float;
+  totalCost: Float;
+  remainder: Float;
+  closed: Boolean;
+}
+
+export interface FinancialMonthPromise
+  extends Promise<FinancialMonth>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  month: () => Promise<Int>;
+  year: () => Promise<Int>;
+  income: () => Promise<Float>;
+  totalCost: () => Promise<Float>;
+  remainder: () => Promise<Float>;
+  closed: () => Promise<Boolean>;
+}
+
+export interface FinancialMonthSubscription
+  extends Promise<AsyncIterator<FinancialMonth>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  income: () => Promise<AsyncIterator<Float>>;
+  totalCost: () => Promise<AsyncIterator<Float>>;
+  remainder: () => Promise<AsyncIterator<Float>>;
+  closed: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface FinancialMonthNullablePromise
+  extends Promise<FinancialMonth | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  month: () => Promise<Int>;
+  year: () => Promise<Int>;
+  income: () => Promise<Float>;
+  totalCost: () => Promise<Float>;
+  remainder: () => Promise<Float>;
+  closed: () => Promise<Boolean>;
+}
+
+export interface FinancialMonthConnection {
+  pageInfo: PageInfo;
+  edges: FinancialMonthEdge[];
+}
+
+export interface FinancialMonthConnectionPromise
+  extends Promise<FinancialMonthConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<FinancialMonthEdge>>() => T;
+  aggregate: <T = AggregateFinancialMonthPromise>() => T;
+}
+
+export interface FinancialMonthConnectionSubscription
+  extends Promise<AsyncIterator<FinancialMonthConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<FinancialMonthEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateFinancialMonthSubscription>() => T;
+}
+
+export interface FinancialMonthEdge {
+  node: FinancialMonth;
+  cursor: String;
+}
+
+export interface FinancialMonthEdgePromise
+  extends Promise<FinancialMonthEdge>,
+    Fragmentable {
+  node: <T = FinancialMonthPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FinancialMonthEdgeSubscription
+  extends Promise<AsyncIterator<FinancialMonthEdge>>,
+    Fragmentable {
+  node: <T = FinancialMonthSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateFinancialMonth {
+  count: Int;
+}
+
+export interface AggregateFinancialMonthPromise
+  extends Promise<AggregateFinancialMonth>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateFinancialMonthSubscription
+  extends Promise<AsyncIterator<AggregateFinancialMonth>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -872,84 +1328,176 @@ export interface AggregateFlexCostCategorySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Income {
+export interface MonthlyIncome {
   id: ID_Output;
-  frequency: TimeFrame;
   amount: Float;
 }
 
-export interface IncomePromise extends Promise<Income>, Fragmentable {
+export interface MonthlyIncomePromise
+  extends Promise<MonthlyIncome>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
-export interface IncomeSubscription
-  extends Promise<AsyncIterator<Income>>,
+export interface MonthlyIncomeSubscription
+  extends Promise<AsyncIterator<MonthlyIncome>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  frequency: () => Promise<AsyncIterator<TimeFrame>>;
   amount: () => Promise<AsyncIterator<Float>>;
 }
 
-export interface IncomeNullablePromise
-  extends Promise<Income | null>,
+export interface MonthlyIncomeNullablePromise
+  extends Promise<MonthlyIncome | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
-export interface IncomeConnection {
+export interface MonthlyIncomeConnection {
   pageInfo: PageInfo;
-  edges: IncomeEdge[];
+  edges: MonthlyIncomeEdge[];
 }
 
-export interface IncomeConnectionPromise
-  extends Promise<IncomeConnection>,
+export interface MonthlyIncomeConnectionPromise
+  extends Promise<MonthlyIncomeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IncomeEdge>>() => T;
-  aggregate: <T = AggregateIncomePromise>() => T;
+  edges: <T = FragmentableArray<MonthlyIncomeEdge>>() => T;
+  aggregate: <T = AggregateMonthlyIncomePromise>() => T;
 }
 
-export interface IncomeConnectionSubscription
-  extends Promise<AsyncIterator<IncomeConnection>>,
+export interface MonthlyIncomeConnectionSubscription
+  extends Promise<AsyncIterator<MonthlyIncomeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IncomeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIncomeSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MonthlyIncomeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMonthlyIncomeSubscription>() => T;
 }
 
-export interface IncomeEdge {
-  node: Income;
+export interface MonthlyIncomeEdge {
+  node: MonthlyIncome;
   cursor: String;
 }
 
-export interface IncomeEdgePromise extends Promise<IncomeEdge>, Fragmentable {
-  node: <T = IncomePromise>() => T;
+export interface MonthlyIncomeEdgePromise
+  extends Promise<MonthlyIncomeEdge>,
+    Fragmentable {
+  node: <T = MonthlyIncomePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface IncomeEdgeSubscription
-  extends Promise<AsyncIterator<IncomeEdge>>,
+export interface MonthlyIncomeEdgeSubscription
+  extends Promise<AsyncIterator<MonthlyIncomeEdge>>,
     Fragmentable {
-  node: <T = IncomeSubscription>() => T;
+  node: <T = MonthlyIncomeSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateIncome {
+export interface AggregateMonthlyIncome {
   count: Int;
 }
 
-export interface AggregateIncomePromise
-  extends Promise<AggregateIncome>,
+export interface AggregateMonthlyIncomePromise
+  extends Promise<AggregateMonthlyIncome>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateIncomeSubscription
-  extends Promise<AsyncIterator<AggregateIncome>>,
+export interface AggregateMonthlyIncomeSubscription
+  extends Promise<AsyncIterator<AggregateMonthlyIncome>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface RollingCostCategory {
+  id: ID_Output;
+  name: String;
+  monthlyLimit: Float;
+  totalLimit: Float;
+}
+
+export interface RollingCostCategoryPromise
+  extends Promise<RollingCostCategory>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  monthlyLimit: () => Promise<Float>;
+  totalLimit: () => Promise<Float>;
+}
+
+export interface RollingCostCategorySubscription
+  extends Promise<AsyncIterator<RollingCostCategory>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  monthlyLimit: () => Promise<AsyncIterator<Float>>;
+  totalLimit: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface RollingCostCategoryNullablePromise
+  extends Promise<RollingCostCategory | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  monthlyLimit: () => Promise<Float>;
+  totalLimit: () => Promise<Float>;
+}
+
+export interface RollingCostCategoryConnection {
+  pageInfo: PageInfo;
+  edges: RollingCostCategoryEdge[];
+}
+
+export interface RollingCostCategoryConnectionPromise
+  extends Promise<RollingCostCategoryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<RollingCostCategoryEdge>>() => T;
+  aggregate: <T = AggregateRollingCostCategoryPromise>() => T;
+}
+
+export interface RollingCostCategoryConnectionSubscription
+  extends Promise<AsyncIterator<RollingCostCategoryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <
+    T = Promise<AsyncIterator<RollingCostCategoryEdgeSubscription>>
+  >() => T;
+  aggregate: <T = AggregateRollingCostCategorySubscription>() => T;
+}
+
+export interface RollingCostCategoryEdge {
+  node: RollingCostCategory;
+  cursor: String;
+}
+
+export interface RollingCostCategoryEdgePromise
+  extends Promise<RollingCostCategoryEdge>,
+    Fragmentable {
+  node: <T = RollingCostCategoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface RollingCostCategoryEdgeSubscription
+  extends Promise<AsyncIterator<RollingCostCategoryEdge>>,
+    Fragmentable {
+  node: <T = RollingCostCategorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateRollingCostCategory {
+  count: Int;
+}
+
+export interface AggregateRollingCostCategoryPromise
+  extends Promise<AggregateRollingCostCategory>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateRollingCostCategorySubscription
+  extends Promise<AsyncIterator<AggregateRollingCostCategory>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -998,6 +1546,7 @@ export interface CostSubscriptionPayloadSubscription
 export interface CostPreviousValues {
   id: ID_Output;
   amount: Float;
+  description: String;
   createdAt: DateTimeOutput;
 }
 
@@ -1006,6 +1555,7 @@ export interface CostPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   amount: () => Promise<Float>;
+  description: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
 }
 
@@ -1014,7 +1564,67 @@ export interface CostPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   amount: () => Promise<AsyncIterator<Float>>;
+  description: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface FinancialMonthSubscriptionPayload {
+  mutation: MutationType;
+  node: FinancialMonth;
+  updatedFields: String[];
+  previousValues: FinancialMonthPreviousValues;
+}
+
+export interface FinancialMonthSubscriptionPayloadPromise
+  extends Promise<FinancialMonthSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = FinancialMonthPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = FinancialMonthPreviousValuesPromise>() => T;
+}
+
+export interface FinancialMonthSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<FinancialMonthSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = FinancialMonthSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = FinancialMonthPreviousValuesSubscription>() => T;
+}
+
+export interface FinancialMonthPreviousValues {
+  id: ID_Output;
+  month: Int;
+  year: Int;
+  income: Float;
+  totalCost: Float;
+  remainder: Float;
+  closed: Boolean;
+}
+
+export interface FinancialMonthPreviousValuesPromise
+  extends Promise<FinancialMonthPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  month: () => Promise<Int>;
+  year: () => Promise<Int>;
+  income: () => Promise<Float>;
+  totalCost: () => Promise<Float>;
+  remainder: () => Promise<Float>;
+  closed: () => Promise<Boolean>;
+}
+
+export interface FinancialMonthPreviousValuesSubscription
+  extends Promise<AsyncIterator<FinancialMonthPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  income: () => Promise<AsyncIterator<Float>>;
+  totalCost: () => Promise<AsyncIterator<Float>>;
+  remainder: () => Promise<AsyncIterator<Float>>;
+  closed: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface FixedCostCategorySubscriptionPayload {
@@ -1111,51 +1721,98 @@ export interface FlexCostCategoryPreviousValuesSubscription
   limit: () => Promise<AsyncIterator<Float>>;
 }
 
-export interface IncomeSubscriptionPayload {
+export interface MonthlyIncomeSubscriptionPayload {
   mutation: MutationType;
-  node: Income;
+  node: MonthlyIncome;
   updatedFields: String[];
-  previousValues: IncomePreviousValues;
+  previousValues: MonthlyIncomePreviousValues;
 }
 
-export interface IncomeSubscriptionPayloadPromise
-  extends Promise<IncomeSubscriptionPayload>,
+export interface MonthlyIncomeSubscriptionPayloadPromise
+  extends Promise<MonthlyIncomeSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = IncomePromise>() => T;
+  node: <T = MonthlyIncomePromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = IncomePreviousValuesPromise>() => T;
+  previousValues: <T = MonthlyIncomePreviousValuesPromise>() => T;
 }
 
-export interface IncomeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IncomeSubscriptionPayload>>,
+export interface MonthlyIncomeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MonthlyIncomeSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IncomeSubscription>() => T;
+  node: <T = MonthlyIncomeSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IncomePreviousValuesSubscription>() => T;
+  previousValues: <T = MonthlyIncomePreviousValuesSubscription>() => T;
 }
 
-export interface IncomePreviousValues {
+export interface MonthlyIncomePreviousValues {
   id: ID_Output;
-  frequency: TimeFrame;
   amount: Float;
 }
 
-export interface IncomePreviousValuesPromise
-  extends Promise<IncomePreviousValues>,
+export interface MonthlyIncomePreviousValuesPromise
+  extends Promise<MonthlyIncomePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  frequency: () => Promise<TimeFrame>;
   amount: () => Promise<Float>;
 }
 
-export interface IncomePreviousValuesSubscription
-  extends Promise<AsyncIterator<IncomePreviousValues>>,
+export interface MonthlyIncomePreviousValuesSubscription
+  extends Promise<AsyncIterator<MonthlyIncomePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  frequency: () => Promise<AsyncIterator<TimeFrame>>;
   amount: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface RollingCostCategorySubscriptionPayload {
+  mutation: MutationType;
+  node: RollingCostCategory;
+  updatedFields: String[];
+  previousValues: RollingCostCategoryPreviousValues;
+}
+
+export interface RollingCostCategorySubscriptionPayloadPromise
+  extends Promise<RollingCostCategorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = RollingCostCategoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = RollingCostCategoryPreviousValuesPromise>() => T;
+}
+
+export interface RollingCostCategorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RollingCostCategorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = RollingCostCategorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = RollingCostCategoryPreviousValuesSubscription>() => T;
+}
+
+export interface RollingCostCategoryPreviousValues {
+  id: ID_Output;
+  name: String;
+  monthlyLimit: Float;
+  totalLimit: Float;
+}
+
+export interface RollingCostCategoryPreviousValuesPromise
+  extends Promise<RollingCostCategoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  monthlyLimit: () => Promise<Float>;
+  totalLimit: () => Promise<Float>;
+}
+
+export interface RollingCostCategoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<RollingCostCategoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  monthlyLimit: () => Promise<AsyncIterator<Float>>;
+  totalLimit: () => Promise<AsyncIterator<Float>>;
 }
 
 /*
@@ -1170,6 +1827,11 @@ The `Float` scalar type represents signed double-precision fractional values as 
 export type Float = number;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1178,11 +1840,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1202,10 +1859,6 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "TimeFrame",
-    embedded: false
-  },
-  {
     name: "FixedCostCategory",
     embedded: false
   },
@@ -1214,11 +1867,19 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Income",
+    name: "RollingCostCategory",
+    embedded: false
+  },
+  {
+    name: "MonthlyIncome",
     embedded: false
   },
   {
     name: "Cost",
+    embedded: false
+  },
+  {
+    name: "FinancialMonth",
     embedded: false
   }
 ];

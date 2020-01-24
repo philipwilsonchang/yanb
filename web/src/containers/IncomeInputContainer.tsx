@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import IncomeInput, { IncomeInterval } from '../components/IncomeInput';
-import { Prisma, Income, TimeFrame } from '../prisma-client';
+import IncomeInput from '../components/IncomeInput';
+import { Prisma, MonthlyIncome } from '../prisma-client';
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 
@@ -20,7 +20,7 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 	// Query income on mount
 	useEffect(() => {
 		const fetchIncomeAndInterval = async () => {
-			const currentIncomes = await prisma.incomes();
+			const currentIncomes = await prisma.monthlyIncomes();
 			if (currentIncomes.length >= 1) {
 				dispatch({
 					type: ActionType.ChangeIncome,
@@ -29,7 +29,7 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 			} else {
 				dispatch({
 					type: ActionType.ChangeIncome,
-					payload: { id: 'placeholder', amount: 0, frequency: IncomeInterval.Monthly } as Income
+					payload: { id: 'placeholder', amount: 0 } as MonthlyIncome
 				});
 			} 
 		};
@@ -44,25 +44,16 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 		});
 	};
 
-	const changeFrequency = (interval: TimeFrame) => {
-		dispatch({
-			type: ActionType.ChangeIncome,
-			payload: {...income, frequency: interval}
-		});
-	};
-
 	const submitIncome = async () => {
-		await prisma.upsertIncome({ 
+		await prisma.upsertMonthlyIncome({ 
 			where: {
 				id: income.id 
 			},
 			update: {
 				amount: income.amount,
-				frequency: income.frequency
 			},
 			create: {
 				amount: income.amount,
-				frequency: income.frequency
 			}
 		});
 	};
@@ -71,7 +62,6 @@ const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 		<IncomeInput
 			income={income}
 			changeAmount={changeAmount}
-			changeFrequency={changeFrequency}
 			submitIncome={submitIncome}
 		/>
 	);

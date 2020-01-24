@@ -21,6 +21,7 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 	const { state, dispatch } = useGlobalState();
 	const { categoryList } = state;	
 	const [amount, setAmount] = useState(0);
+	const [description, setDescription] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
 	const prisma = new Prisma({
@@ -30,6 +31,7 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 	const submitSpending = async () => {
 		await prisma.createCost({ 
 			amount: amount, 
+			description: description,
 			category: {
 				connect: { 
 					name: selectedCategory.name }
@@ -52,9 +54,11 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 			categories={categoryList}
 			selectedCategory={selectedCategory}
 			amount={amount}
+			description={description}
 			categorySpent={selectedCategory.spent || 0}
 			changeCategory={setSelectedCategory}
 			changeAmount={setAmount}
+			changeDescription={setDescription}
 			submitFunc={submitSpending}
 		/>
 	);

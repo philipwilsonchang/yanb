@@ -18,10 +18,12 @@ interface ISpendingAdderProps {
 	changeCategory(category: FlexCostCategory): void,
 	amount: number,
 	changeAmount(newAmount: number): void,
+	description: string,
+	changeDescription(newDesc: string): void,
 	submitFunc(): void,
 }
 
-const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCategory, categorySpent, changeCategory, amount, changeAmount, submitFunc }) => {
+const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCategory, categorySpent, changeCategory, amount, changeAmount, description, changeDescription, submitFunc }) => {
 	return (
 		<Card>
 			<Card.Header>Add Spending Record</Card.Header>
@@ -38,8 +40,14 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 					    </Dropdown.Menu>
 					</Dropdown>
 					<Col>
-						<Form.Control value={amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))}/>
+						<Form.Control value={amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
 					</Col>
+				</Row>
+				<Row>
+					<Form.Control value={description} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeDescription(e.currentTarget.value as string)} />
+				</Row>
+				<Row>
+
 				</Row>
 				<br />
 				{(selectedCategory.id !== "abc") && (

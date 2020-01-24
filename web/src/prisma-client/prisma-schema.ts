@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateCost {
   count: Int!
 }
 
+type AggregateFinancialMonth {
+  count: Int!
+}
+
 type AggregateFixedCostCategory {
   count: Int!
 }
@@ -14,7 +18,11 @@ type AggregateFlexCostCategory {
   count: Int!
 }
 
-type AggregateIncome {
+type AggregateMonthlyIncome {
+  count: Int!
+}
+
+type AggregateRollingCostCategory {
   count: Int!
 }
 
@@ -25,6 +33,7 @@ type BatchPayload {
 type Cost {
   id: ID!
   amount: Float!
+  description: String!
   createdAt: DateTime!
   category: FlexCostCategory!
 }
@@ -38,6 +47,7 @@ type CostConnection {
 input CostCreateInput {
   id: ID
   amount: Float!
+  description: String!
   category: FlexCostCategoryCreateOneInput!
 }
 
@@ -51,6 +61,8 @@ enum CostOrderByInput {
   id_DESC
   amount_ASC
   amount_DESC
+  description_ASC
+  description_DESC
   createdAt_ASC
   createdAt_DESC
 }
@@ -58,6 +70,7 @@ enum CostOrderByInput {
 type CostPreviousValues {
   id: ID!
   amount: Float!
+  description: String!
   createdAt: DateTime!
 }
 
@@ -81,11 +94,13 @@ input CostSubscriptionWhereInput {
 
 input CostUpdateInput {
   amount: Float
+  description: String
   category: FlexCostCategoryUpdateOneRequiredInput
 }
 
 input CostUpdateManyMutationInput {
   amount: Float
+  description: String
 }
 
 input CostWhereInput {
@@ -111,6 +126,20 @@ input CostWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -130,6 +159,166 @@ input CostWhereUniqueInput {
 }
 
 scalar DateTime
+
+type FinancialMonth {
+  id: ID!
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean!
+}
+
+type FinancialMonthConnection {
+  pageInfo: PageInfo!
+  edges: [FinancialMonthEdge]!
+  aggregate: AggregateFinancialMonth!
+}
+
+input FinancialMonthCreateInput {
+  id: ID
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean
+}
+
+type FinancialMonthEdge {
+  node: FinancialMonth!
+  cursor: String!
+}
+
+enum FinancialMonthOrderByInput {
+  id_ASC
+  id_DESC
+  month_ASC
+  month_DESC
+  year_ASC
+  year_DESC
+  income_ASC
+  income_DESC
+  totalCost_ASC
+  totalCost_DESC
+  remainder_ASC
+  remainder_DESC
+  closed_ASC
+  closed_DESC
+}
+
+type FinancialMonthPreviousValues {
+  id: ID!
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean!
+}
+
+type FinancialMonthSubscriptionPayload {
+  mutation: MutationType!
+  node: FinancialMonth
+  updatedFields: [String!]
+  previousValues: FinancialMonthPreviousValues
+}
+
+input FinancialMonthSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FinancialMonthWhereInput
+  AND: [FinancialMonthSubscriptionWhereInput!]
+  OR: [FinancialMonthSubscriptionWhereInput!]
+  NOT: [FinancialMonthSubscriptionWhereInput!]
+}
+
+input FinancialMonthUpdateInput {
+  month: Int
+  year: Int
+  income: Float
+  totalCost: Float
+  remainder: Float
+  closed: Boolean
+}
+
+input FinancialMonthUpdateManyMutationInput {
+  month: Int
+  year: Int
+  income: Float
+  totalCost: Float
+  remainder: Float
+  closed: Boolean
+}
+
+input FinancialMonthWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  income: Float
+  income_not: Float
+  income_in: [Float!]
+  income_not_in: [Float!]
+  income_lt: Float
+  income_lte: Float
+  income_gt: Float
+  income_gte: Float
+  totalCost: Float
+  totalCost_not: Float
+  totalCost_in: [Float!]
+  totalCost_not_in: [Float!]
+  totalCost_lt: Float
+  totalCost_lte: Float
+  totalCost_gt: Float
+  totalCost_gte: Float
+  remainder: Float
+  remainder_not: Float
+  remainder_in: [Float!]
+  remainder_not_in: [Float!]
+  remainder_lt: Float
+  remainder_lte: Float
+  remainder_gt: Float
+  remainder_gte: Float
+  closed: Boolean
+  closed_not: Boolean
+  AND: [FinancialMonthWhereInput!]
+  OR: [FinancialMonthWhereInput!]
+  NOT: [FinancialMonthWhereInput!]
+}
+
+input FinancialMonthWhereUniqueInput {
+  id: ID
+}
 
 type FixedCostCategory {
   id: ID!
@@ -379,73 +568,68 @@ input FlexCostCategoryWhereUniqueInput {
   name: String
 }
 
-type Income {
+scalar Long
+
+type MonthlyIncome {
   id: ID!
-  frequency: TimeFrame!
   amount: Float!
 }
 
-type IncomeConnection {
+type MonthlyIncomeConnection {
   pageInfo: PageInfo!
-  edges: [IncomeEdge]!
-  aggregate: AggregateIncome!
+  edges: [MonthlyIncomeEdge]!
+  aggregate: AggregateMonthlyIncome!
 }
 
-input IncomeCreateInput {
+input MonthlyIncomeCreateInput {
   id: ID
-  frequency: TimeFrame!
   amount: Float!
 }
 
-type IncomeEdge {
-  node: Income!
+type MonthlyIncomeEdge {
+  node: MonthlyIncome!
   cursor: String!
 }
 
-enum IncomeOrderByInput {
+enum MonthlyIncomeOrderByInput {
   id_ASC
   id_DESC
-  frequency_ASC
-  frequency_DESC
   amount_ASC
   amount_DESC
 }
 
-type IncomePreviousValues {
+type MonthlyIncomePreviousValues {
   id: ID!
-  frequency: TimeFrame!
   amount: Float!
 }
 
-type IncomeSubscriptionPayload {
+type MonthlyIncomeSubscriptionPayload {
   mutation: MutationType!
-  node: Income
+  node: MonthlyIncome
   updatedFields: [String!]
-  previousValues: IncomePreviousValues
+  previousValues: MonthlyIncomePreviousValues
 }
 
-input IncomeSubscriptionWhereInput {
+input MonthlyIncomeSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: IncomeWhereInput
-  AND: [IncomeSubscriptionWhereInput!]
-  OR: [IncomeSubscriptionWhereInput!]
-  NOT: [IncomeSubscriptionWhereInput!]
+  node: MonthlyIncomeWhereInput
+  AND: [MonthlyIncomeSubscriptionWhereInput!]
+  OR: [MonthlyIncomeSubscriptionWhereInput!]
+  NOT: [MonthlyIncomeSubscriptionWhereInput!]
 }
 
-input IncomeUpdateInput {
-  frequency: TimeFrame
+input MonthlyIncomeUpdateInput {
   amount: Float
 }
 
-input IncomeUpdateManyMutationInput {
-  frequency: TimeFrame
+input MonthlyIncomeUpdateManyMutationInput {
   amount: Float
 }
 
-input IncomeWhereInput {
+input MonthlyIncomeWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -460,10 +644,6 @@ input IncomeWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  frequency: TimeFrame
-  frequency_not: TimeFrame
-  frequency_in: [TimeFrame!]
-  frequency_not_in: [TimeFrame!]
   amount: Float
   amount_not: Float
   amount_in: [Float!]
@@ -472,16 +652,14 @@ input IncomeWhereInput {
   amount_lte: Float
   amount_gt: Float
   amount_gte: Float
-  AND: [IncomeWhereInput!]
-  OR: [IncomeWhereInput!]
-  NOT: [IncomeWhereInput!]
+  AND: [MonthlyIncomeWhereInput!]
+  OR: [MonthlyIncomeWhereInput!]
+  NOT: [MonthlyIncomeWhereInput!]
 }
 
-input IncomeWhereUniqueInput {
+input MonthlyIncomeWhereUniqueInput {
   id: ID
 }
-
-scalar Long
 
 type Mutation {
   createCost(data: CostCreateInput!): Cost!
@@ -490,6 +668,12 @@ type Mutation {
   upsertCost(where: CostWhereUniqueInput!, create: CostCreateInput!, update: CostUpdateInput!): Cost!
   deleteCost(where: CostWhereUniqueInput!): Cost
   deleteManyCosts(where: CostWhereInput): BatchPayload!
+  createFinancialMonth(data: FinancialMonthCreateInput!): FinancialMonth!
+  updateFinancialMonth(data: FinancialMonthUpdateInput!, where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  updateManyFinancialMonths(data: FinancialMonthUpdateManyMutationInput!, where: FinancialMonthWhereInput): BatchPayload!
+  upsertFinancialMonth(where: FinancialMonthWhereUniqueInput!, create: FinancialMonthCreateInput!, update: FinancialMonthUpdateInput!): FinancialMonth!
+  deleteFinancialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  deleteManyFinancialMonths(where: FinancialMonthWhereInput): BatchPayload!
   createFixedCostCategory(data: FixedCostCategoryCreateInput!): FixedCostCategory!
   updateFixedCostCategory(data: FixedCostCategoryUpdateInput!, where: FixedCostCategoryWhereUniqueInput!): FixedCostCategory
   updateManyFixedCostCategories(data: FixedCostCategoryUpdateManyMutationInput!, where: FixedCostCategoryWhereInput): BatchPayload!
@@ -502,12 +686,18 @@ type Mutation {
   upsertFlexCostCategory(where: FlexCostCategoryWhereUniqueInput!, create: FlexCostCategoryCreateInput!, update: FlexCostCategoryUpdateInput!): FlexCostCategory!
   deleteFlexCostCategory(where: FlexCostCategoryWhereUniqueInput!): FlexCostCategory
   deleteManyFlexCostCategories(where: FlexCostCategoryWhereInput): BatchPayload!
-  createIncome(data: IncomeCreateInput!): Income!
-  updateIncome(data: IncomeUpdateInput!, where: IncomeWhereUniqueInput!): Income
-  updateManyIncomes(data: IncomeUpdateManyMutationInput!, where: IncomeWhereInput): BatchPayload!
-  upsertIncome(where: IncomeWhereUniqueInput!, create: IncomeCreateInput!, update: IncomeUpdateInput!): Income!
-  deleteIncome(where: IncomeWhereUniqueInput!): Income
-  deleteManyIncomes(where: IncomeWhereInput): BatchPayload!
+  createMonthlyIncome(data: MonthlyIncomeCreateInput!): MonthlyIncome!
+  updateMonthlyIncome(data: MonthlyIncomeUpdateInput!, where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  updateManyMonthlyIncomes(data: MonthlyIncomeUpdateManyMutationInput!, where: MonthlyIncomeWhereInput): BatchPayload!
+  upsertMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!, create: MonthlyIncomeCreateInput!, update: MonthlyIncomeUpdateInput!): MonthlyIncome!
+  deleteMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  deleteManyMonthlyIncomes(where: MonthlyIncomeWhereInput): BatchPayload!
+  createRollingCostCategory(data: RollingCostCategoryCreateInput!): RollingCostCategory!
+  updateRollingCostCategory(data: RollingCostCategoryUpdateInput!, where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  updateManyRollingCostCategories(data: RollingCostCategoryUpdateManyMutationInput!, where: RollingCostCategoryWhereInput): BatchPayload!
+  upsertRollingCostCategory(where: RollingCostCategoryWhereUniqueInput!, create: RollingCostCategoryCreateInput!, update: RollingCostCategoryUpdateInput!): RollingCostCategory!
+  deleteRollingCostCategory(where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  deleteManyRollingCostCategories(where: RollingCostCategoryWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -531,29 +721,158 @@ type Query {
   cost(where: CostWhereUniqueInput!): Cost
   costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost]!
   costsConnection(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CostConnection!
+  financialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  financialMonths(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FinancialMonth]!
+  financialMonthsConnection(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FinancialMonthConnection!
   fixedCostCategory(where: FixedCostCategoryWhereUniqueInput!): FixedCostCategory
   fixedCostCategories(where: FixedCostCategoryWhereInput, orderBy: FixedCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FixedCostCategory]!
   fixedCostCategoriesConnection(where: FixedCostCategoryWhereInput, orderBy: FixedCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FixedCostCategoryConnection!
   flexCostCategory(where: FlexCostCategoryWhereUniqueInput!): FlexCostCategory
   flexCostCategories(where: FlexCostCategoryWhereInput, orderBy: FlexCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FlexCostCategory]!
   flexCostCategoriesConnection(where: FlexCostCategoryWhereInput, orderBy: FlexCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlexCostCategoryConnection!
-  income(where: IncomeWhereUniqueInput!): Income
-  incomes(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Income]!
-  incomesConnection(where: IncomeWhereInput, orderBy: IncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IncomeConnection!
+  monthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  monthlyIncomes(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MonthlyIncome]!
+  monthlyIncomesConnection(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MonthlyIncomeConnection!
+  rollingCostCategory(where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  rollingCostCategories(where: RollingCostCategoryWhereInput, orderBy: RollingCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RollingCostCategory]!
+  rollingCostCategoriesConnection(where: RollingCostCategoryWhereInput, orderBy: RollingCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RollingCostCategoryConnection!
   node(id: ID!): Node
+}
+
+type RollingCostCategory {
+  id: ID!
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+type RollingCostCategoryConnection {
+  pageInfo: PageInfo!
+  edges: [RollingCostCategoryEdge]!
+  aggregate: AggregateRollingCostCategory!
+}
+
+input RollingCostCategoryCreateInput {
+  id: ID
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+type RollingCostCategoryEdge {
+  node: RollingCostCategory!
+  cursor: String!
+}
+
+enum RollingCostCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  monthlyLimit_ASC
+  monthlyLimit_DESC
+  totalLimit_ASC
+  totalLimit_DESC
+}
+
+type RollingCostCategoryPreviousValues {
+  id: ID!
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+type RollingCostCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: RollingCostCategory
+  updatedFields: [String!]
+  previousValues: RollingCostCategoryPreviousValues
+}
+
+input RollingCostCategorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RollingCostCategoryWhereInput
+  AND: [RollingCostCategorySubscriptionWhereInput!]
+  OR: [RollingCostCategorySubscriptionWhereInput!]
+  NOT: [RollingCostCategorySubscriptionWhereInput!]
+}
+
+input RollingCostCategoryUpdateInput {
+  name: String
+  monthlyLimit: Float
+  totalLimit: Float
+}
+
+input RollingCostCategoryUpdateManyMutationInput {
+  name: String
+  monthlyLimit: Float
+  totalLimit: Float
+}
+
+input RollingCostCategoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  monthlyLimit: Float
+  monthlyLimit_not: Float
+  monthlyLimit_in: [Float!]
+  monthlyLimit_not_in: [Float!]
+  monthlyLimit_lt: Float
+  monthlyLimit_lte: Float
+  monthlyLimit_gt: Float
+  monthlyLimit_gte: Float
+  totalLimit: Float
+  totalLimit_not: Float
+  totalLimit_in: [Float!]
+  totalLimit_not_in: [Float!]
+  totalLimit_lt: Float
+  totalLimit_lte: Float
+  totalLimit_gt: Float
+  totalLimit_gte: Float
+  AND: [RollingCostCategoryWhereInput!]
+  OR: [RollingCostCategoryWhereInput!]
+  NOT: [RollingCostCategoryWhereInput!]
+}
+
+input RollingCostCategoryWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 type Subscription {
   cost(where: CostSubscriptionWhereInput): CostSubscriptionPayload
+  financialMonth(where: FinancialMonthSubscriptionWhereInput): FinancialMonthSubscriptionPayload
   fixedCostCategory(where: FixedCostCategorySubscriptionWhereInput): FixedCostCategorySubscriptionPayload
   flexCostCategory(where: FlexCostCategorySubscriptionWhereInput): FlexCostCategorySubscriptionPayload
-  income(where: IncomeSubscriptionWhereInput): IncomeSubscriptionPayload
-}
-
-enum TimeFrame {
-  Weekly
-  Biweekly
-  Semimonthly
-  Monthly
+  monthlyIncome(where: MonthlyIncomeSubscriptionWhereInput): MonthlyIncomeSubscriptionPayload
+  rollingCostCategory(where: RollingCostCategorySubscriptionWhereInput): RollingCostCategorySubscriptionPayload
 }
 `

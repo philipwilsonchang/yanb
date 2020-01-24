@@ -19,24 +19,6 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 		endpoint: api
 	});
 
-	let monthlyIncome: number;
-	switch (income.frequency) {
-		case "Weekly":
-			monthlyIncome = income.amount * 4;
-			break;
-		case "Monthly":
-			monthlyIncome = income.amount;
-			break;
-		case "Biweekly":
-			monthlyIncome = income.amount * 2;
-			break;
-		case "Semimonthly":
-			monthlyIncome = income.amount * 2;
-			break;
-		default:
-			monthlyIncome = income.amount;
-	}
-
 	// Query costList on mount
 	useEffect(() => {
 		const fetchCostList = async () => {
@@ -74,7 +56,7 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 		<FixedSpendingList 
 			budgetedAmount={budgetedAmount}
 			costs={fixedList} 
-			monthlyIncome={monthlyIncome}
+			monthlyIncome={income.amount}
 			newName={newCostName} 
 			newAmount={newCostAmount} 
 			changeNewName={setNewCostName} 
