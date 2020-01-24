@@ -1,2 +1,3 @@
-# budgetapp
-Budget monitoring web application via Gmail
+# Yet ANother Budget (YANB)
+
+Simple envelope-based budget monitoring web application.
