@@ -40,3 +40,4 @@ export interface FinancialMonth {
 	remainder: number
 	closed: boolean
 }
+

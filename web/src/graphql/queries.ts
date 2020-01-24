@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { Cost, FlexCostCategory } from '../state/stateTypes'
+import { Cost, FlexCostCategory, FixedCostCategory, MonthlyIncome } from '../state/stateTypes'
 
 export const GET_ALL_COSTS = gql`
   query {
@@ -51,6 +51,20 @@ export interface FlexCostCategoriesReturn {
 	flexCostCategories: FlexCostCategory[]
 }
 
+export const GET_ALL_FIXED_CATEGORIES = gql`
+  query {
+    fixedCostCategories() {
+      id
+      name
+      amount
+    }
+  }
+`;
+
+export interface FixedCostCategoriesReturn {
+  fixedCostCategories: FixedCostCategory[]
+}
+
 export const GET_MONTHLY_INCOMES = gql`
   query {
     monthlyIncomes() {
@@ -60,3 +74,6 @@ export const GET_MONTHLY_INCOMES = gql`
   }
 `;
 
+export interface MonthlyIncomesReturn {
+  monthlyIncomes: MonthlyIncome[]
+}

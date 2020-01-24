@@ -3,8 +3,6 @@ import { IGlobalState } from './initialState';
 export enum ActionType {
 	AddFlexCategory,	// payload: FlexCostCategory
 	DeleteFlexCategory, // payload: string
-	AddFixedCategory,	// payload: FixedCostCategory
-	DeleteFixedCategory,// payload: string
 	AddFlexCost,		// payload: { name: string, amount: number }
 	ChangeIncome		// payload: Income
 };
@@ -28,19 +26,6 @@ export const reducer = (state: IGlobalState, action: IAction) => {
 				newState.budgetedAmount -= categoryToDelete.limit;
 			}
 			newState.categoryList = state.categoryList.filter(cat => cat.name !== action.payload);
-			return newState;
-
-		case ActionType.AddFixedCategory:
-			newState.fixedList.push(action.payload);
-			newState.budgetedAmount += action.payload.amount;
-			return newState;
-
-		case ActionType.DeleteFixedCategory:
-			const fixedToDelete = state.fixedList.find(cat => (cat.name === action.payload));
-			if (fixedToDelete) {
-				newState.budgetedAmount -= fixedToDelete.amount;
-			}
-			newState.fixedList = state.fixedList.filter(cat => cat.name !== action.payload);
 			return newState;
 
 		case ActionType.AddFlexCost:
