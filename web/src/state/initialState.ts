@@ -1,15 +1,14 @@
-import { SpentFlexCostCategory } from './stateTypes';
-import { FixedCostCategory, MonthlyIncome } from '../prisma-client';
+import { FlexCostCategory, FixedCostCategory, MonthlyIncome } from './stateTypes';
 
 export interface IGlobalState {
-	categoryList: SpentFlexCostCategory[],
+	categoryList: FlexCostCategory[],
 	fixedList: FixedCostCategory[],
 	income: MonthlyIncome,
 	budgetedAmount: number,
 }
 
 export const initialState: IGlobalState = {
-	categoryList: [] as SpentFlexCostCategory[],
+	categoryList: [] as FlexCostCategory[],
 	fixedList: [] as FixedCostCategory[],
 	income: { id: 'placeholder', amount: 0 },
 	budgetedAmount: 0

@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
+import { keyBy, keys } from 'lodash'
+import { useQuery } from "@apollo/react-hooks";
 
 import CategoryDisplay from '../components/CategoryDisplay';
-import { Prisma } from '../prisma-client';
+import { 
+	CostsReturn,
+	FlexCostCategoriesReturn,
+	GET_ALL_COSTS_BETWEEN_TIMES, 
+	GET_ALL_FLEX_CATEGORIES } from '../graphql/queries'
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
-import { SpentFlexCostCategory } from '../state/stateTypes';
+import { Cost, FlexCostCategory } from '../state/stateTypes';
 
 interface ICategoryHUDContainerProps {
 	api: string,
@@ -14,42 +20,34 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 	const { state, dispatch } = useGlobalState();
 	const { categoryList } = state;
 
-	const prisma = new Prisma({
-		endpoint: api
-	});
+	const today = new Date();
+	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+	const { loading: flexLoading, data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES)
+	const { loading: costsLoading, data: costs } = useQuery<CostsReturn>(GET_ALL_COSTS_BETWEEN_TIMES, {
+		variables: {
+			timeStart: firstDay.toISOString(),
+			timeEnd: lastDay.toISOString(),
+		}
+	})
 
 	// Get all categories on component mount
 	useEffect(() => {
-		const today = new Date();
-		const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-		const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-
-		const getCategoryList = async () => {
-			const categories = await prisma.flexCostCategories();
-			if (categories.length >= 1) {
-				categories.forEach(async (category) => {
-					const spent = await getCategorySpent(category.name, firstDay, lastDay);
-					dispatch({
-						type: ActionType.AddFlexCategory,
-						payload: {...category, spent: spent } as SpentFlexCostCategory
-					});
-
-				});
-			}
-		};
-
-		const getCategorySpent = async (name: string, firstDay: Date, lastDay: Date) => {
-			const costs = await prisma.costs({ where: { category: { name: name }, createdAt_gte: firstDay.toISOString(), createdAt_lte: lastDay.toISOString()}});
-			if (costs.length === 0) {
-				return 0;
-			} else {
-				const spentToDate = costs.reduce((acc, cost) => ({...acc, amount: acc.amount + cost.amount }));
-				return spentToDate.amount;
-			}
-		};
-
-		getCategoryList();
-	}, []);
+		if (!flexLoading && !costsLoading && categories && costs) {
+			const updatedCategories = keyBy(categories.flexCostCategories, (cat: FlexCostCategory) => cat.id);
+			costs.costs.forEach((cost: Cost) => {
+				let existingCost = updatedCategories[cost.category.id].spent || 0;
+				updatedCategories[cost.category.id].spent = existingCost + cost.amount;
+			})
+			keys(updatedCategories).forEach((category: string) => {
+				dispatch({
+					type: ActionType.AddFlexCategory,
+					payload: {...updatedCategories[category] }
+				})
+			})
+		}
+	}, [flexLoading, costsLoading]);
 
 	return (
 		<div>
