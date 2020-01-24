@@ -18,7 +18,7 @@ interface IFixedSpendingListProps {
 	newAmount: number,
 	changeNewName(name: string): void,
 	changeNewAmount(amount: number): void, 
-	removeCost(name: string): void,
+	removeCost(id: string): void,
 	submitCost(): void
 };
 
@@ -39,7 +39,7 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 			  	{costs.map(cost => 
 			  		(<tr key={cost.name}>
 				      <td style={{ textAlign: 'center', width: '25px' }}>
-				      	<Button variant="outline-danger" onClick={() => removeCost(cost.name)}>
+				      	<Button variant="outline-danger" onClick={() => removeCost(cost.id)}>
 				      		<FaTrashAlt />
 				      	</Button>
 				      </td>

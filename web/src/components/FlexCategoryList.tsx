@@ -18,7 +18,7 @@ interface IFlexCategoryListProps {
 	newLimit: number,
 	changeNewName(name: string): void,
 	changeNewLimit(amount: number): void, 
-	removeCategory(name: string): void,
+	removeCategory(id: string): void,
 	submitCategory(): void
 };
 
@@ -39,7 +39,7 @@ const FlexCategoryList: React.FC<IFlexCategoryListProps> = ({ budgetedAmount, ca
 			  	{categories.map(category => 
 			  		(<tr key={category.name}>
 				      <td style={{ textAlign: 'center', width: '25px' }}>
-				      	<Button variant="outline-danger" onClick={() => removeCategory(category.name)}>
+				      	<Button variant="outline-danger" onClick={() => removeCategory(category.id)}>
 				      		<FaTrashAlt />
 				      	</Button>
 				      </td>

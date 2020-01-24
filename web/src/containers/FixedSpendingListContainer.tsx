@@ -22,7 +22,7 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 	});
 	const [deleteFixedCategory] = useMutation(DELETE_FIXED_CATEGORY, {
 		refetchQueries: ["fixedCostCategories"]
-	})
+	});
 
 	const removeCostFromList = (id: string) => {
 		deleteFixedCategory({
