@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import IncomeInput from '../components/IncomeInput';
-import { Prisma, MonthlyIncome } from '../prisma-client';
+import { UPSERT_MONTHLY_INCOME } from '../graphql/mutations'
+import { GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries'
 import { useGlobalState } from '../state/useGlobalState';
+import { MonthlyIncome } from '../state/stateTypes';
 import { ActionType } from '../state/reducer';
 
 interface IIncomeInputContainer {
@@ -11,56 +14,36 @@ interface IIncomeInputContainer {
 
 const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
 	const { state, dispatch } = useGlobalState();
-	const { income } = state;
+	const [tempIncome, setTempIncome] = useState<MonthlyIncome>()
 
-	const prisma = new Prisma({
-		endpoint: api
-	});
-
-	// Query income on mount
-	useEffect(() => {
-		const fetchIncomeAndInterval = async () => {
-			const currentIncomes = await prisma.monthlyIncomes();
-			if (currentIncomes.length >= 1) {
-				dispatch({
-					type: ActionType.ChangeIncome,
-					payload: currentIncomes[0]
-				});
-			} else {
-				dispatch({
-					type: ActionType.ChangeIncome,
-					payload: { id: 'placeholder', amount: 0 } as MonthlyIncome
-				});
-			} 
-		};
-
-		fetchIncomeAndInterval();
-	}, [])
+	const { loading: incomeLoading, data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES); 
+	const [upsertIncome] = useMutation(UPSERT_MONTHLY_INCOME, {
+		refetchQueries: ["monthlyIncomes"]
+	})
 
 	const changeAmount = (amount: number) => {
-		dispatch({
-			type: ActionType.ChangeIncome,
-			payload: {...income, amount: amount}
-		});
+		if (tempIncome) {
+			const newTempIncome = { ...tempIncome }
+			newTempIncome.amount = amount
+			setTempIncome(newTempIncome)
+		}
 	};
 
 	const submitIncome = async () => {
-		await prisma.upsertMonthlyIncome({ 
-			where: {
-				id: income.id 
-			},
-			update: {
-				amount: income.amount,
-			},
-			create: {
-				amount: income.amount,
-			}
-		});
+		if (tempIncome) {
+			await upsertIncome({
+				variables: {
+					newincome: tempIncome,
+					id: tempIncome.id
+				}
+			})
+			setTempIncome(undefined)
+		}
 	};
 
 	return (
 		<IncomeInput
-			income={income}
+			income={tempIncome ? tempIncome : (incomesResult ? incomesResult.monthlyIncomes[0] : {id: "0", amount: 0})}
 			changeAmount={changeAmount}
 			submitIncome={submitIncome}
 		/>

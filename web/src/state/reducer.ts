@@ -4,7 +4,6 @@ export enum ActionType {
 	AddFlexCategory,	// payload: FlexCostCategory
 	DeleteFlexCategory, // payload: string
 	AddFlexCost,		// payload: { name: string, amount: number }
-	ChangeIncome		// payload: Income
 };
 
 export interface IAction {
@@ -31,10 +30,6 @@ export const reducer = (state: IGlobalState, action: IAction) => {
 		case ActionType.AddFlexCost:
 			const i = newState.categoryList.findIndex(cat => cat.name === action.payload.name);
 			newState.categoryList[i].spent += action.payload.amount;
-			return newState;
-
-		case ActionType.ChangeIncome:
-			newState.income = action.payload;
 			return newState;
 			
 		default:

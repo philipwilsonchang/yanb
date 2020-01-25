@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import FixedSpendingList from '../components/FixedSpendingList';
 import { CREATE_FIXED_CATEGORY, DELETE_FIXED_CATEGORY } from '../graphql/mutations';
-import { GET_ALL_FIXED_CATEGORIES, FixedCostCategoriesReturn } from '../graphql/queries';
+import { GET_ALL_FIXED_CATEGORIES, FixedCostCategoriesReturn, GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
 
 interface IFixedSpendingListContainerProps {
@@ -12,11 +12,12 @@ interface IFixedSpendingListContainerProps {
 
 const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = ({ api }) => {
 	const { state } = useGlobalState();
-	const { budgetedAmount, income } = state;
+	const { budgetedAmount } = state;
 	const [newCostName, setNewCostName] = useState("");
 	const [newCostAmount, setNewCostAmount] = useState(0);
 
 	const { data: fixedReturn } = useQuery<FixedCostCategoriesReturn>(GET_ALL_FIXED_CATEGORIES);
+	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 	const [createFixedCategory] = useMutation(CREATE_FIXED_CATEGORY, {
 		refetchQueries: ["fixedCostCategories"]
 	});
@@ -46,7 +47,7 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 		<FixedSpendingList 
 			budgetedAmount={budgetedAmount}
 			costs={fixedReturn ? fixedReturn.fixedCostCategories : []} 
-			monthlyIncome={income.amount}
+			monthlyIncome={incomeReturn ? incomeReturn.monthlyIncomes[0].amount : 0}
 			newName={newCostName} 
 			newAmount={newCostAmount} 
 			changeNewName={setNewCostName} 
