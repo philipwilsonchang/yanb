@@ -51,7 +51,7 @@ const FlexCategoryListContainer: React.FC = () => {
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
 			categories={categoryList}
-			monthlyIncome={incomeReturn ? incomeReturn.monthlyIncomes[0].amount : 0}
+			monthlyIncome={(incomeReturn && incomeReturn.monthlyIncomes.length > 0) ? incomeReturn.monthlyIncomes[0].amount : 0}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}

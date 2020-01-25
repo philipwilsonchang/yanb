@@ -43,7 +43,7 @@ const FixedSpendingListContainer: React.FC = () => {
 		<FixedSpendingList 
 			budgetedAmount={budgetedAmount}
 			costs={fixedReturn ? fixedReturn.fixedCostCategories : []} 
-			monthlyIncome={incomeReturn ? incomeReturn.monthlyIncomes[0].amount : 0}
+			monthlyIncome={(incomeReturn && incomeReturn.monthlyIncomes.length > 0) ? incomeReturn.monthlyIncomes[0].amount : 0}
 			newName={newCostName} 
 			newAmount={newCostAmount} 
 			changeNewName={setNewCostName} 

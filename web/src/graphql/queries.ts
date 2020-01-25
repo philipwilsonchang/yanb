@@ -3,7 +3,7 @@ import { Cost, FlexCostCategory, FixedCostCategory, MonthlyIncome } from '../sta
 
 export const GET_ALL_COSTS = gql`
   query getAllCosts {
-    costs() {
+    costs {
       id
       amount
       description
@@ -18,8 +18,8 @@ export const GET_ALL_COSTS = gql`
 `;
 
 export const GET_ALL_COSTS_BETWEEN_TIMES = gql`
-  query getAllCostsBetweenTimes ($timeStart: DateTime!, $timeEnd: DateTime!) {
-    costs( where: { createdAt_gte: $timeStart, createAt_lte: $timeEnd }) {
+  query getAllCostsBetweenTimes($timeStart: DateTime!, $timeEnd: DateTime!) {
+    costs( where: { createdAt_gte: $timeStart, createdAt_lte: $timeEnd }) {
       id
       amount
       description
@@ -39,7 +39,7 @@ export interface CostsReturn {
 
 export const GET_ALL_FLEX_CATEGORIES = gql`
   query getAllFlexCategories {
-    flexCostCategories() {
+    flexCostCategories {
       id
       name
       limit
@@ -53,7 +53,7 @@ export interface FlexCostCategoriesReturn {
 
 export const GET_ALL_FIXED_CATEGORIES = gql`
   query getAllFixedCategories {
-    fixedCostCategories() {
+    fixedCostCategories {
       id
       name
       amount
@@ -67,7 +67,7 @@ export interface FixedCostCategoriesReturn {
 
 export const GET_MONTHLY_INCOMES = gql`
   query getMonthlyIncomes {
-    monthlyIncomes() {
+    monthlyIncomes {
       id
       amount
     }

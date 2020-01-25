@@ -36,7 +36,7 @@ const IncomeInputContainer: React.FC = () => {
 
 	return (
 		<IncomeInput
-			income={tempIncome ? tempIncome : (incomesResult ? incomesResult.monthlyIncomes[0] : {id: "0", amount: 0})}
+			income={tempIncome ? tempIncome : ((incomesResult && incomesResult.monthlyIncomes.length > 0) ? incomesResult.monthlyIncomes[0] : {id: "0", amount: 0})}
 			changeAmount={changeAmount}
 			submitIncome={submitIncome}
 		/>
