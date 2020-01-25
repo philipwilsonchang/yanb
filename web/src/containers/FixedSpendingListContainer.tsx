@@ -19,10 +19,10 @@ const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = (
 	const { data: fixedReturn } = useQuery<FixedCostCategoriesReturn>(GET_ALL_FIXED_CATEGORIES);
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 	const [createFixedCategory] = useMutation(CREATE_FIXED_CATEGORY, {
-		refetchQueries: ["fixedCostCategories"]
+		refetchQueries: ["getAllFixedCategories"]
 	});
 	const [deleteFixedCategory] = useMutation(DELETE_FIXED_CATEGORY, {
-		refetchQueries: ["fixedCostCategories"]
+		refetchQueries: ["getAllFixedCategories"]
 	});
 
 	const removeCostFromList = (id: string) => {

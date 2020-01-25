@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import { useMutation } from "@apollo/react-hooks";
 
 import SpendingAdder from '../components/SpendingAdder';
-import { Prisma } from '../prisma-client';
+import { CREATE_COST } from '../graphql/mutations'
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
-import { SpentFlexCostCategory } from '../state/stateTypes';
+import { FlexCostCategory } from '../state/stateTypes';
 
 interface ISpendingAdderContainerProps {
 	api: string,
 };
 
-const dummyCategory: SpentFlexCostCategory = {
+const dummyCategory: FlexCostCategory = {
 	id: 'abc',
 	name: "Select category...",
 	limit: 0,
@@ -24,17 +25,21 @@ const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api })
 	const [description, setDescription] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
-	const prisma = new Prisma({
-		endpoint: api
-	});
+	const [addCost] = useMutation(CREATE_COST, {
+		refetchQueries: ["getAllCostsBetweenTimes"]
+	})
 
 	const submitSpending = async () => {
-		await prisma.createCost({ 
-			amount: amount, 
-			description: description,
-			category: {
-				connect: { 
-					name: selectedCategory.name }
+		await addCost({
+			variables: {
+				newcost: { 
+					amount: amount, 
+					description: description,
+					category: {
+						connect: { 
+							name: selectedCategory.name }
+					}
+				}
 			}
 		});
 		dispatch({
