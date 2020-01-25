@@ -4,19 +4,12 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import IncomeInput from '../components/IncomeInput';
 import { UPSERT_MONTHLY_INCOME } from '../graphql/mutations'
 import { GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries'
-import { useGlobalState } from '../state/useGlobalState';
 import { MonthlyIncome } from '../state/stateTypes';
-import { ActionType } from '../state/reducer';
 
-interface IIncomeInputContainer {
-	api: string
-};
-
-const IncomeInputContainer: React.FC<IIncomeInputContainer> = ({ api }) => {
-	const { state, dispatch } = useGlobalState();
+const IncomeInputContainer: React.FC = () => {
 	const [tempIncome, setTempIncome] = useState<MonthlyIncome>()
 
-	const { loading: incomeLoading, data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES); 
+	const { data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES); 
 	const [upsertIncome] = useMutation(UPSERT_MONTHLY_INCOME, {
 		refetchQueries: ["monthlyIncomes"]
 	})

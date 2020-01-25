@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 
-import { FlexCostCategory } from '../prisma-client';
+import { FlexCostCategory } from '../state/stateTypes';
 
 interface IFlexCategoryListProps {
 	budgetedAmount: number,

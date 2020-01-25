@@ -6,11 +6,7 @@ import { CREATE_FIXED_CATEGORY, DELETE_FIXED_CATEGORY } from '../graphql/mutatio
 import { GET_ALL_FIXED_CATEGORIES, FixedCostCategoriesReturn, GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
 
-interface IFixedSpendingListContainerProps {
-	api: string;
-};
-
-const FixedSpendingListContainer: React.FC<IFixedSpendingListContainerProps> = ({ api }) => {
+const FixedSpendingListContainer: React.FC = () => {
 	const { state } = useGlobalState();
 	const { budgetedAmount } = state;
 	const [newCostName, setNewCostName] = useState("");

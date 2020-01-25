@@ -20,11 +20,11 @@ export const reducer = (state: IGlobalState, action: IAction) => {
 			return newState;
 
 		case ActionType.DeleteFlexCategory:
-			const categoryToDelete = state.categoryList.find(cat => (cat.name === action.payload));
+			const categoryToDelete = state.categoryList.find(cat => (cat.id === action.payload));
 			if (categoryToDelete) {
 				newState.budgetedAmount -= categoryToDelete.limit;
 			}
-			newState.categoryList = state.categoryList.filter(cat => cat.name !== action.payload);
+			newState.categoryList = state.categoryList.filter(cat => cat.id !== action.payload);
 			return newState;
 
 		case ActionType.AddFlexCost:

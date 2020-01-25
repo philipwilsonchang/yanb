@@ -4,11 +4,10 @@ import { FormControl, FormControlProps } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-import { MonthlyIncome } from '../prisma-client';
+import { MonthlyIncome } from '../state/stateTypes';
 
 interface IIncomeInputProps {
 	income: MonthlyIncome,

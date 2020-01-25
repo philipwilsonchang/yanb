@@ -33,7 +33,7 @@ const App: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div style={{ width: '90%' }}>
                 <br />
-                <CategoryHUDContainer api={prismaAPI} />
+                <CategoryHUDContainer />
               </div>
             </div>
           </Tab>
@@ -41,7 +41,7 @@ const App: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div style={{ width: '90%' }}>
                 <br />
-                <SpendingAdderContainer api={prismaAPI} />
+                <SpendingAdderContainer />
               </div>
             </div>
           </Tab>
@@ -49,11 +49,11 @@ const App: React.FC = () => {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div style={{ width: '90%' }}>
                 <br />
-                <IncomeInputContainer api={prismaAPI} />
+                <IncomeInputContainer />
                 <br />
-                <FixedSpendingListContainer api={prismaAPI} />
+                <FixedSpendingListContainer />
                 <br />
-                <FlexSpendingListContainer api={prismaAPI} />
+                <FlexSpendingListContainer />
               </div>
             </div>
           </Tab>

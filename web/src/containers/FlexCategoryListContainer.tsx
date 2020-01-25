@@ -7,11 +7,7 @@ import { GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 
-interface IFlexCategoryListContainerProps {
-	api: string
-};
-
-const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ api }) => {
+const FlexCategoryListContainer: React.FC = () => {
 	const { state, dispatch } = useGlobalState();
 	const { budgetedAmount, categoryList } = state;
 	const [newCostName, setNewCostName] = useState("");
@@ -19,10 +15,10 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 	const [createFlexCategory] = useMutation(CREATE_FLEX_CATEGORY, {
-		refetchQueries: ["flexCostCategories"]
+		refetchQueries: ["getAllFlexCategories"]
 	});
 	const [deleteFlexCategory] = useMutation(DELETE_FLEX_CATEGORY, {
-		refetchQueries: ["flexCostCategories"]
+		refetchQueries: ["getAllFlexCategories"]
 	})
 
 	const removeCostFromList = async (id: string) => {
@@ -33,7 +29,7 @@ const FlexCategoryListContainer: React.FC<IFlexCategoryListContainerProps> = ({ 
 		})
 		dispatch({
 			type: ActionType.DeleteFlexCategory,
-			payload: name
+			payload: id
 		});
 	};
 

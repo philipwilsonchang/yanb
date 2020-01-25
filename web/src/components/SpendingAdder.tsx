@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import CategoryDisplay from './CategoryDisplay';
-import { FlexCostCategory } from '../prisma-client';
+import { FlexCostCategory } from '../state/stateTypes';
 
 interface ISpendingAdderProps {
 	categories: FlexCostCategory[],

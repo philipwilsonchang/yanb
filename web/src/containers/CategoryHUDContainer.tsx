@@ -12,11 +12,7 @@ import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 import { Cost, FlexCostCategory } from '../state/stateTypes';
 
-interface ICategoryHUDContainerProps {
-	api: string,
-};
-
-const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => {
+const CategoryHUDContainer: React.FC = () => {
 	const { state, dispatch } = useGlobalState();
 	const { categoryList } = state;
 
@@ -24,8 +20,8 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-	const { loading: flexLoading, data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES)
-	const { loading: costsLoading, data: costs } = useQuery<CostsReturn>(GET_ALL_COSTS_BETWEEN_TIMES, {
+	const { data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES)
+	const { data: costs } = useQuery<CostsReturn>(GET_ALL_COSTS_BETWEEN_TIMES, {
 		variables: {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
@@ -34,7 +30,7 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 
 	// Get all categories on component mount
 	useEffect(() => {
-		if (!flexLoading && !costsLoading && categories && costs) {
+		if (categories && costs) {
 			const updatedCategories = keyBy(categories.flexCostCategories, (cat: FlexCostCategory) => cat.id);
 			costs.costs.forEach((cost: Cost) => {
 				let existingCost = updatedCategories[cost.category.id].spent || 0;
@@ -47,7 +43,7 @@ const CategoryHUDContainer: React.FC<ICategoryHUDContainerProps> = ({ api }) => 
 				})
 			})
 		}
-	}, [flexLoading, costsLoading]);
+	}, [categories, costs, dispatch]);
 
 	return (
 		<div>

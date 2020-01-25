@@ -1,4 +1,4 @@
-import { FlexCostCategory, FixedCostCategory, MonthlyIncome } from './stateTypes';
+import { FlexCostCategory } from './stateTypes';
 
 export interface IGlobalState {
 	categoryList: FlexCostCategory[],

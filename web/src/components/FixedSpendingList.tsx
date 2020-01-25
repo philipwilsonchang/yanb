@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 
-import { FixedCostCategory } from "../prisma-client"
+import { FixedCostCategory } from "../state/stateTypes"
 
 interface IFixedSpendingListProps {
 	budgetedAmount: number,

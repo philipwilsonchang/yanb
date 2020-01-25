@@ -7,10 +7,6 @@ import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 import { FlexCostCategory } from '../state/stateTypes';
 
-interface ISpendingAdderContainerProps {
-	api: string,
-};
-
 const dummyCategory: FlexCostCategory = {
 	id: 'abc',
 	name: "Select category...",
@@ -18,7 +14,7 @@ const dummyCategory: FlexCostCategory = {
 	spent: 0
 };
 
-const SpendingAdderContainer: React.FC<ISpendingAdderContainerProps> = ({ api }) => {
+const SpendingAdderContainer: React.FC = () => {
 	const { state, dispatch } = useGlobalState();
 	const { categoryList } = state;	
 	const [amount, setAmount] = useState(0);
