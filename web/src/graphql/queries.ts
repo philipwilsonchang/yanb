@@ -1,41 +1,5 @@
 import gql from 'graphql-tag'
-import { Cost, FlexCostCategory, FixedCostCategory, MonthlyIncome } from '../state/stateTypes'
-
-export const GET_ALL_COSTS = gql`
-  query getAllCosts {
-    costs {
-      id
-      amount
-      description
-      createdAt
-      category {
-        id
-        name
-        limit
-      }
-    }
-  }
-`;
-
-export const GET_ALL_COSTS_BETWEEN_TIMES = gql`
-  query getAllCostsBetweenTimes($timeStart: DateTime!, $timeEnd: DateTime!) {
-    costs( where: { createdAt_gte: $timeStart, createdAt_lte: $timeEnd }) {
-      id
-      amount
-      description
-      createdAt
-      category {
-        id
-        name
-        limit
-      }
-    }
-  }
-`;
-
-export interface CostsReturn {
-	costs: Cost[]
-}
+import { FlexCostCategory, FixedCostCategory, MonthlyIncome } from '../state/stateTypes'
 
 export const GET_ALL_FLEX_CATEGORIES = gql`
   query getAllFlexCategories {
