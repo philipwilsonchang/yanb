@@ -53,8 +53,8 @@ export const DELETE_FLEX_CATEGORY = gql`
 `;
 
 export const UPSERT_MONTHLY_INCOME = gql`
-  mutation upsertIncome($newincome: MonthlyIncomeCreateInput!, $id: ID!) {
-    upsertMonthlyIncome(where: { id: $ID }, create: $newincome, update: $newincome) {
+  mutation upsertIncome($newincome: MonthlyIncomeCreateInput!, $updateincome: MonthlyIncomeUpdateInput!, $id: ID!) {
+    upsertMonthlyIncome(where: { id: $id }, create: $newincome, update: $updateincome) {
       id
       amount
     }

@@ -22,7 +22,7 @@ const IncomeInput: React.FC<IIncomeInputProps> = ({ income, changeAmount, submit
 			<Card.Body className='card text-right'>
 				<Row>
 					<Col>
-						<Form.Control value={income.amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
+						<Form.Control value={income.amount ? income.amount.toString() : ""} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
 					</Col>
 					<Button style={{ margin: '0px 15px 0px 0px' }} variant="success" onClick={submitIncome}>
 			      		Submit
