@@ -16,7 +16,7 @@ const dummyCategory: FlexCostCategory = {
 };
 
 const SpendingAdderContainer: React.FC = () => {
-	const [amount, setAmount] = useState<number | undefined>();
+	const [amount, setAmount] = useState<string>("");
 	const [description, setDescription] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
@@ -47,10 +47,13 @@ const SpendingAdderContainer: React.FC = () => {
 	}, [categories])
 
 	const submitSpending = async () => {
+		if (isNaN(parseFloat(amount))) {
+			return;
+		}
 		await addCost({
 			variables: {
 				newcost: { 
-					amount: amount, 
+					amount: parseFloat(amount), 
 					description: description,
 					category: {
 						connect: {
@@ -64,7 +67,7 @@ const SpendingAdderContainer: React.FC = () => {
 	};
 
 	const clearInput = () => {
-		setAmount(undefined);
+		setAmount("");
 		setDescription("");
 		setSelectedCategory(categories ? categories.flexCostCategories[0] : dummyCategory);
 	};
