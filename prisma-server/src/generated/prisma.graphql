@@ -1,0 +1,1722 @@
+# source: http://localhost:4466
+# timestamp: Mon Jan 27 2020 14:21:42 GMT-0500 (Eastern Standard Time)
+
+type AggregateCost {
+  count: Int!
+}
+
+type AggregateFinancialMonth {
+  count: Int!
+}
+
+type AggregateFixedCostCategory {
+  count: Int!
+}
+
+type AggregateFlexCostCategory {
+  count: Int!
+}
+
+type AggregateMonthlyIncome {
+  count: Int!
+}
+
+type AggregateRollingCostCategory {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Cost implements Node {
+  id: ID!
+  amount: Float!
+  description: String!
+  createdAt: DateTime!
+  category: FlexCostCategory!
+}
+
+"""A connection to a list of items."""
+type CostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CostEdge]!
+  aggregate: AggregateCost!
+}
+
+input CostCreateInput {
+  id: ID
+  amount: Float!
+  description: String!
+  category: FlexCostCategoryCreateOneWithoutCostsInput!
+}
+
+input CostCreateManyWithoutCategoryInput {
+  create: [CostCreateWithoutCategoryInput!]
+  connect: [CostWhereUniqueInput!]
+}
+
+input CostCreateWithoutCategoryInput {
+  id: ID
+  amount: Float!
+  description: String!
+}
+
+"""An edge in a connection."""
+type CostEdge {
+  """The item at the end of the edge."""
+  node: Cost!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CostOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+  description_ASC
+  description_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CostPreviousValues {
+  id: ID!
+  amount: Float!
+  description: String!
+  createdAt: DateTime!
+}
+
+input CostScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CostScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CostScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CostScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  amount: Float
+
+  """All values that are not equal to given value."""
+  amount_not: Float
+
+  """All values that are contained in given list."""
+  amount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Float!]
+
+  """All values less than the given value."""
+  amount_lt: Float
+
+  """All values less than or equal the given value."""
+  amount_lte: Float
+
+  """All values greater than the given value."""
+  amount_gt: Float
+
+  """All values greater than or equal the given value."""
+  amount_gte: Float
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
+type CostSubscriptionPayload {
+  mutation: MutationType!
+  node: Cost
+  updatedFields: [String!]
+  previousValues: CostPreviousValues
+}
+
+input CostSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CostSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CostSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CostSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CostWhereInput
+}
+
+input CostUpdateInput {
+  amount: Float
+  description: String
+  category: FlexCostCategoryUpdateOneRequiredWithoutCostsInput
+}
+
+input CostUpdateManyDataInput {
+  amount: Float
+  description: String
+}
+
+input CostUpdateManyMutationInput {
+  amount: Float
+  description: String
+}
+
+input CostUpdateManyWithoutCategoryInput {
+  create: [CostCreateWithoutCategoryInput!]
+  connect: [CostWhereUniqueInput!]
+  set: [CostWhereUniqueInput!]
+  disconnect: [CostWhereUniqueInput!]
+  delete: [CostWhereUniqueInput!]
+  update: [CostUpdateWithWhereUniqueWithoutCategoryInput!]
+  updateMany: [CostUpdateManyWithWhereNestedInput!]
+  deleteMany: [CostScalarWhereInput!]
+  upsert: [CostUpsertWithWhereUniqueWithoutCategoryInput!]
+}
+
+input CostUpdateManyWithWhereNestedInput {
+  where: CostScalarWhereInput!
+  data: CostUpdateManyDataInput!
+}
+
+input CostUpdateWithoutCategoryDataInput {
+  amount: Float
+  description: String
+}
+
+input CostUpdateWithWhereUniqueWithoutCategoryInput {
+  where: CostWhereUniqueInput!
+  data: CostUpdateWithoutCategoryDataInput!
+}
+
+input CostUpsertWithWhereUniqueWithoutCategoryInput {
+  where: CostWhereUniqueInput!
+  update: CostUpdateWithoutCategoryDataInput!
+  create: CostCreateWithoutCategoryInput!
+}
+
+input CostWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CostWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CostWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  amount: Float
+
+  """All values that are not equal to given value."""
+  amount_not: Float
+
+  """All values that are contained in given list."""
+  amount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Float!]
+
+  """All values less than the given value."""
+  amount_lt: Float
+
+  """All values less than or equal the given value."""
+  amount_lte: Float
+
+  """All values greater than the given value."""
+  amount_gt: Float
+
+  """All values greater than or equal the given value."""
+  amount_gte: Float
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  category: FlexCostCategoryWhereInput
+}
+
+input CostWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type FinancialMonth implements Node {
+  id: ID!
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean!
+}
+
+"""A connection to a list of items."""
+type FinancialMonthConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FinancialMonthEdge]!
+  aggregate: AggregateFinancialMonth!
+}
+
+input FinancialMonthCreateInput {
+  id: ID
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean
+}
+
+"""An edge in a connection."""
+type FinancialMonthEdge {
+  """The item at the end of the edge."""
+  node: FinancialMonth!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FinancialMonthOrderByInput {
+  id_ASC
+  id_DESC
+  month_ASC
+  month_DESC
+  year_ASC
+  year_DESC
+  income_ASC
+  income_DESC
+  totalCost_ASC
+  totalCost_DESC
+  remainder_ASC
+  remainder_DESC
+  closed_ASC
+  closed_DESC
+}
+
+type FinancialMonthPreviousValues {
+  id: ID!
+  month: Int!
+  year: Int!
+  income: Float!
+  totalCost: Float!
+  remainder: Float!
+  closed: Boolean!
+}
+
+type FinancialMonthSubscriptionPayload {
+  mutation: MutationType!
+  node: FinancialMonth
+  updatedFields: [String!]
+  previousValues: FinancialMonthPreviousValues
+}
+
+input FinancialMonthSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FinancialMonthSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FinancialMonthSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FinancialMonthSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FinancialMonthWhereInput
+}
+
+input FinancialMonthUpdateInput {
+  month: Int
+  year: Int
+  income: Float
+  totalCost: Float
+  remainder: Float
+  closed: Boolean
+}
+
+input FinancialMonthUpdateManyMutationInput {
+  month: Int
+  year: Int
+  income: Float
+  totalCost: Float
+  remainder: Float
+  closed: Boolean
+}
+
+input FinancialMonthWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FinancialMonthWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FinancialMonthWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FinancialMonthWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  month: Int
+
+  """All values that are not equal to given value."""
+  month_not: Int
+
+  """All values that are contained in given list."""
+  month_in: [Int!]
+
+  """All values that are not contained in given list."""
+  month_not_in: [Int!]
+
+  """All values less than the given value."""
+  month_lt: Int
+
+  """All values less than or equal the given value."""
+  month_lte: Int
+
+  """All values greater than the given value."""
+  month_gt: Int
+
+  """All values greater than or equal the given value."""
+  month_gte: Int
+  year: Int
+
+  """All values that are not equal to given value."""
+  year_not: Int
+
+  """All values that are contained in given list."""
+  year_in: [Int!]
+
+  """All values that are not contained in given list."""
+  year_not_in: [Int!]
+
+  """All values less than the given value."""
+  year_lt: Int
+
+  """All values less than or equal the given value."""
+  year_lte: Int
+
+  """All values greater than the given value."""
+  year_gt: Int
+
+  """All values greater than or equal the given value."""
+  year_gte: Int
+  income: Float
+
+  """All values that are not equal to given value."""
+  income_not: Float
+
+  """All values that are contained in given list."""
+  income_in: [Float!]
+
+  """All values that are not contained in given list."""
+  income_not_in: [Float!]
+
+  """All values less than the given value."""
+  income_lt: Float
+
+  """All values less than or equal the given value."""
+  income_lte: Float
+
+  """All values greater than the given value."""
+  income_gt: Float
+
+  """All values greater than or equal the given value."""
+  income_gte: Float
+  totalCost: Float
+
+  """All values that are not equal to given value."""
+  totalCost_not: Float
+
+  """All values that are contained in given list."""
+  totalCost_in: [Float!]
+
+  """All values that are not contained in given list."""
+  totalCost_not_in: [Float!]
+
+  """All values less than the given value."""
+  totalCost_lt: Float
+
+  """All values less than or equal the given value."""
+  totalCost_lte: Float
+
+  """All values greater than the given value."""
+  totalCost_gt: Float
+
+  """All values greater than or equal the given value."""
+  totalCost_gte: Float
+  remainder: Float
+
+  """All values that are not equal to given value."""
+  remainder_not: Float
+
+  """All values that are contained in given list."""
+  remainder_in: [Float!]
+
+  """All values that are not contained in given list."""
+  remainder_not_in: [Float!]
+
+  """All values less than the given value."""
+  remainder_lt: Float
+
+  """All values less than or equal the given value."""
+  remainder_lte: Float
+
+  """All values greater than the given value."""
+  remainder_gt: Float
+
+  """All values greater than or equal the given value."""
+  remainder_gte: Float
+  closed: Boolean
+
+  """All values that are not equal to given value."""
+  closed_not: Boolean
+}
+
+input FinancialMonthWhereUniqueInput {
+  id: ID
+}
+
+type FixedCostCategory implements Node {
+  id: ID!
+  name: String!
+  amount: Float!
+}
+
+"""A connection to a list of items."""
+type FixedCostCategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FixedCostCategoryEdge]!
+  aggregate: AggregateFixedCostCategory!
+}
+
+input FixedCostCategoryCreateInput {
+  id: ID
+  name: String!
+  amount: Float!
+}
+
+"""An edge in a connection."""
+type FixedCostCategoryEdge {
+  """The item at the end of the edge."""
+  node: FixedCostCategory!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FixedCostCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  amount_ASC
+  amount_DESC
+}
+
+type FixedCostCategoryPreviousValues {
+  id: ID!
+  name: String!
+  amount: Float!
+}
+
+type FixedCostCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: FixedCostCategory
+  updatedFields: [String!]
+  previousValues: FixedCostCategoryPreviousValues
+}
+
+input FixedCostCategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FixedCostCategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FixedCostCategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FixedCostCategorySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FixedCostCategoryWhereInput
+}
+
+input FixedCostCategoryUpdateInput {
+  name: String
+  amount: Float
+}
+
+input FixedCostCategoryUpdateManyMutationInput {
+  name: String
+  amount: Float
+}
+
+input FixedCostCategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FixedCostCategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FixedCostCategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FixedCostCategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  amount: Float
+
+  """All values that are not equal to given value."""
+  amount_not: Float
+
+  """All values that are contained in given list."""
+  amount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Float!]
+
+  """All values less than the given value."""
+  amount_lt: Float
+
+  """All values less than or equal the given value."""
+  amount_lte: Float
+
+  """All values greater than the given value."""
+  amount_gt: Float
+
+  """All values greater than or equal the given value."""
+  amount_gte: Float
+}
+
+input FixedCostCategoryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type FlexCostCategory implements Node {
+  id: ID!
+  name: String!
+  limit: Float!
+  costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost!]
+}
+
+"""A connection to a list of items."""
+type FlexCostCategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FlexCostCategoryEdge]!
+  aggregate: AggregateFlexCostCategory!
+}
+
+input FlexCostCategoryCreateInput {
+  id: ID
+  name: String!
+  limit: Float!
+  costs: CostCreateManyWithoutCategoryInput
+}
+
+input FlexCostCategoryCreateOneWithoutCostsInput {
+  create: FlexCostCategoryCreateWithoutCostsInput
+  connect: FlexCostCategoryWhereUniqueInput
+}
+
+input FlexCostCategoryCreateWithoutCostsInput {
+  id: ID
+  name: String!
+  limit: Float!
+}
+
+"""An edge in a connection."""
+type FlexCostCategoryEdge {
+  """The item at the end of the edge."""
+  node: FlexCostCategory!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FlexCostCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  limit_ASC
+  limit_DESC
+}
+
+type FlexCostCategoryPreviousValues {
+  id: ID!
+  name: String!
+  limit: Float!
+}
+
+type FlexCostCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: FlexCostCategory
+  updatedFields: [String!]
+  previousValues: FlexCostCategoryPreviousValues
+}
+
+input FlexCostCategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FlexCostCategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FlexCostCategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FlexCostCategorySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FlexCostCategoryWhereInput
+}
+
+input FlexCostCategoryUpdateInput {
+  name: String
+  limit: Float
+  costs: CostUpdateManyWithoutCategoryInput
+}
+
+input FlexCostCategoryUpdateManyMutationInput {
+  name: String
+  limit: Float
+}
+
+input FlexCostCategoryUpdateOneRequiredWithoutCostsInput {
+  create: FlexCostCategoryCreateWithoutCostsInput
+  connect: FlexCostCategoryWhereUniqueInput
+  update: FlexCostCategoryUpdateWithoutCostsDataInput
+  upsert: FlexCostCategoryUpsertWithoutCostsInput
+}
+
+input FlexCostCategoryUpdateWithoutCostsDataInput {
+  name: String
+  limit: Float
+}
+
+input FlexCostCategoryUpsertWithoutCostsInput {
+  update: FlexCostCategoryUpdateWithoutCostsDataInput!
+  create: FlexCostCategoryCreateWithoutCostsInput!
+}
+
+input FlexCostCategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FlexCostCategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FlexCostCategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FlexCostCategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  limit: Float
+
+  """All values that are not equal to given value."""
+  limit_not: Float
+
+  """All values that are contained in given list."""
+  limit_in: [Float!]
+
+  """All values that are not contained in given list."""
+  limit_not_in: [Float!]
+
+  """All values less than the given value."""
+  limit_lt: Float
+
+  """All values less than or equal the given value."""
+  limit_lte: Float
+
+  """All values greater than the given value."""
+  limit_gt: Float
+
+  """All values greater than or equal the given value."""
+  limit_gte: Float
+  costs_every: CostWhereInput
+  costs_some: CostWhereInput
+  costs_none: CostWhereInput
+}
+
+input FlexCostCategoryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+"""Raw JSON value"""
+scalar Json
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type MonthlyIncome implements Node {
+  id: ID!
+  amount: Float!
+}
+
+"""A connection to a list of items."""
+type MonthlyIncomeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MonthlyIncomeEdge]!
+  aggregate: AggregateMonthlyIncome!
+}
+
+input MonthlyIncomeCreateInput {
+  id: ID
+  amount: Float!
+}
+
+"""An edge in a connection."""
+type MonthlyIncomeEdge {
+  """The item at the end of the edge."""
+  node: MonthlyIncome!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MonthlyIncomeOrderByInput {
+  id_ASC
+  id_DESC
+  amount_ASC
+  amount_DESC
+}
+
+type MonthlyIncomePreviousValues {
+  id: ID!
+  amount: Float!
+}
+
+type MonthlyIncomeSubscriptionPayload {
+  mutation: MutationType!
+  node: MonthlyIncome
+  updatedFields: [String!]
+  previousValues: MonthlyIncomePreviousValues
+}
+
+input MonthlyIncomeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MonthlyIncomeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MonthlyIncomeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MonthlyIncomeSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MonthlyIncomeWhereInput
+}
+
+input MonthlyIncomeUpdateInput {
+  amount: Float
+}
+
+input MonthlyIncomeUpdateManyMutationInput {
+  amount: Float
+}
+
+input MonthlyIncomeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MonthlyIncomeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MonthlyIncomeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MonthlyIncomeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  amount: Float
+
+  """All values that are not equal to given value."""
+  amount_not: Float
+
+  """All values that are contained in given list."""
+  amount_in: [Float!]
+
+  """All values that are not contained in given list."""
+  amount_not_in: [Float!]
+
+  """All values less than the given value."""
+  amount_lt: Float
+
+  """All values less than or equal the given value."""
+  amount_lte: Float
+
+  """All values greater than the given value."""
+  amount_gt: Float
+
+  """All values greater than or equal the given value."""
+  amount_gte: Float
+}
+
+input MonthlyIncomeWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createFixedCostCategory(data: FixedCostCategoryCreateInput!): FixedCostCategory!
+  createFlexCostCategory(data: FlexCostCategoryCreateInput!): FlexCostCategory!
+  createRollingCostCategory(data: RollingCostCategoryCreateInput!): RollingCostCategory!
+  createMonthlyIncome(data: MonthlyIncomeCreateInput!): MonthlyIncome!
+  createCost(data: CostCreateInput!): Cost!
+  createFinancialMonth(data: FinancialMonthCreateInput!): FinancialMonth!
+  updateFixedCostCategory(data: FixedCostCategoryUpdateInput!, where: FixedCostCategoryWhereUniqueInput!): FixedCostCategory
+  updateFlexCostCategory(data: FlexCostCategoryUpdateInput!, where: FlexCostCategoryWhereUniqueInput!): FlexCostCategory
+  updateRollingCostCategory(data: RollingCostCategoryUpdateInput!, where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  updateMonthlyIncome(data: MonthlyIncomeUpdateInput!, where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  updateCost(data: CostUpdateInput!, where: CostWhereUniqueInput!): Cost
+  updateFinancialMonth(data: FinancialMonthUpdateInput!, where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  deleteFixedCostCategory(where: FixedCostCategoryWhereUniqueInput!): FixedCostCategory
+  deleteFlexCostCategory(where: FlexCostCategoryWhereUniqueInput!): FlexCostCategory
+  deleteRollingCostCategory(where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  deleteMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  deleteCost(where: CostWhereUniqueInput!): Cost
+  deleteFinancialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  upsertFixedCostCategory(where: FixedCostCategoryWhereUniqueInput!, create: FixedCostCategoryCreateInput!, update: FixedCostCategoryUpdateInput!): FixedCostCategory!
+  upsertFlexCostCategory(where: FlexCostCategoryWhereUniqueInput!, create: FlexCostCategoryCreateInput!, update: FlexCostCategoryUpdateInput!): FlexCostCategory!
+  upsertRollingCostCategory(where: RollingCostCategoryWhereUniqueInput!, create: RollingCostCategoryCreateInput!, update: RollingCostCategoryUpdateInput!): RollingCostCategory!
+  upsertMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!, create: MonthlyIncomeCreateInput!, update: MonthlyIncomeUpdateInput!): MonthlyIncome!
+  upsertCost(where: CostWhereUniqueInput!, create: CostCreateInput!, update: CostUpdateInput!): Cost!
+  upsertFinancialMonth(where: FinancialMonthWhereUniqueInput!, create: FinancialMonthCreateInput!, update: FinancialMonthUpdateInput!): FinancialMonth!
+  updateManyFixedCostCategories(data: FixedCostCategoryUpdateManyMutationInput!, where: FixedCostCategoryWhereInput): BatchPayload!
+  updateManyFlexCostCategories(data: FlexCostCategoryUpdateManyMutationInput!, where: FlexCostCategoryWhereInput): BatchPayload!
+  updateManyRollingCostCategories(data: RollingCostCategoryUpdateManyMutationInput!, where: RollingCostCategoryWhereInput): BatchPayload!
+  updateManyMonthlyIncomes(data: MonthlyIncomeUpdateManyMutationInput!, where: MonthlyIncomeWhereInput): BatchPayload!
+  updateManyCosts(data: CostUpdateManyMutationInput!, where: CostWhereInput): BatchPayload!
+  updateManyFinancialMonths(data: FinancialMonthUpdateManyMutationInput!, where: FinancialMonthWhereInput): BatchPayload!
+  deleteManyFixedCostCategories(where: FixedCostCategoryWhereInput): BatchPayload!
+  deleteManyFlexCostCategories(where: FlexCostCategoryWhereInput): BatchPayload!
+  deleteManyRollingCostCategories(where: RollingCostCategoryWhereInput): BatchPayload!
+  deleteManyMonthlyIncomes(where: MonthlyIncomeWhereInput): BatchPayload!
+  deleteManyCosts(where: CostWhereInput): BatchPayload!
+  deleteManyFinancialMonths(where: FinancialMonthWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum PrismaDatabase {
+  default
+}
+
+type Query {
+  fixedCostCategories(where: FixedCostCategoryWhereInput, orderBy: FixedCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FixedCostCategory]!
+  flexCostCategories(where: FlexCostCategoryWhereInput, orderBy: FlexCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FlexCostCategory]!
+  rollingCostCategories(where: RollingCostCategoryWhereInput, orderBy: RollingCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RollingCostCategory]!
+  monthlyIncomes(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MonthlyIncome]!
+  costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost]!
+  financialMonths(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FinancialMonth]!
+  fixedCostCategory(where: FixedCostCategoryWhereUniqueInput!): FixedCostCategory
+  flexCostCategory(where: FlexCostCategoryWhereUniqueInput!): FlexCostCategory
+  rollingCostCategory(where: RollingCostCategoryWhereUniqueInput!): RollingCostCategory
+  monthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
+  cost(where: CostWhereUniqueInput!): Cost
+  financialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  fixedCostCategoriesConnection(where: FixedCostCategoryWhereInput, orderBy: FixedCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FixedCostCategoryConnection!
+  flexCostCategoriesConnection(where: FlexCostCategoryWhereInput, orderBy: FlexCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FlexCostCategoryConnection!
+  rollingCostCategoriesConnection(where: RollingCostCategoryWhereInput, orderBy: RollingCostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RollingCostCategoryConnection!
+  monthlyIncomesConnection(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MonthlyIncomeConnection!
+  costsConnection(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CostConnection!
+  financialMonthsConnection(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FinancialMonthConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type RollingCostCategory implements Node {
+  id: ID!
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+"""A connection to a list of items."""
+type RollingCostCategoryConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RollingCostCategoryEdge]!
+  aggregate: AggregateRollingCostCategory!
+}
+
+input RollingCostCategoryCreateInput {
+  id: ID
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+"""An edge in a connection."""
+type RollingCostCategoryEdge {
+  """The item at the end of the edge."""
+  node: RollingCostCategory!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RollingCostCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  monthlyLimit_ASC
+  monthlyLimit_DESC
+  totalLimit_ASC
+  totalLimit_DESC
+}
+
+type RollingCostCategoryPreviousValues {
+  id: ID!
+  name: String!
+  monthlyLimit: Float!
+  totalLimit: Float!
+}
+
+type RollingCostCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: RollingCostCategory
+  updatedFields: [String!]
+  previousValues: RollingCostCategoryPreviousValues
+}
+
+input RollingCostCategorySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RollingCostCategorySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RollingCostCategorySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RollingCostCategorySubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RollingCostCategoryWhereInput
+}
+
+input RollingCostCategoryUpdateInput {
+  name: String
+  monthlyLimit: Float
+  totalLimit: Float
+}
+
+input RollingCostCategoryUpdateManyMutationInput {
+  name: String
+  monthlyLimit: Float
+  totalLimit: Float
+}
+
+input RollingCostCategoryWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RollingCostCategoryWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RollingCostCategoryWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RollingCostCategoryWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  monthlyLimit: Float
+
+  """All values that are not equal to given value."""
+  monthlyLimit_not: Float
+
+  """All values that are contained in given list."""
+  monthlyLimit_in: [Float!]
+
+  """All values that are not contained in given list."""
+  monthlyLimit_not_in: [Float!]
+
+  """All values less than the given value."""
+  monthlyLimit_lt: Float
+
+  """All values less than or equal the given value."""
+  monthlyLimit_lte: Float
+
+  """All values greater than the given value."""
+  monthlyLimit_gt: Float
+
+  """All values greater than or equal the given value."""
+  monthlyLimit_gte: Float
+  totalLimit: Float
+
+  """All values that are not equal to given value."""
+  totalLimit_not: Float
+
+  """All values that are contained in given list."""
+  totalLimit_in: [Float!]
+
+  """All values that are not contained in given list."""
+  totalLimit_not_in: [Float!]
+
+  """All values less than the given value."""
+  totalLimit_lt: Float
+
+  """All values less than or equal the given value."""
+  totalLimit_lte: Float
+
+  """All values greater than the given value."""
+  totalLimit_gt: Float
+
+  """All values greater than or equal the given value."""
+  totalLimit_gte: Float
+}
+
+input RollingCostCategoryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Subscription {
+  fixedCostCategory(where: FixedCostCategorySubscriptionWhereInput): FixedCostCategorySubscriptionPayload
+  flexCostCategory(where: FlexCostCategorySubscriptionWhereInput): FlexCostCategorySubscriptionPayload
+  rollingCostCategory(where: RollingCostCategorySubscriptionWhereInput): RollingCostCategorySubscriptionPayload
+  monthlyIncome(where: MonthlyIncomeSubscriptionWhereInput): MonthlyIncomeSubscriptionPayload
+  cost(where: CostSubscriptionWhereInput): CostSubscriptionPayload
+  financialMonth(where: FinancialMonthSubscriptionWhereInput): FinancialMonthSubscriptionPayload
+}

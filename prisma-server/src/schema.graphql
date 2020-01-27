@@ -1,0 +1,19 @@
+# import CostCreateInput from './generated/prisma.graphql'
+# import FlexCostCategory from './generated/prisma.graphql'
+# import FixedCostCategory from './generated/prisma.graphql'
+# import MonthlyIncome from './generated/prisma.graphql'
+
+type Query {
+  getAllFlexCategoriesBetweenTimes(timeStart: DateTime!, timeEnd: DateTime!): [FlexCostCategory!]
+  getAllFixedCategories: [FixedCostCategory!]
+  getMonthlyIncomes: [MonthlyIncome!]
+}
+
+type Mutation {
+  createCost(data: CostCreateInput!): Cost!
+  createFixedCostCategory(data: FixedCostCategoryCreateInput!): FixedCostCategory!
+  deleteFixedCostCategory(id: ID!): FixedCostCategory!
+  createFlexCostCategory(data: FlexCostCategoryCreateInput!): FlexCostCategory!
+  deleteFlexCostCategory(id: ID!): FlexCostCategory!
+  upsertMonthlyIncome(newincome: MonthlyIncomeCreateInput!, updateincome: MonthlyIncomeUpdateInput!, id: ID): MonthlyIncome!
+}
