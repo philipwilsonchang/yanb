@@ -1,5 +1,3 @@
-import { FlexCostCategory } from './stateTypes';
-
 export interface IGlobalState {
 	budgetedAmount: number,
 };

@@ -16,7 +16,7 @@ interface ISpendingAdderProps {
 	selectedCategory: FlexCostCategory,
 	categorySpent: number,
 	changeCategory(category: FlexCostCategory): void,
-	amount: number,
+	amount: number | undefined,
 	changeAmount(newAmount: number): void,
 	description: string,
 	changeDescription(newDesc: string): void,
@@ -40,11 +40,14 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 					    </Dropdown.Menu>
 					</Dropdown>
 					<Col>
-						<Form.Control value={amount.toString()} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
+						<Form.Control placeholder="Amount" value={amount ? amount.toString() : ""} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
 					</Col>
 				</Row>
+				&nbsp;
 				<Row>
-					<Form.Control value={description} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeDescription(e.currentTarget.value as string)} />
+					<Col>
+						<Form.Control placeholder="Description" value={description} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeDescription(e.currentTarget.value as string)} />
+					</Col>
 				</Row>
 				<Row>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import SpendingAdder from '../components/SpendingAdder';
@@ -16,8 +16,8 @@ const dummyCategory: FlexCostCategory = {
 };
 
 const SpendingAdderContainer: React.FC = () => {
-	const [amount, setAmount] = useState(0);
-	const [description, setDescription] = useState("")
+	const [amount, setAmount] = useState<number | undefined>();
+	const [description, setDescription] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
 	const today = new Date();
@@ -29,10 +29,22 @@ const SpendingAdderContainer: React.FC = () => {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
 		}
-	})
+	});
 	const [addCost] = useMutation(CREATE_COST, {
 		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
-	})
+	});
+
+	useEffect(() => {
+		if (categories && selectedCategory.id !== 'abc') {
+			const newSelectedCategory = categories.flexCostCategories.find((cat: FlexCostCategory): boolean => (cat.id === selectedCategory.id));
+			if (newSelectedCategory) {
+				setSelectedCategory(newSelectedCategory);
+			} else {
+				setSelectedCategory(dummyCategory);
+			}
+		}
+	// eslint-disable-next-line
+	}, [categories])
 
 	const submitSpending = async () => {
 		await addCost({
@@ -52,7 +64,8 @@ const SpendingAdderContainer: React.FC = () => {
 	};
 
 	const clearInput = () => {
-		setAmount(0);
+		setAmount(undefined);
+		setDescription("");
 		setSelectedCategory(categories ? categories.flexCostCategories[0] : dummyCategory);
 	};
 
