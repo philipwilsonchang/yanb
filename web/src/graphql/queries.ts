@@ -43,9 +43,35 @@ export const GET_ALL_FLEX_CATEGORIES = gql`
       id
       name
       limit
+      costs {
+        id
+        amount
+        description
+      }
     }
   }
 `;
+
+export const GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES = gql`
+  query getAllFlexCategoriesBetweenTimes($timeStart: DateTime!, $timeEnd: DateTime!) {
+    flexCostCategories( where: { costs_every: { createdAt_gte: $timeStart, createdAt_lte: $timeEnd } } ) {
+      id
+      name
+      limit
+      costs {
+        id
+        amount
+        description
+        createdAt
+        category {
+          id
+          name
+          limit
+        }
+      }
+    }
+  }
+`
 
 export interface FlexCostCategoriesReturn {
 	flexCostCategories: FlexCostCategory[]

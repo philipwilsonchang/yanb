@@ -37,7 +37,7 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 			  </thead>
 			  <tbody>
 			  	{costs.map(cost => 
-			  		(<tr key={cost.name}>
+			  		(<tr key={`fixlist-${cost.name}`}>
 				      <td style={{ textAlign: 'center', width: '25px' }}>
 				      	<Button variant="outline-danger" onClick={() => removeCost(cost.id)}>
 				      		<FaTrashAlt />

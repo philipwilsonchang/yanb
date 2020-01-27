@@ -8,6 +8,7 @@ type FlexCostCategory {
   id: ID! @id
   name: String! @unique
   limit: Float!
+  costs: [Cost!] @relation(name: "CostsByCategory")
 }
 
 type RollingCostCategory {
@@ -27,7 +28,7 @@ type Cost {
   amount: Float!
   description: String!
   createdAt: DateTime! @createdAt 
-  category: FlexCostCategory!
+  category: FlexCostCategory! @relation(name: "CostsByCategory")
 }
 
 type FinancialMonth {

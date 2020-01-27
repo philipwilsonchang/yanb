@@ -7,7 +7,11 @@ export const CREATE_COST = gql`
       amount
       description
       createdAt
-      category
+      category {
+        id
+        name
+        limit
+      }
     }
   }
 `;

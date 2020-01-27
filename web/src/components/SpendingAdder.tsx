@@ -35,7 +35,7 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 					    </Dropdown.Toggle>
 					    <Dropdown.Menu>
 					    	{categories.map(cat => (
-					    		<Dropdown.Item key={cat.id} eventKey={cat.name}>{cat.name}</Dropdown.Item>
+					    		<Dropdown.Item key={`costdropdown-${cat.id}`} eventKey={cat.name}>{cat.name}</Dropdown.Item>
 					    	))}
 					    </Dropdown.Menu>
 					</Dropdown>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import SpendingAdder from '../components/SpendingAdder';
 import { CREATE_COST } from '../graphql/mutations'
-import { useGlobalState } from '../state/useGlobalState';
-import { ActionType } from '../state/reducer';
+import { 
+	FlexCostCategoriesReturn,
+	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES } from '../graphql/queries'
 import { FlexCostCategory } from '../state/stateTypes';
 
 const dummyCategory: FlexCostCategory = {
@@ -15,14 +16,22 @@ const dummyCategory: FlexCostCategory = {
 };
 
 const SpendingAdderContainer: React.FC = () => {
-	const { state, dispatch } = useGlobalState();
-	const { categoryList } = state;	
 	const [amount, setAmount] = useState(0);
 	const [description, setDescription] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState(dummyCategory);
 
+	const today = new Date();
+	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+	const { data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, {
+		variables: {
+			timeStart: firstDay.toISOString(),
+			timeEnd: lastDay.toISOString(),
+		}
+	})
 	const [addCost] = useMutation(CREATE_COST, {
-		refetchQueries: ["getAllCostsBetweenTimes"]
+		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
 	})
 
 	const submitSpending = async () => {
@@ -32,31 +41,39 @@ const SpendingAdderContainer: React.FC = () => {
 					amount: amount, 
 					description: description,
 					category: {
-						connect: { 
-							name: selectedCategory.name }
-					}
+						connect: {
+							id: selectedCategory.id,
+						}
+					},
 				}
 			}
-		});
-		dispatch({
-			type: ActionType.AddFlexCost,
-			payload: { name: selectedCategory.name, amount: amount }
 		});
 		clearInput();
 	};
 
 	const clearInput = () => {
 		setAmount(0);
-		setSelectedCategory(categoryList[0]);
+		setSelectedCategory(categories ? categories.flexCostCategories[0] : dummyCategory);
 	};
+
+	const totalCostsInCategory = (category: FlexCostCategory): number => {
+		if (category.costs) {
+			const totalCost = category.costs.reduce((acc, currentValue) => {
+				return acc + currentValue.amount;
+			}, 0);
+			return totalCost;
+		} else {
+			return 0;
+		}
+	}
 
 	return (
 		<SpendingAdder
-			categories={categoryList}
+			categories={categories ? categories.flexCostCategories : []}
 			selectedCategory={selectedCategory}
 			amount={amount}
 			description={description}
-			categorySpent={selectedCategory.spent || 0}
+			categorySpent={totalCostsInCategory(selectedCategory)}
 			changeCategory={setSelectedCategory}
 			changeAmount={setAmount}
 			changeDescription={setDescription}

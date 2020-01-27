@@ -37,7 +37,7 @@ const FlexCategoryList: React.FC<IFlexCategoryListProps> = ({ budgetedAmount, ca
 			  </thead>
 			  <tbody>
 			  	{categories.map(category => 
-			  		(<tr key={category.name}>
+			  		(<tr key={`flexlist-${category.name}`}>
 				      <td style={{ textAlign: 'center', width: '25px' }}>
 				      	<Button variant="outline-danger" onClick={() => removeCategory(category.id)}>
 				      		<FaTrashAlt />

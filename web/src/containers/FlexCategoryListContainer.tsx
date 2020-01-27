@@ -6,16 +6,27 @@ import { CREATE_FLEX_CATEGORY, DELETE_FLEX_CATEGORY } from '../graphql/mutations
 import { 
 	GET_MONTHLY_INCOMES, 
 	MonthlyIncomesReturn, 
+	FlexCostCategoriesReturn,
+	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES,
 } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
-import { ActionType } from '../state/reducer';
 
 const FlexCategoryListContainer: React.FC = () => {
-	const { state, dispatch } = useGlobalState();
-	const { budgetedAmount, categoryList } = state;
+	const { state } = useGlobalState();
+	const { budgetedAmount } = state;
 	const [newCostName, setNewCostName] = useState("");
 	const [newCostLimit, setNewCostLimit] = useState(0);
 
+	const today = new Date();
+	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+	const { data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, {
+		variables: {
+			timeStart: firstDay.toISOString(),
+			timeEnd: lastDay.toISOString(),
+		}
+	})
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 
 	const [createFlexCategory] = useMutation(CREATE_FLEX_CATEGORY, {
@@ -31,10 +42,6 @@ const FlexCategoryListContainer: React.FC = () => {
 				id: id
 			}
 		})
-		dispatch({
-			type: ActionType.DeleteFlexCategory,
-			payload: id
-		});
 	};
 
 	const addNewCostToList = async () => {
@@ -44,17 +51,13 @@ const FlexCategoryListContainer: React.FC = () => {
 					cat: { name: newCostName, limit: newCostLimit }
 				}
 			})
-			dispatch({
-				type: ActionType.AddFlexCategory,
-				payload: { name: newCostName, limit: newCostLimit, spent: 0 }
-			});
 		}
 	};
 
 	return (
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
-			categories={categoryList}
+			categories={categories ? categories.flexCostCategories : []}
 			monthlyIncome={(incomeReturn && incomeReturn.monthlyIncomes.length > 0) ? incomeReturn.monthlyIncomes[0].amount : 0}
 			newName={newCostName}
 			newLimit={newCostLimit}
