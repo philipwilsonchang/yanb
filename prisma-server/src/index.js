@@ -3,18 +3,24 @@ const { Prisma } = require('prisma-binding')
 
 const resolvers = {
   Query: {
-    getAllFlexCategoriesBetweenTimes: (_, args, context, info) => {
-      return context.prisma.query.flexCostCategories(
-        {
+    getAllFlexCategoriesBetweenTimes: async (_, args, context, info) => {
+      const flexCategories = await context.prisma.query.flexCostCategories();
+      const spentFlexCategories = flexCategories.map( async (category) => {
+        const costsPerCategory = await context.prisma.query.costs({
           where: {
-            costs_every: {
-              createdAt_gte: args.timeStart,
-              createdAt_lte: args.timeEnd,
-            }
-          },
-          info,
-        }
-      )
+            category: {
+              id: category.id,
+            },
+            createdAt_gte: args.timeStart,
+            createdAt_lte: args.timeEnd,
+          }
+        });
+        const totalSpent = costsPerCategory.reduce((acc, cost) => {
+          return acc + cost.amount;
+        }, 0);
+        return { ...category, spent: totalSpent }
+      })
+      return spentFlexCategories
     },
     getAllFixedCategories: (_, args, context, info) => {
       return context.prisma.query.fixedCostCategories()
@@ -27,11 +33,13 @@ const resolvers = {
     createCost: (_, args, context, info) => {
       return context.prisma.mutation.createCost({
         data: args.newcost,
+        info,
       })
     },
     createFixedCostCategory: (_, args, context, info) => {
       return context.prisma.mutation.createFixedCostCategory({
         data: args.cat,
+        info,
       })
     },
     deleteFixedCostCategory: (_, args, context, info) => {
@@ -39,7 +47,8 @@ const resolvers = {
         {
           where: {
             id: args.id,
-          }
+          },
+          info,
         }
       )
     },
@@ -47,6 +56,7 @@ const resolvers = {
       return context.prisma.mutation.createFlexCostCategory(
         {
           data: args.cat,
+          info,
         }
       )
     },
@@ -55,7 +65,8 @@ const resolvers = {
         {
           where: {
             id: args.id,
-          }
+          },
+          info,
         }
       )
     },
@@ -66,6 +77,7 @@ const resolvers = {
         },
         create: args.newincome,
         update: args.updateincome,
+        info,
       })
     },
   }

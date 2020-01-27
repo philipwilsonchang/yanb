@@ -3,8 +3,15 @@
 # import FixedCostCategory from './generated/prisma.graphql'
 # import MonthlyIncome from './generated/prisma.graphql'
 
+type FlexCostCategoryWithSpent {
+  id: ID!
+  name: String!
+  limit: Float!
+  spent: Float!
+}
+
 type Query {
-  getAllFlexCategoriesBetweenTimes(timeStart: DateTime!, timeEnd: DateTime!): [FlexCostCategory!]
+  getAllFlexCategoriesBetweenTimes(timeStart: DateTime!, timeEnd: DateTime!): [FlexCostCategoryWithSpent!]
   getAllFixedCategories: [FixedCostCategory!]
   getMonthlyIncomes: [MonthlyIncome!]
 }
