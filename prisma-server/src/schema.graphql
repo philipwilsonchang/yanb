@@ -1,7 +1,11 @@
 # import CostCreateInput from './generated/prisma.graphql'
 # import FlexCostCategory from './generated/prisma.graphql'
+# import FlexCostCategoryCreateInput from './generated/prisma.graphql'
 # import FixedCostCategory from './generated/prisma.graphql'
+# import FixedCostCategoryCreateInput from './generated/prisma.graphql'
 # import MonthlyIncome from './generated/prisma.graphql'
+# import MonthlyIncomeCreateInput from './generated/prisma.graphql'
+
 
 type FlexCostCategoryWithSpent {
   id: ID!

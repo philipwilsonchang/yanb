@@ -32,18 +32,18 @@ const resolvers = {
   Mutation: {
     createCost: (_, args, context, info) => {
       return context.prisma.mutation.createCost({
-        data: args.newcost,
+        data: args.data,
         info,
       })
     },
     createFixedCostCategory: (_, args, context, info) => {
       return context.prisma.mutation.createFixedCostCategory({
-        data: args.cat,
+        data: args.data,
         info,
       })
     },
     deleteFixedCostCategory: (_, args, context, info) => {
-      return context.prisma.mutation.deleteFixedCategory(
+      return context.prisma.mutation.deleteFixedCostCategory(
         {
           where: {
             id: args.id,
@@ -53,12 +53,10 @@ const resolvers = {
       )
     },
     createFlexCostCategory: (_, args, context, info) => {
-      return context.prisma.mutation.createFlexCostCategory(
-        {
-          data: args.cat,
-          info,
-        }
-      )
+      return context.prisma.mutation.createFlexCostCategory({
+        data: args.data,
+        info,
+      })
     },
     deleteFlexCostCategory: (_, args, context, info) => {
       return context.prisma.mutation.deleteFlexCostCategory(
