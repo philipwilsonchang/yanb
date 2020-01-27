@@ -3,7 +3,10 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import FlexCategoryList from '../components/FlexCategoryList';
 import { CREATE_FLEX_CATEGORY, DELETE_FLEX_CATEGORY } from '../graphql/mutations';
-import { GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries';
+import { 
+	GET_MONTHLY_INCOMES, 
+	MonthlyIncomesReturn, 
+} from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
 import { ActionType } from '../state/reducer';
 
@@ -14,6 +17,7 @@ const FlexCategoryListContainer: React.FC = () => {
 	const [newCostLimit, setNewCostLimit] = useState(0);
 
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
+
 	const [createFlexCategory] = useMutation(CREATE_FLEX_CATEGORY, {
 		refetchQueries: ["getAllFlexCategories"]
 	});
