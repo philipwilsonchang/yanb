@@ -25,7 +25,7 @@ const CategoryHUDContainer: React.FC = () => {
 					<br />
 					<CategoryDisplay 
 						name={category.name}
-						limit={category.limit}
+						limit={category.monthlyLimit}
 						spent={category.spent ? category.spent : 0}
 					/>
 				</div>

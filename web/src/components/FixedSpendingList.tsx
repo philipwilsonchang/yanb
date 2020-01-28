@@ -44,7 +44,7 @@ const FixedSpendingList: React.FC<IFixedSpendingListProps> = ({ costs, newName, 
 				      	</Button>
 				      </td>
 				      <td>{cost.name}</td>
-				      <td>${cost.amount.toFixed(2)}</td>
+				      <td>${cost.monthlyLimit.toFixed(2)}</td>
 			    	</tr>)
 			  	)} 
 			  </tbody>

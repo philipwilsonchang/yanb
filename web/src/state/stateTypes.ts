@@ -1,21 +1,28 @@
-export interface FixedCostCategory {
-	id: string
-	name: string
-	amount: number
+export enum CostCategoryType {
+	FLEX = "FLEX",
+	FIXED = "FIXED",
+	ROLLING = "ROLLING"
 }
 
-export interface FlexCostCategory {
-	id: string
-	name: string
-	limit: number
-	spent?: number
-}
-
-export interface RollingCostCategory {
+export interface CostCategory {
 	id: string
 	name: string
 	monthlyLimit: number
+	type: string
+	createdAt?: string
+}
+
+export interface FixedCostCategory extends CostCategory {
+
+}
+
+export interface FlexCostCategory extends CostCategory {
+	spent?: number
+}
+
+export interface RollingCostCategory extends CostCategory {
 	totalLimit: number
+	spent?: number
 }
 
 export interface MonthlyIncome {

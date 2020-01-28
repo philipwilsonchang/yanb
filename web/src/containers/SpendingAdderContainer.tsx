@@ -11,7 +11,8 @@ import { FlexCostCategory } from '../state/stateTypes';
 const dummyCategory: FlexCostCategory = {
 	id: 'abc',
 	name: "Select category...",
-	limit: 0,
+	type: "FLEX",
+	monthlyLimit: 0,
 	spent: 0
 };
 

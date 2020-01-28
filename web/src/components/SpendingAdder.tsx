@@ -57,7 +57,7 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCate
 					<div>
 						<CategoryDisplay 
 							name={selectedCategory.name} 
-							limit={selectedCategory.limit} 
+							limit={selectedCategory.monthlyLimit} 
 							spent={categorySpent} />
 						<br />
 					</div>

@@ -10,48 +10,42 @@ export const CREATE_COST = gql`
       category {
         id
         name
-        limit
+        monthlyLimit
+        type
       }
     }
   }
 `;
 
-export const CREATE_FIXED_CATEGORY = gql`
-  mutation createFixedCostCategory($cat: FixedCostCategoryCreateInput!) {
-    createFixedCostCategory(data: $cat) {
+export const DELETE_COST = gql`
+  mutation deleteCost($id: ID!) {
+    deleteCost(id: $id) {
       id
-      name
       amount
+      description
+      createdAt
     }
   }
 `;
 
-export const DELETE_FIXED_CATEGORY = gql`
-  mutation deleteFixedCostCategory($id: ID!) {
-    deleteFixedCostCategory(id: $id) {
+export const CREATE_COST_CATEGORY = gql`
+  mutation createCostCategory($cat: CostCategoryCreateInput!) {
+    createCostCategory(data: $cat) {
       id
       name
-      amount
+      monthlyLimit
+      type
     }
   }
 `;
 
-export const CREATE_FLEX_CATEGORY = gql`
-  mutation createFlexCostCategory($cat: FlexCostCategoryCreateInput!) {
-    createFlexCostCategory(data: $cat) {
+export const DELETE_COST_CATEGORY = gql`
+  mutation deleteCostCategory($id: ID!) {
+    deleteCostCategory(id: $id) {
       id
       name
-      limit
-    }
-  }
-`;
-
-export const DELETE_FLEX_CATEGORY = gql`
-  mutation deleteFlexCostCategory($id: ID!) {
-    deleteFlexCostCategory(id: $id) {
-      id
-      name
-      limit
+      monthlyLimit
+      type
     }
   }
 `;

@@ -44,7 +44,7 @@ const FlexCategoryList: React.FC<IFlexCategoryListProps> = ({ budgetedAmount, ca
 				      	</Button>
 				      </td>
 				      <td>{category.name}</td>
-				      <td>${category.limit.toFixed(2)}</td>
+				      <td>${category.monthlyLimit.toFixed(2)}</td>
 			    	</tr>)
 			  	)} 
 			  </tbody>

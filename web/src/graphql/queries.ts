@@ -6,7 +6,7 @@ export const GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES = gql`
     getAllFlexCategoriesBetweenTimes(timeStart: $timeStart, timeEnd: $timeEnd) {
       id
       name
-      limit
+      monthlyLimit
       spent
     }
   }
@@ -21,7 +21,7 @@ export const GET_ALL_FIXED_CATEGORIES = gql`
     getAllFixedCategories {
       id
       name
-      amount
+      monthlyLimit
     }
   }
 `;
@@ -29,6 +29,18 @@ export const GET_ALL_FIXED_CATEGORIES = gql`
 export interface FixedCostCategoriesReturn {
   getAllFixedCategories: FixedCostCategory[]
 }
+
+export const GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES = gql`
+  query getAllRollingCategoriesBetweenTimes($timeStart: DateTime!, $timeEnd: DateTime!) {
+    getAllRollingCategoriesBetweenTimes(timeStart: $timeStart, timeEnd: $timeEnd) {
+      id
+      name
+      monthlyLimit
+      totalLimit
+      spent
+    }
+  }
+`
 
 export const GET_MONTHLY_INCOMES = gql`
   query getMonthlyIncomes {

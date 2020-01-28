@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import FixedSpendingList from '../components/FixedSpendingList';
-import { CREATE_FIXED_CATEGORY, DELETE_FIXED_CATEGORY } from '../graphql/mutations';
+import { CREATE_COST_CATEGORY, DELETE_COST_CATEGORY } from '../graphql/mutations';
 import { 
 	GET_ALL_FIXED_CATEGORIES, 
 	FixedCostCategoriesReturn, 
@@ -33,10 +33,10 @@ const FixedSpendingListContainer: React.FC = () => {
 		}
 	});
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
-	const [createFixedCategory] = useMutation(CREATE_FIXED_CATEGORY, {
+	const [createFixedCategory] = useMutation(CREATE_COST_CATEGORY, {
 		refetchQueries: ["getAllFixedCategories"]
 	});
-	const [deleteFixedCategory] = useMutation(DELETE_FIXED_CATEGORY, {
+	const [deleteFixedCategory] = useMutation(DELETE_COST_CATEGORY, {
 		refetchQueries: ["getAllFixedCategories"]
 	});
 	
@@ -45,10 +45,10 @@ const FixedSpendingListContainer: React.FC = () => {
 		let totalBudgetedAmount = 0;
 		if (flexReturn && fixedReturn) {
 			flexReturn.getAllFlexCategoriesBetweenTimes.forEach((cat: FlexCostCategory) => {
-				totalBudgetedAmount += cat.limit;
+				totalBudgetedAmount += cat.monthlyLimit;
 			})
 			fixedReturn.getAllFixedCategories.forEach((cat: FixedCostCategory) => {
-				totalBudgetedAmount += cat.amount;
+				totalBudgetedAmount += cat.monthlyLimit;
 			})
 		}
 		dispatch({
