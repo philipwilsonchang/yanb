@@ -5,7 +5,6 @@ import CategoryDisplay from '../components/CategoryDisplay';
 import { 
 	FlexCostCategoriesReturn,
 	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES } from '../graphql/queries'
-import { FlexCostCategory } from '../state/stateTypes';
 
 const CategoryHUDContainer: React.FC = () => {
 	const today = new Date();
@@ -19,26 +18,15 @@ const CategoryHUDContainer: React.FC = () => {
 		}
 	})
 
-	const totalCostsInCategory = (category: FlexCostCategory): number => {
-		if (category.costs) {
-			const totalCost = category.costs.reduce((acc, currentValue) => {
-				return acc + currentValue.amount;
-			}, 0);
-			return totalCost;
-		} else {
-			return 0;
-		}
-	}
-
 	return (
 		<div>
-			{categories && categories.flexCostCategories.map((category) => (
+			{categories && categories.getAllFlexCategoriesBetweenTimes.map((category) => (
 				<div key={`hudlist-${category.name}`}>
 					<br />
 					<CategoryDisplay 
 						name={category.name}
 						limit={category.limit}
-						spent={totalCostsInCategory(category)}
+						spent={category.spent ? category.spent : 0}
 					/>
 				</div>
 			))}

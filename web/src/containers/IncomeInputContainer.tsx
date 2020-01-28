@@ -11,7 +11,7 @@ const IncomeInputContainer: React.FC = () => {
 
 	const { data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES); 
 	const [upsertIncome] = useMutation(UPSERT_MONTHLY_INCOME, {
-		refetchQueries: ["monthlyIncomes"]
+		refetchQueries: ["getMonthlyIncomes"]
 	})
 
 	const changeAmount = (amount: number) => {
@@ -24,7 +24,7 @@ const IncomeInputContainer: React.FC = () => {
 				variables: {
 					newincome: { id: "0", amount: tempIncome },
 					updateincome: { amount: tempIncome },
-					id: (incomesResult && incomesResult.monthlyIncomes[0]) ? incomesResult.monthlyIncomes[0].id : 0
+					id: (incomesResult && incomesResult.getMonthlyIncomes[0]) ? incomesResult.getMonthlyIncomes[0].id : 0
 				}
 			})
 			setTempIncome(undefined)
@@ -35,8 +35,8 @@ const IncomeInputContainer: React.FC = () => {
 		if (tempIncome) {
 			return { id: "0", amount: tempIncome };
 		} else {
-			if (incomesResult && incomesResult.monthlyIncomes[0]) {
-				return incomesResult.monthlyIncomes[0];
+			if (incomesResult && incomesResult.getMonthlyIncomes[0]) {
+				return incomesResult.getMonthlyIncomes[0];
 			} else {
 				return { id: "0", amount: 0 };
 			}

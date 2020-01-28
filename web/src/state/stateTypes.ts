@@ -9,7 +9,6 @@ export interface FlexCostCategory {
 	name: string
 	limit: number
 	spent?: number
-	costs?: Cost[]
 }
 
 export interface RollingCostCategory {

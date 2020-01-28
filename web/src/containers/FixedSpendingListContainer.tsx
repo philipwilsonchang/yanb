@@ -8,7 +8,7 @@ import {
 	FixedCostCategoriesReturn, 
 	GET_MONTHLY_INCOMES, 
 	MonthlyIncomesReturn,
-	GET_ALL_FLEX_CATEGORIES, 
+	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, 
 	FlexCostCategoriesReturn,
 } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
@@ -21,8 +21,17 @@ const FixedSpendingListContainer: React.FC = () => {
 	const [newCostName, setNewCostName] = useState("");
 	const [newCostAmount, setNewCostAmount] = useState(0);
 
+	const today = new Date();
+	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
 	const { data: fixedReturn } = useQuery<FixedCostCategoriesReturn>(GET_ALL_FIXED_CATEGORIES);
-	const { data: flexReturn } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES);
+	const { data: flexReturn } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, {
+		variables: {
+			timeStart: firstDay.toISOString(),
+			timeEnd: lastDay.toISOString(),
+		}
+	});
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 	const [createFixedCategory] = useMutation(CREATE_FIXED_CATEGORY, {
 		refetchQueries: ["getAllFixedCategories"]
@@ -35,10 +44,10 @@ const FixedSpendingListContainer: React.FC = () => {
 	useEffect(() => {
 		let totalBudgetedAmount = 0;
 		if (flexReturn && fixedReturn) {
-			flexReturn.flexCostCategories.forEach((cat: FlexCostCategory) => {
+			flexReturn.getAllFlexCategoriesBetweenTimes.forEach((cat: FlexCostCategory) => {
 				totalBudgetedAmount += cat.limit;
 			})
-			fixedReturn.fixedCostCategories.forEach((cat: FixedCostCategory) => {
+			fixedReturn.getAllFixedCategories.forEach((cat: FixedCostCategory) => {
 				totalBudgetedAmount += cat.amount;
 			})
 		}
@@ -71,8 +80,8 @@ const FixedSpendingListContainer: React.FC = () => {
 	return (
 		<FixedSpendingList 
 			budgetedAmount={budgetedAmount}
-			costs={fixedReturn ? fixedReturn.fixedCostCategories : []} 
-			monthlyIncome={(incomeReturn && incomeReturn.monthlyIncomes.length > 0) ? incomeReturn.monthlyIncomes[0].amount : 0}
+			costs={fixedReturn ? fixedReturn.getAllFixedCategories : []} 
+			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncomes.length > 0) ? incomeReturn.getMonthlyIncomes[0].amount : 0}
 			newName={newCostName} 
 			newAmount={newCostAmount} 
 			changeNewName={setNewCostName} 

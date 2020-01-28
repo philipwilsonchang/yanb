@@ -30,11 +30,17 @@ const resolvers = {
     }
   },
   Mutation: {
-    createCost: (_, args, context, info) => {
-      return context.prisma.mutation.createCost({
+    createCost: async (_, args, context, info) => {
+      const newCost = await context.prisma.mutation.createCost({
         data: args.data,
         info,
-      })
+      });
+      const costCategory = await context.prisma.query.flexCostCategory({
+        where: {
+          id: args.data.category.connect.id
+        }
+      });
+      return { ...newCost, category: costCategory };
     },
     createFixedCostCategory: (_, args, context, info) => {
       return context.prisma.mutation.createFixedCostCategory({

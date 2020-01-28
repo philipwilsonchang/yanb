@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const CREATE_COST = gql`
-  mutation newCost($newcost: CostCreateInput!) {
+  mutation createCost($newcost: CostCreateInput!) {
     createCost(data: $newcost) {
       id
       amount
@@ -17,7 +17,7 @@ export const CREATE_COST = gql`
 `;
 
 export const CREATE_FIXED_CATEGORY = gql`
-  mutation newFixedCategory($cat: FixedCostCategoryCreateInput!) {
+  mutation createFixedCostCategory($cat: FixedCostCategoryCreateInput!) {
     createFixedCostCategory(data: $cat) {
       id
       name
@@ -27,8 +27,8 @@ export const CREATE_FIXED_CATEGORY = gql`
 `;
 
 export const DELETE_FIXED_CATEGORY = gql`
-  mutation deleteFixedCategory($id: ID!) {
-    deleteFixedCostCategory(where: { id: $id }) {
+  mutation deleteFixedCostCategory($id: ID!) {
+    deleteFixedCostCategory(id: $id) {
       id
       name
       amount
@@ -37,7 +37,7 @@ export const DELETE_FIXED_CATEGORY = gql`
 `;
 
 export const CREATE_FLEX_CATEGORY = gql`
-  mutation createFlexCategory($cat: FlexCostCategoryCreateInput!) {
+  mutation createFlexCostCategory($cat: FlexCostCategoryCreateInput!) {
     createFlexCostCategory(data: $cat) {
       id
       name
@@ -47,8 +47,8 @@ export const CREATE_FLEX_CATEGORY = gql`
 `;
 
 export const DELETE_FLEX_CATEGORY = gql`
-  mutation deleteFlexCategory($id: ID!) {
-    deleteFlexCostCategory(where: { id: $id }) {
+  mutation deleteFlexCostCategory($id: ID!) {
+    deleteFlexCostCategory(id: $id) {
       id
       name
       limit
@@ -57,8 +57,8 @@ export const DELETE_FLEX_CATEGORY = gql`
 `;
 
 export const UPSERT_MONTHLY_INCOME = gql`
-  mutation upsertIncome($newincome: MonthlyIncomeCreateInput!, $updateincome: MonthlyIncomeUpdateInput!, $id: ID!) {
-    upsertMonthlyIncome(where: { id: $id }, create: $newincome, update: $updateincome) {
+  mutation upsertMonthlyIncome($newincome: MonthlyIncomeCreateInput!, $updateincome: MonthlyIncomeUpdateInput!, $id: ID!) {
+    upsertMonthlyIncome(newincome: $newincome, updateincome: $updateincome, id: $id) {
       id
       amount
     }

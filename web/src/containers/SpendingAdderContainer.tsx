@@ -36,7 +36,7 @@ const SpendingAdderContainer: React.FC = () => {
 
 	useEffect(() => {
 		if (categories && selectedCategory.id !== 'abc') {
-			const newSelectedCategory = categories.flexCostCategories.find((cat: FlexCostCategory): boolean => (cat.id === selectedCategory.id));
+			const newSelectedCategory = categories.getAllFlexCategoriesBetweenTimes.find((cat: FlexCostCategory): boolean => (cat.id === selectedCategory.id));
 			if (newSelectedCategory) {
 				setSelectedCategory(newSelectedCategory);
 			} else {
@@ -69,27 +69,16 @@ const SpendingAdderContainer: React.FC = () => {
 	const clearInput = () => {
 		setAmount("");
 		setDescription("");
-		setSelectedCategory(categories ? categories.flexCostCategories[0] : dummyCategory);
+		setSelectedCategory(categories ? categories.getAllFlexCategoriesBetweenTimes[0] : dummyCategory);
 	};
-
-	const totalCostsInCategory = (category: FlexCostCategory): number => {
-		if (category.costs) {
-			const totalCost = category.costs.reduce((acc, currentValue) => {
-				return acc + currentValue.amount;
-			}, 0);
-			return totalCost;
-		} else {
-			return 0;
-		}
-	}
 
 	return (
 		<SpendingAdder
-			categories={categories ? categories.flexCostCategories : []}
+			categories={categories ? categories.getAllFlexCategoriesBetweenTimes : []}
 			selectedCategory={selectedCategory}
 			amount={amount}
 			description={description}
-			categorySpent={totalCostsInCategory(selectedCategory)}
+			categorySpent={selectedCategory.spent || 0}
 			changeCategory={setSelectedCategory}
 			changeAmount={setAmount}
 			changeDescription={setDescription}

@@ -16,10 +16,10 @@ import { StateProvider } from './state/useGlobalState';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-const prismaAPI = 'http://localhost:4466';
+const api = 'http://localhost:4000';
 
 const client = new ApolloClient({
-  uri: prismaAPI,
+  uri: api,
 });
 
 const App: React.FC = () => {

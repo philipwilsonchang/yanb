@@ -30,10 +30,10 @@ const FlexCategoryListContainer: React.FC = () => {
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 
 	const [createFlexCategory] = useMutation(CREATE_FLEX_CATEGORY, {
-		refetchQueries: ["getAllFlexCategories"]
+		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
 	});
 	const [deleteFlexCategory] = useMutation(DELETE_FLEX_CATEGORY, {
-		refetchQueries: ["getAllFlexCategories"]
+		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
 	})
 
 	const removeCostFromList = async (id: string) => {
@@ -57,8 +57,8 @@ const FlexCategoryListContainer: React.FC = () => {
 	return (
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
-			categories={categories ? categories.flexCostCategories : []}
-			monthlyIncome={(incomeReturn && incomeReturn.monthlyIncomes.length > 0) ? incomeReturn.monthlyIncomes[0].amount : 0}
+			categories={categories ? categories.getAllFlexCategoriesBetweenTimes : []}
+			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncomes.length > 0) ? incomeReturn.getMonthlyIncomes[0].amount : 0}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}
