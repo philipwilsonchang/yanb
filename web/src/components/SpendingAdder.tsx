@@ -9,13 +9,14 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 import CategoryDisplay from './CategoryDisplay';
-import { FlexCostCategory } from '../state/stateTypes';
+import { FlexCostCategory, RollingCostCategory } from '../state/stateTypes';
 
 interface ISpendingAdderProps {
-	categories: FlexCostCategory[],
-	selectedCategory: FlexCostCategory,
+	flexCategories: FlexCostCategory[],
+	rollingCategories: RollingCostCategory[],
+	selectedCategory: FlexCostCategory | RollingCostCategory,
 	categorySpent: number,
-	changeCategory(category: FlexCostCategory): void,
+	changeCategory(category: FlexCostCategory | RollingCostCategory): void,
 	amount: string,
 	changeAmount(newAmount: string): void,
 	description: string,
@@ -23,19 +24,32 @@ interface ISpendingAdderProps {
 	submitFunc(): void,
 }
 
-const SpendingAdder: React.FC<ISpendingAdderProps> = ({ categories, selectedCategory, categorySpent, changeCategory, amount, changeAmount, description, changeDescription, submitFunc }) => {
+const SpendingAdder: React.FC<ISpendingAdderProps> = ({ flexCategories, rollingCategories, selectedCategory, categorySpent, changeCategory, amount, changeAmount, description, changeDescription, submitFunc }) => {
+	
+	const findCategoryByID = (e: any): FlexCostCategory | RollingCostCategory => {
+		const flexCat = flexCategories.filter(cat => (cat.id === e))
+		if (flexCat.length === 1) {
+			return flexCat[0]
+		}
+		const rollCat = rollingCategories.filter(cat => (cat.id === e))
+		return rollCat[0]
+	}
+	
 	return (
 		<Card>
 			<Card.Header>Add Spending Record</Card.Header>
 			<Card.Body className='card text-right'>
 				<Row>
-					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeCategory(categories.filter(cat => (cat.name === e))[0])}>
+					<Dropdown style={{ margin: '0px 0px 0px 15px' }} onSelect={(e: any) => changeCategory(findCategoryByID(e))}>
 					    <Dropdown.Toggle variant="success" id="dropdown-basic">
 					    	{selectedCategory.name}
 					    </Dropdown.Toggle>
 					    <Dropdown.Menu>
-					    	{categories.map(cat => (
-					    		<Dropdown.Item key={`costdropdown-${cat.id}`} eventKey={cat.name}>{cat.name}</Dropdown.Item>
+					    	{flexCategories.map(cat => (
+					    		<Dropdown.Item key={`costdropdown-${cat.id}`} eventKey={cat.id}>{cat.name}</Dropdown.Item>
+					    	))}
+								{rollingCategories.map(cat => (
+					    		<Dropdown.Item key={`costdropdown-${cat.id}`} eventKey={cat.id}>{cat.name}</Dropdown.Item>
 					    	))}
 					    </Dropdown.Menu>
 					</Dropdown>

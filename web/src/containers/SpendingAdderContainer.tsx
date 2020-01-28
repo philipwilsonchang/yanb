@@ -5,7 +5,10 @@ import SpendingAdder from '../components/SpendingAdder';
 import { CREATE_COST } from '../graphql/mutations'
 import { 
 	FlexCostCategoriesReturn,
-	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES } from '../graphql/queries'
+	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES,
+	RollingCostCategoriesReturn,
+	GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, 
+} from '../graphql/queries'
 import { FlexCostCategory } from '../state/stateTypes';
 
 const dummyCategory: FlexCostCategory = {
@@ -26,6 +29,12 @@ const SpendingAdderContainer: React.FC = () => {
 	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
 	const { data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, {
+		variables: {
+			timeStart: firstDay.toISOString(),
+			timeEnd: lastDay.toISOString(),
+		}
+	});
+	const { data: rollingCategories } = useQuery<RollingCostCategoriesReturn>(GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, {
 		variables: {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
@@ -75,7 +84,8 @@ const SpendingAdderContainer: React.FC = () => {
 
 	return (
 		<SpendingAdder
-			categories={categories ? categories.getAllFlexCategoriesBetweenTimes : []}
+			flexCategories={categories ? categories.getAllFlexCategoriesBetweenTimes : []}
+			rollingCategories={rollingCategories ? rollingCategories.getAllRollingCategoriesBetweenTimes : []}
 			selectedCategory={selectedCategory}
 			amount={amount}
 			description={description}

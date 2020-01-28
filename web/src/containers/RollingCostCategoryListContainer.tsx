@@ -6,8 +6,8 @@ import { CREATE_COST_CATEGORY, DELETE_COST_CATEGORY } from '../graphql/mutations
 import { 
 	GET_MONTHLY_INCOMES, 
 	MonthlyIncomesReturn, 
-	FlexCostCategoriesReturn,
-	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES,
+	RollingCostCategoriesReturn,
+	GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES,
 } from '../graphql/queries';
 import { CostCategoryType } from '../state/stateTypes'
 import { useGlobalState } from '../state/useGlobalState';
@@ -22,7 +22,7 @@ const FlexCategoryListContainer: React.FC = () => {
 	const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 	const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-	const { data: categories } = useQuery<FlexCostCategoriesReturn>(GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, {
+	const { data: categories } = useQuery<RollingCostCategoriesReturn>(GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, {
 		variables: {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
@@ -30,15 +30,15 @@ const FlexCategoryListContainer: React.FC = () => {
 	})
 	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
 
-	const [createFlexCategory] = useMutation(CREATE_COST_CATEGORY, {
-		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
+	const [createRollingCategory] = useMutation(CREATE_COST_CATEGORY, {
+		refetchQueries: ["getAllRollingCategoriesBetweenTimes"]
 	});
-	const [deleteFlexCategory] = useMutation(DELETE_COST_CATEGORY, {
-		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
+	const [deleteRollingCategory] = useMutation(DELETE_COST_CATEGORY, {
+		refetchQueries: ["getAllRollingCategoriesBetweenTimes"]
 	})
 
 	const removeCostFromList = async (id: string) => {
-		await deleteFlexCategory({
+		await deleteRollingCategory({
 			variables: {
 				id: id
 			}
@@ -47,13 +47,13 @@ const FlexCategoryListContainer: React.FC = () => {
 
 	const addNewCostToList = async () => {
 		if (newCostName !== "" && newCostLimit !== 0) {
-			await createFlexCategory({
+			await createRollingCategory({
 				variables: {
 					cat: { 
-						name: newCostName, 
-						monthlyLimit: newCostLimit, 
-						type: CostCategoryType.FLEX 
-					}
+            name: newCostName, 
+            monthlyLimit: newCostLimit,
+            type: CostCategoryType.ROLLING, 
+          }
 				}
 			})
 		}
@@ -62,7 +62,7 @@ const FlexCategoryListContainer: React.FC = () => {
 	return (
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
-			categories={categories ? categories.getAllFlexCategoriesBetweenTimes : []}
+			categories={categories ? categories.getAllRollingCategoriesBetweenTimes : []}
 			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncomes.length > 0) ? incomeReturn.getMonthlyIncomes[0].amount : 0}
 			newName={newCostName}
 			newLimit={newCostLimit}

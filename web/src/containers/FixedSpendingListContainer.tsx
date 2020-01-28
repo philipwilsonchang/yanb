@@ -12,7 +12,7 @@ import {
 	FlexCostCategoriesReturn,
 } from '../graphql/queries';
 import { useGlobalState } from '../state/useGlobalState';
-import { FixedCostCategory, FlexCostCategory } from '../state/stateTypes';
+import { CostCategoryType, FixedCostCategory, FlexCostCategory } from '../state/stateTypes';
 import { ActionType } from '../state/reducer';
 
 const FixedSpendingListContainer: React.FC = () => {
@@ -69,7 +69,11 @@ const FixedSpendingListContainer: React.FC = () => {
 		if (newCostName !== "" && newCostAmount !== 0) {
 			await createFixedCategory({
 				variables: {
-					cat: { name: newCostName, amount: newCostAmount }
+					cat: { 
+						name: newCostName, 
+						monthlyLimit: newCostAmount,
+						type: CostCategoryType.FIXED,
+					 }
 				}
 			});
 			setNewCostName("");

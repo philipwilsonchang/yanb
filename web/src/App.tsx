@@ -8,6 +8,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import CategoryHUDContainer from './containers/CategoryHUDContainer';
 import FixedSpendingListContainer from './containers/FixedSpendingListContainer';
 import FlexSpendingListContainer from './containers/FlexCategoryListContainer';
+import RollingCostCategoryListContainer from './containers/RollingCostCategoryListContainer';
 import IncomeInputContainer from './containers/IncomeInputContainer';
 import SpendingAdderContainer from './containers/SpendingAdderContainer';
 
@@ -54,6 +55,8 @@ const App: React.FC = () => {
                 <FixedSpendingListContainer />
                 <br />
                 <FlexSpendingListContainer />
+                <br />
+                <RollingCostCategoryListContainer />
               </div>
             </div>
           </Tab>
