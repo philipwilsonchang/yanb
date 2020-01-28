@@ -1,21 +1,17 @@
-type FixedCostCategory {
-  id: ID! @id
-  name: String! @unique
-  amount: Float!
+enum CategoryType {
+  FIXED
+  FLEX 
+  ROLLING
 }
 
-type FlexCostCategory {
+type CostCategory {
   id: ID! @id
-  name: String! @unique
-  limit: Float!
-  costs: [Cost!] @relation(name: "CostsByCategory")
-}
-
-type RollingCostCategory {
-  id: ID! @id
-  name: String! @unique
+  name: String!
   monthlyLimit: Float!
-  totalLimit: Float!
+  type: CategoryType!
+  totalLimit: Float
+  createdAt: DateTime! @createdAt
+  costs: [Cost!] @relation(name: "CostByCostCategory")
 }
 
 type MonthlyIncome {
@@ -28,7 +24,7 @@ type Cost {
   amount: Float!
   description: String!
   createdAt: DateTime! @createdAt 
-  category: FlexCostCategory! @relation(name: "CostsByCategory")
+  category: CostCategory! @relation(name: "CostByCostCategory")
 }
 
 type FinancialMonth {
