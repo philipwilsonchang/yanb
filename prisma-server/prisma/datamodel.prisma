@@ -12,11 +12,7 @@ type CostCategory {
   totalLimit: Float
   createdAt: DateTime! @createdAt
   costs: [Cost!] @relation(name: "CostByCostCategory")
-}
-
-type MonthlyIncome {
-  id: ID! @id
-  amount: Float!
+  user: User
 }
 
 type Cost {
@@ -25,14 +21,15 @@ type Cost {
   description: String!
   createdAt: DateTime! @createdAt 
   category: CostCategory! @relation(name: "CostByCostCategory")
+  user: User
 }
 
-type FinancialMonth {
+type User {
   id: ID! @id
-  month: Int!
-  year: Int!
-  income: Float!
-  totalCost: Float!
-  remainder: Float!
-  closed: Boolean! @default(value: false)
+  name: String!
+  email: String! @unique
+  password: String!
+  costs: [Cost!]
+  categories: [CostCategory!]
+  monthlyIncome: Float
 }

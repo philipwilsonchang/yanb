@@ -15,11 +15,16 @@ type CostCategoryWithSpent {
   createdAt: DateTime!
 }
 
+type AuthPayload {
+  token: String
+  user: User
+}
+
 type Query {
   getAllFlexCategoriesBetweenTimes(timeStart: DateTime!, timeEnd: DateTime!): [CostCategoryWithSpent!]
   getAllFixedCategories: [CostCategory!]
   getAllRollingCategoriesBetweenTimes(timeStart: DateTime!, timeEnd: DateTime!): [CostCategoryWithSpent!]
-  getMonthlyIncomes: [MonthlyIncome!]
+  getMonthlyIncome: Float!
 }
 
 type Mutation {
@@ -27,5 +32,7 @@ type Mutation {
   deleteCost(id: ID!): Cost!
   createCostCategory(data: CostCategoryCreateInput!): CostCategory!
   deleteCostCategory(id: ID!): CostCategory!
-  upsertMonthlyIncome(newincome: MonthlyIncomeCreateInput!, updateincome: MonthlyIncomeUpdateInput!, id: ID): MonthlyIncome!
+  updateMonthlyIncome(newincome: Float!): Float!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 }

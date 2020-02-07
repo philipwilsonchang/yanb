@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Tue Jan 28 2020 14:51:25 GMT-0500 (Eastern Standard Time)
+# timestamp: Sat Feb 08 2020 11:54:25 GMT-0500 (Eastern Standard Time)
 
 type AggregateCost {
   count: Int!
@@ -9,11 +9,7 @@ type AggregateCostCategory {
   count: Int!
 }
 
-type AggregateFinancialMonth {
-  count: Int!
-}
-
-type AggregateMonthlyIncome {
+type AggregateUser {
   count: Int!
 }
 
@@ -34,6 +30,7 @@ type Cost implements Node {
   description: String!
   createdAt: DateTime!
   category: CostCategory!
+  user: User
 }
 
 type CostCategory implements Node {
@@ -44,6 +41,7 @@ type CostCategory implements Node {
   totalLimit: Float
   createdAt: DateTime!
   costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost!]
+  user: User
 }
 
 """A connection to a list of items."""
@@ -63,6 +61,12 @@ input CostCategoryCreateInput {
   type: CategoryType!
   totalLimit: Float
   costs: CostCreateManyWithoutCategoryInput
+  user: UserCreateOneWithoutCategoriesInput
+}
+
+input CostCategoryCreateManyWithoutUserInput {
+  create: [CostCategoryCreateWithoutUserInput!]
+  connect: [CostCategoryWhereUniqueInput!]
 }
 
 input CostCategoryCreateOneWithoutCostsInput {
@@ -76,6 +80,16 @@ input CostCategoryCreateWithoutCostsInput {
   monthlyLimit: Float!
   type: CategoryType!
   totalLimit: Float
+  user: UserCreateOneWithoutCategoriesInput
+}
+
+input CostCategoryCreateWithoutUserInput {
+  id: ID
+  name: String!
+  monthlyLimit: Float!
+  type: CategoryType!
+  totalLimit: Float
+  costs: CostCreateManyWithoutCategoryInput
 }
 
 """An edge in a connection."""
@@ -109,6 +123,173 @@ type CostCategoryPreviousValues {
   type: CategoryType!
   totalLimit: Float
   createdAt: DateTime!
+}
+
+input CostCategoryScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CostCategoryScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CostCategoryScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CostCategoryScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  monthlyLimit: Float
+
+  """All values that are not equal to given value."""
+  monthlyLimit_not: Float
+
+  """All values that are contained in given list."""
+  monthlyLimit_in: [Float!]
+
+  """All values that are not contained in given list."""
+  monthlyLimit_not_in: [Float!]
+
+  """All values less than the given value."""
+  monthlyLimit_lt: Float
+
+  """All values less than or equal the given value."""
+  monthlyLimit_lte: Float
+
+  """All values greater than the given value."""
+  monthlyLimit_gt: Float
+
+  """All values greater than or equal the given value."""
+  monthlyLimit_gte: Float
+  type: CategoryType
+
+  """All values that are not equal to given value."""
+  type_not: CategoryType
+
+  """All values that are contained in given list."""
+  type_in: [CategoryType!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [CategoryType!]
+  totalLimit: Float
+
+  """All values that are not equal to given value."""
+  totalLimit_not: Float
+
+  """All values that are contained in given list."""
+  totalLimit_in: [Float!]
+
+  """All values that are not contained in given list."""
+  totalLimit_not_in: [Float!]
+
+  """All values less than the given value."""
+  totalLimit_lt: Float
+
+  """All values less than or equal the given value."""
+  totalLimit_lte: Float
+
+  """All values greater than the given value."""
+  totalLimit_gt: Float
+
+  """All values greater than or equal the given value."""
+  totalLimit_gte: Float
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
 }
 
 type CostCategorySubscriptionPayload {
@@ -154,6 +335,14 @@ input CostCategoryUpdateInput {
   type: CategoryType
   totalLimit: Float
   costs: CostUpdateManyWithoutCategoryInput
+  user: UserUpdateOneWithoutCategoriesInput
+}
+
+input CostCategoryUpdateManyDataInput {
+  name: String
+  monthlyLimit: Float
+  type: CategoryType
+  totalLimit: Float
 }
 
 input CostCategoryUpdateManyMutationInput {
@@ -161,6 +350,23 @@ input CostCategoryUpdateManyMutationInput {
   monthlyLimit: Float
   type: CategoryType
   totalLimit: Float
+}
+
+input CostCategoryUpdateManyWithoutUserInput {
+  create: [CostCategoryCreateWithoutUserInput!]
+  connect: [CostCategoryWhereUniqueInput!]
+  set: [CostCategoryWhereUniqueInput!]
+  disconnect: [CostCategoryWhereUniqueInput!]
+  delete: [CostCategoryWhereUniqueInput!]
+  update: [CostCategoryUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CostCategoryUpdateManyWithWhereNestedInput!]
+  deleteMany: [CostCategoryScalarWhereInput!]
+  upsert: [CostCategoryUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CostCategoryUpdateManyWithWhereNestedInput {
+  where: CostCategoryScalarWhereInput!
+  data: CostCategoryUpdateManyDataInput!
 }
 
 input CostCategoryUpdateOneRequiredWithoutCostsInput {
@@ -175,11 +381,31 @@ input CostCategoryUpdateWithoutCostsDataInput {
   monthlyLimit: Float
   type: CategoryType
   totalLimit: Float
+  user: UserUpdateOneWithoutCategoriesInput
+}
+
+input CostCategoryUpdateWithoutUserDataInput {
+  name: String
+  monthlyLimit: Float
+  type: CategoryType
+  totalLimit: Float
+  costs: CostUpdateManyWithoutCategoryInput
+}
+
+input CostCategoryUpdateWithWhereUniqueWithoutUserInput {
+  where: CostCategoryWhereUniqueInput!
+  data: CostCategoryUpdateWithoutUserDataInput!
 }
 
 input CostCategoryUpsertWithoutCostsInput {
   update: CostCategoryUpdateWithoutCostsDataInput!
   create: CostCategoryCreateWithoutCostsInput!
+}
+
+input CostCategoryUpsertWithWhereUniqueWithoutUserInput {
+  where: CostCategoryWhereUniqueInput!
+  update: CostCategoryUpdateWithoutUserDataInput!
+  create: CostCategoryCreateWithoutUserInput!
 }
 
 input CostCategoryWhereInput {
@@ -350,6 +576,7 @@ input CostCategoryWhereInput {
   costs_every: CostWhereInput
   costs_some: CostWhereInput
   costs_none: CostWhereInput
+  user: UserWhereInput
 }
 
 input CostCategoryWhereUniqueInput {
@@ -371,6 +598,7 @@ input CostCreateInput {
   amount: Float!
   description: String!
   category: CostCategoryCreateOneWithoutCostsInput!
+  user: UserCreateOneWithoutCostsInput
 }
 
 input CostCreateManyWithoutCategoryInput {
@@ -378,10 +606,23 @@ input CostCreateManyWithoutCategoryInput {
   connect: [CostWhereUniqueInput!]
 }
 
+input CostCreateManyWithoutUserInput {
+  create: [CostCreateWithoutUserInput!]
+  connect: [CostWhereUniqueInput!]
+}
+
 input CostCreateWithoutCategoryInput {
   id: ID
   amount: Float!
   description: String!
+  user: UserCreateOneWithoutCostsInput
+}
+
+input CostCreateWithoutUserInput {
+  id: ID
+  amount: Float!
+  description: String!
+  category: CostCategoryCreateOneWithoutCostsInput!
 }
 
 """An edge in a connection."""
@@ -587,6 +828,7 @@ input CostUpdateInput {
   amount: Float
   description: String
   category: CostCategoryUpdateOneRequiredWithoutCostsInput
+  user: UserUpdateOneWithoutCostsInput
 }
 
 input CostUpdateManyDataInput {
@@ -611,6 +853,18 @@ input CostUpdateManyWithoutCategoryInput {
   upsert: [CostUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
+input CostUpdateManyWithoutUserInput {
+  create: [CostCreateWithoutUserInput!]
+  connect: [CostWhereUniqueInput!]
+  set: [CostWhereUniqueInput!]
+  disconnect: [CostWhereUniqueInput!]
+  delete: [CostWhereUniqueInput!]
+  update: [CostUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CostUpdateManyWithWhereNestedInput!]
+  deleteMany: [CostScalarWhereInput!]
+  upsert: [CostUpsertWithWhereUniqueWithoutUserInput!]
+}
+
 input CostUpdateManyWithWhereNestedInput {
   where: CostScalarWhereInput!
   data: CostUpdateManyDataInput!
@@ -619,6 +873,13 @@ input CostUpdateManyWithWhereNestedInput {
 input CostUpdateWithoutCategoryDataInput {
   amount: Float
   description: String
+  user: UserUpdateOneWithoutCostsInput
+}
+
+input CostUpdateWithoutUserDataInput {
+  amount: Float
+  description: String
+  category: CostCategoryUpdateOneRequiredWithoutCostsInput
 }
 
 input CostUpdateWithWhereUniqueWithoutCategoryInput {
@@ -626,10 +887,21 @@ input CostUpdateWithWhereUniqueWithoutCategoryInput {
   data: CostUpdateWithoutCategoryDataInput!
 }
 
+input CostUpdateWithWhereUniqueWithoutUserInput {
+  where: CostWhereUniqueInput!
+  data: CostUpdateWithoutUserDataInput!
+}
+
 input CostUpsertWithWhereUniqueWithoutCategoryInput {
   where: CostWhereUniqueInput!
   update: CostUpdateWithoutCategoryDataInput!
   create: CostCreateWithoutCategoryInput!
+}
+
+input CostUpsertWithWhereUniqueWithoutUserInput {
+  where: CostWhereUniqueInput!
+  update: CostUpdateWithoutUserDataInput!
+  create: CostCreateWithoutUserInput!
 }
 
 input CostWhereInput {
@@ -766,6 +1038,7 @@ input CostWhereInput {
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
   category: CostCategoryWhereInput
+  user: UserWhereInput
 }
 
 input CostWhereUniqueInput {
@@ -773,296 +1046,6 @@ input CostWhereUniqueInput {
 }
 
 scalar DateTime
-
-type FinancialMonth implements Node {
-  id: ID!
-  month: Int!
-  year: Int!
-  income: Float!
-  totalCost: Float!
-  remainder: Float!
-  closed: Boolean!
-}
-
-"""A connection to a list of items."""
-type FinancialMonthConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [FinancialMonthEdge]!
-  aggregate: AggregateFinancialMonth!
-}
-
-input FinancialMonthCreateInput {
-  id: ID
-  month: Int!
-  year: Int!
-  income: Float!
-  totalCost: Float!
-  remainder: Float!
-  closed: Boolean
-}
-
-"""An edge in a connection."""
-type FinancialMonthEdge {
-  """The item at the end of the edge."""
-  node: FinancialMonth!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum FinancialMonthOrderByInput {
-  id_ASC
-  id_DESC
-  month_ASC
-  month_DESC
-  year_ASC
-  year_DESC
-  income_ASC
-  income_DESC
-  totalCost_ASC
-  totalCost_DESC
-  remainder_ASC
-  remainder_DESC
-  closed_ASC
-  closed_DESC
-}
-
-type FinancialMonthPreviousValues {
-  id: ID!
-  month: Int!
-  year: Int!
-  income: Float!
-  totalCost: Float!
-  remainder: Float!
-  closed: Boolean!
-}
-
-type FinancialMonthSubscriptionPayload {
-  mutation: MutationType!
-  node: FinancialMonth
-  updatedFields: [String!]
-  previousValues: FinancialMonthPreviousValues
-}
-
-input FinancialMonthSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FinancialMonthSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FinancialMonthSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FinancialMonthSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: FinancialMonthWhereInput
-}
-
-input FinancialMonthUpdateInput {
-  month: Int
-  year: Int
-  income: Float
-  totalCost: Float
-  remainder: Float
-  closed: Boolean
-}
-
-input FinancialMonthUpdateManyMutationInput {
-  month: Int
-  year: Int
-  income: Float
-  totalCost: Float
-  remainder: Float
-  closed: Boolean
-}
-
-input FinancialMonthWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FinancialMonthWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FinancialMonthWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FinancialMonthWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  month: Int
-
-  """All values that are not equal to given value."""
-  month_not: Int
-
-  """All values that are contained in given list."""
-  month_in: [Int!]
-
-  """All values that are not contained in given list."""
-  month_not_in: [Int!]
-
-  """All values less than the given value."""
-  month_lt: Int
-
-  """All values less than or equal the given value."""
-  month_lte: Int
-
-  """All values greater than the given value."""
-  month_gt: Int
-
-  """All values greater than or equal the given value."""
-  month_gte: Int
-  year: Int
-
-  """All values that are not equal to given value."""
-  year_not: Int
-
-  """All values that are contained in given list."""
-  year_in: [Int!]
-
-  """All values that are not contained in given list."""
-  year_not_in: [Int!]
-
-  """All values less than the given value."""
-  year_lt: Int
-
-  """All values less than or equal the given value."""
-  year_lte: Int
-
-  """All values greater than the given value."""
-  year_gt: Int
-
-  """All values greater than or equal the given value."""
-  year_gte: Int
-  income: Float
-
-  """All values that are not equal to given value."""
-  income_not: Float
-
-  """All values that are contained in given list."""
-  income_in: [Float!]
-
-  """All values that are not contained in given list."""
-  income_not_in: [Float!]
-
-  """All values less than the given value."""
-  income_lt: Float
-
-  """All values less than or equal the given value."""
-  income_lte: Float
-
-  """All values greater than the given value."""
-  income_gt: Float
-
-  """All values greater than or equal the given value."""
-  income_gte: Float
-  totalCost: Float
-
-  """All values that are not equal to given value."""
-  totalCost_not: Float
-
-  """All values that are contained in given list."""
-  totalCost_in: [Float!]
-
-  """All values that are not contained in given list."""
-  totalCost_not_in: [Float!]
-
-  """All values less than the given value."""
-  totalCost_lt: Float
-
-  """All values less than or equal the given value."""
-  totalCost_lte: Float
-
-  """All values greater than the given value."""
-  totalCost_gt: Float
-
-  """All values greater than or equal the given value."""
-  totalCost_gte: Float
-  remainder: Float
-
-  """All values that are not equal to given value."""
-  remainder_not: Float
-
-  """All values that are contained in given list."""
-  remainder_in: [Float!]
-
-  """All values that are not contained in given list."""
-  remainder_not_in: [Float!]
-
-  """All values less than the given value."""
-  remainder_lt: Float
-
-  """All values less than or equal the given value."""
-  remainder_lte: Float
-
-  """All values greater than the given value."""
-  remainder_gt: Float
-
-  """All values greater than or equal the given value."""
-  remainder_gte: Float
-  closed: Boolean
-
-  """All values that are not equal to given value."""
-  closed_not: Boolean
-}
-
-input FinancialMonthWhereUniqueInput {
-  id: ID
-}
 
 """Raw JSON value"""
 scalar Json
@@ -1073,194 +1056,25 @@ Long can represent values between -(2^63) and 2^63 - 1.
 """
 scalar Long
 
-type MonthlyIncome implements Node {
-  id: ID!
-  amount: Float!
-}
-
-"""A connection to a list of items."""
-type MonthlyIncomeConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [MonthlyIncomeEdge]!
-  aggregate: AggregateMonthlyIncome!
-}
-
-input MonthlyIncomeCreateInput {
-  id: ID
-  amount: Float!
-}
-
-"""An edge in a connection."""
-type MonthlyIncomeEdge {
-  """The item at the end of the edge."""
-  node: MonthlyIncome!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum MonthlyIncomeOrderByInput {
-  id_ASC
-  id_DESC
-  amount_ASC
-  amount_DESC
-}
-
-type MonthlyIncomePreviousValues {
-  id: ID!
-  amount: Float!
-}
-
-type MonthlyIncomeSubscriptionPayload {
-  mutation: MutationType!
-  node: MonthlyIncome
-  updatedFields: [String!]
-  previousValues: MonthlyIncomePreviousValues
-}
-
-input MonthlyIncomeSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MonthlyIncomeSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MonthlyIncomeSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MonthlyIncomeSubscriptionWhereInput!]
-
-  """The subscription event gets dispatched when it's listed in mutation_in"""
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: MonthlyIncomeWhereInput
-}
-
-input MonthlyIncomeUpdateInput {
-  amount: Float
-}
-
-input MonthlyIncomeUpdateManyMutationInput {
-  amount: Float
-}
-
-input MonthlyIncomeWhereInput {
-  """Logical AND on all given filters."""
-  AND: [MonthlyIncomeWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [MonthlyIncomeWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [MonthlyIncomeWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  amount: Float
-
-  """All values that are not equal to given value."""
-  amount_not: Float
-
-  """All values that are contained in given list."""
-  amount_in: [Float!]
-
-  """All values that are not contained in given list."""
-  amount_not_in: [Float!]
-
-  """All values less than the given value."""
-  amount_lt: Float
-
-  """All values less than or equal the given value."""
-  amount_lte: Float
-
-  """All values greater than the given value."""
-  amount_gt: Float
-
-  """All values greater than or equal the given value."""
-  amount_gte: Float
-}
-
-input MonthlyIncomeWhereUniqueInput {
-  id: ID
-}
-
 type Mutation {
   createCostCategory(data: CostCategoryCreateInput!): CostCategory!
-  createMonthlyIncome(data: MonthlyIncomeCreateInput!): MonthlyIncome!
   createCost(data: CostCreateInput!): Cost!
-  createFinancialMonth(data: FinancialMonthCreateInput!): FinancialMonth!
+  createUser(data: UserCreateInput!): User!
   updateCostCategory(data: CostCategoryUpdateInput!, where: CostCategoryWhereUniqueInput!): CostCategory
-  updateMonthlyIncome(data: MonthlyIncomeUpdateInput!, where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
   updateCost(data: CostUpdateInput!, where: CostWhereUniqueInput!): Cost
-  updateFinancialMonth(data: FinancialMonthUpdateInput!, where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteCostCategory(where: CostCategoryWhereUniqueInput!): CostCategory
-  deleteMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
   deleteCost(where: CostWhereUniqueInput!): Cost
-  deleteFinancialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertCostCategory(where: CostCategoryWhereUniqueInput!, create: CostCategoryCreateInput!, update: CostCategoryUpdateInput!): CostCategory!
-  upsertMonthlyIncome(where: MonthlyIncomeWhereUniqueInput!, create: MonthlyIncomeCreateInput!, update: MonthlyIncomeUpdateInput!): MonthlyIncome!
   upsertCost(where: CostWhereUniqueInput!, create: CostCreateInput!, update: CostUpdateInput!): Cost!
-  upsertFinancialMonth(where: FinancialMonthWhereUniqueInput!, create: FinancialMonthCreateInput!, update: FinancialMonthUpdateInput!): FinancialMonth!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyCostCategories(data: CostCategoryUpdateManyMutationInput!, where: CostCategoryWhereInput): BatchPayload!
-  updateManyMonthlyIncomes(data: MonthlyIncomeUpdateManyMutationInput!, where: MonthlyIncomeWhereInput): BatchPayload!
   updateManyCosts(data: CostUpdateManyMutationInput!, where: CostWhereInput): BatchPayload!
-  updateManyFinancialMonths(data: FinancialMonthUpdateManyMutationInput!, where: FinancialMonthWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyCostCategories(where: CostCategoryWhereInput): BatchPayload!
-  deleteManyMonthlyIncomes(where: MonthlyIncomeWhereInput): BatchPayload!
   deleteManyCosts(where: CostWhereInput): BatchPayload!
-  deleteManyFinancialMonths(where: FinancialMonthWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -1297,17 +1111,14 @@ enum PrismaDatabase {
 
 type Query {
   costCategories(where: CostCategoryWhereInput, orderBy: CostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CostCategory]!
-  monthlyIncomes(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MonthlyIncome]!
   costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost]!
-  financialMonths(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FinancialMonth]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   costCategory(where: CostCategoryWhereUniqueInput!): CostCategory
-  monthlyIncome(where: MonthlyIncomeWhereUniqueInput!): MonthlyIncome
   cost(where: CostWhereUniqueInput!): Cost
-  financialMonth(where: FinancialMonthWhereUniqueInput!): FinancialMonth
+  user(where: UserWhereUniqueInput!): User
   costCategoriesConnection(where: CostCategoryWhereInput, orderBy: CostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CostCategoryConnection!
-  monthlyIncomesConnection(where: MonthlyIncomeWhereInput, orderBy: MonthlyIncomeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MonthlyIncomeConnection!
   costsConnection(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CostConnection!
-  financialMonthsConnection(where: FinancialMonthWhereInput, orderBy: FinancialMonthOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FinancialMonthConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1318,7 +1129,395 @@ type Query {
 
 type Subscription {
   costCategory(where: CostCategorySubscriptionWhereInput): CostCategorySubscriptionPayload
-  monthlyIncome(where: MonthlyIncomeSubscriptionWhereInput): MonthlyIncomeSubscriptionPayload
   cost(where: CostSubscriptionWhereInput): CostSubscriptionPayload
-  financialMonth(where: FinancialMonthSubscriptionWhereInput): FinancialMonthSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost!]
+  categories(where: CostCategoryWhereInput, orderBy: CostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CostCategory!]
+  monthlyIncome: Float
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  monthlyIncome: Float
+  costs: CostCreateManyWithoutUserInput
+  categories: CostCategoryCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutCategoriesInput {
+  create: UserCreateWithoutCategoriesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutCostsInput {
+  create: UserCreateWithoutCostsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCategoriesInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  monthlyIncome: Float
+  costs: CostCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutCostsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  monthlyIncome: Float
+  categories: CostCategoryCreateManyWithoutUserInput
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  monthlyIncome_ASC
+  monthlyIncome_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  monthlyIncome: Float
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+  monthlyIncome: Float
+  costs: CostUpdateManyWithoutUserInput
+  categories: CostCategoryUpdateManyWithoutUserInput
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  monthlyIncome: Float
+}
+
+input UserUpdateOneWithoutCategoriesInput {
+  create: UserCreateWithoutCategoriesInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutCategoriesDataInput
+  upsert: UserUpsertWithoutCategoriesInput
+}
+
+input UserUpdateOneWithoutCostsInput {
+  create: UserCreateWithoutCostsInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutCostsDataInput
+  upsert: UserUpsertWithoutCostsInput
+}
+
+input UserUpdateWithoutCategoriesDataInput {
+  name: String
+  email: String
+  password: String
+  monthlyIncome: Float
+  costs: CostUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutCostsDataInput {
+  name: String
+  email: String
+  password: String
+  monthlyIncome: Float
+  categories: CostCategoryUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutCategoriesInput {
+  update: UserUpdateWithoutCategoriesDataInput!
+  create: UserCreateWithoutCategoriesInput!
+}
+
+input UserUpsertWithoutCostsInput {
+  update: UserUpdateWithoutCostsDataInput!
+  create: UserCreateWithoutCostsInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  monthlyIncome: Float
+
+  """All values that are not equal to given value."""
+  monthlyIncome_not: Float
+
+  """All values that are contained in given list."""
+  monthlyIncome_in: [Float!]
+
+  """All values that are not contained in given list."""
+  monthlyIncome_not_in: [Float!]
+
+  """All values less than the given value."""
+  monthlyIncome_lt: Float
+
+  """All values less than or equal the given value."""
+  monthlyIncome_lte: Float
+
+  """All values greater than the given value."""
+  monthlyIncome_gt: Float
+
+  """All values greater than or equal the given value."""
+  monthlyIncome_gte: Float
+  costs_every: CostWhereInput
+  costs_some: CostWhereInput
+  costs_none: CostWhereInput
+  categories_every: CostCategoryWhereInput
+  categories_some: CostCategoryWhereInput
+  categories_none: CostCategoryWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
 }
