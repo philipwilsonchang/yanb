@@ -6,7 +6,7 @@ import { CREATE_COST_CATEGORY, DELETE_COST_CATEGORY } from '../graphql/mutations
 import { 
 	GET_ALL_FIXED_CATEGORIES, 
 	FixedCostCategoriesReturn, 
-	GET_MONTHLY_INCOMES, 
+	GET_MONTHLY_INCOME, 
 	MonthlyIncomesReturn,
 	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES, 
 	FlexCostCategoriesReturn,
@@ -32,7 +32,7 @@ const FixedSpendingListContainer: React.FC = () => {
 			timeEnd: lastDay.toISOString(),
 		}
 	});
-	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
+	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOME);
 	const [createFixedCategory] = useMutation(CREATE_COST_CATEGORY, {
 		refetchQueries: ["getAllFixedCategories"]
 	});
@@ -85,7 +85,7 @@ const FixedSpendingListContainer: React.FC = () => {
 		<FixedSpendingList 
 			budgetedAmount={budgetedAmount}
 			costs={fixedReturn ? fixedReturn.getAllFixedCategories : []} 
-			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncomes.length > 0) ? incomeReturn.getMonthlyIncomes[0].amount : 0}
+			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncome) ? incomeReturn.getMonthlyIncome : 0}
 			newName={newCostName} 
 			newAmount={newCostAmount} 
 			changeNewName={setNewCostName} 

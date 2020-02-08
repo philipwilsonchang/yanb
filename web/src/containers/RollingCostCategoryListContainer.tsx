@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import FlexCategoryList from '../components/FlexCategoryList';
 import { CREATE_COST_CATEGORY, DELETE_COST_CATEGORY } from '../graphql/mutations';
 import { 
-	GET_MONTHLY_INCOMES, 
+	GET_MONTHLY_INCOME, 
 	MonthlyIncomesReturn, 
 	RollingCostCategoriesReturn,
 	GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES,
@@ -28,7 +28,7 @@ const FlexCategoryListContainer: React.FC = () => {
 			timeEnd: lastDay.toISOString(),
 		}
 	})
-	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES);
+	const { data: incomeReturn } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOME);
 
 	const [createRollingCategory] = useMutation(CREATE_COST_CATEGORY, {
 		refetchQueries: ["getAllRollingCategoriesBetweenTimes"]
@@ -63,7 +63,7 @@ const FlexCategoryListContainer: React.FC = () => {
 		<FlexCategoryList
 			budgetedAmount={budgetedAmount}
 			categories={categories ? categories.getAllRollingCategoriesBetweenTimes : []}
-			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncomes.length > 0) ? incomeReturn.getMonthlyIncomes[0].amount : 0}
+			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncome) ? incomeReturn.getMonthlyIncome : 0}
 			newName={newCostName}
 			newLimit={newCostLimit}
 			changeNewName={setNewCostName}

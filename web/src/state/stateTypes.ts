@@ -25,11 +25,6 @@ export interface RollingCostCategory extends CostCategory {
 	spent?: number
 }
 
-export interface MonthlyIncome {
-	id: string
-	amount: number
-}
-
 export interface Cost {
 	id: string
 	amount: number

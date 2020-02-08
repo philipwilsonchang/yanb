@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { FlexCostCategory, FixedCostCategory, RollingCostCategory, MonthlyIncome } from '../state/stateTypes'
+import { FlexCostCategory, FixedCostCategory, RollingCostCategory } from '../state/stateTypes'
 
 export const GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES = gql`
   query getAllFlexCategoriesBetweenTimes($timeStart: DateTime!, $timeEnd: DateTime!) {
@@ -46,15 +46,12 @@ export interface RollingCostCategoriesReturn {
   getAllRollingCategoriesBetweenTimes: RollingCostCategory[]
 }
 
-export const GET_MONTHLY_INCOMES = gql`
-  query getMonthlyIncomes {
-    getMonthlyIncomes {
-      id
-      amount
-    }
+export const GET_MONTHLY_INCOME = gql`
+  query getMonthlyIncome {
+    getMonthlyIncome
   }
 `;
 
 export interface MonthlyIncomesReturn {
-  getMonthlyIncomes: MonthlyIncome[]
+  getMonthlyIncome: number
 }

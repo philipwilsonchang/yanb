@@ -50,11 +50,8 @@ export const DELETE_COST_CATEGORY = gql`
   }
 `;
 
-export const UPSERT_MONTHLY_INCOME = gql`
-  mutation upsertMonthlyIncome($newincome: MonthlyIncomeCreateInput!, $updateincome: MonthlyIncomeUpdateInput!, $id: ID!) {
-    upsertMonthlyIncome(newincome: $newincome, updateincome: $updateincome, id: $id) {
-      id
-      amount
-    }
+export const UPDATE_MONTHLY_INCOME = gql`
+  mutation updateMonthlyIncome($newincome: Float!) {
+    updateMonthlyIncome(newincome: $newincome)
   }
 `;

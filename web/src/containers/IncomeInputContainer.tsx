@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import IncomeInput from '../components/IncomeInput';
-import { UPSERT_MONTHLY_INCOME } from '../graphql/mutations'
-import { GET_MONTHLY_INCOMES, MonthlyIncomesReturn } from '../graphql/queries'
-import { MonthlyIncome } from '../state/stateTypes';
+import { UPDATE_MONTHLY_INCOME } from '../graphql/mutations'
+import { GET_MONTHLY_INCOME, MonthlyIncomesReturn } from '../graphql/queries'
 
 const IncomeInputContainer: React.FC = () => {
 	const [tempIncome, setTempIncome] = useState<number|undefined>()
 
-	const { data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOMES); 
-	const [upsertIncome] = useMutation(UPSERT_MONTHLY_INCOME, {
-		refetchQueries: ["getMonthlyIncomes"]
+	const { data: incomesResult } = useQuery<MonthlyIncomesReturn>(GET_MONTHLY_INCOME); 
+	const [upsertIncome] = useMutation(UPDATE_MONTHLY_INCOME, {
+		refetchQueries: ["getMonthlyIncome"]
 	})
 
 	const changeAmount = (amount: number) => {
@@ -22,23 +21,21 @@ const IncomeInputContainer: React.FC = () => {
 		if (tempIncome) {
 			await upsertIncome({
 				variables: {
-					newincome: { id: "0", amount: tempIncome },
-					updateincome: { amount: tempIncome },
-					id: (incomesResult && incomesResult.getMonthlyIncomes[0]) ? incomesResult.getMonthlyIncomes[0].id : 0
+					newincome: tempIncome,
 				}
 			})
 			setTempIncome(undefined)
 		}
 	};
 
-	const getCorrectIncomeValue = (): MonthlyIncome => {
+	const getCorrectIncomeValue = (): number => {
 		if (tempIncome) {
-			return { id: "0", amount: tempIncome };
+			return tempIncome;
 		} else {
-			if (incomesResult && incomesResult.getMonthlyIncomes[0]) {
-				return incomesResult.getMonthlyIncomes[0];
+			if (incomesResult && incomesResult.getMonthlyIncome) {
+				return incomesResult.getMonthlyIncome;
 			} else {
-				return { id: "0", amount: 0 };
+				return 0;
 			}
 		}
 	}
