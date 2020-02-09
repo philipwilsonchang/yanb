@@ -17,7 +17,7 @@ import { StateProvider } from './state/useGlobalState';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-const api = 'http://localhost:4000'; 
+const api = process.env.YANB_GRAPHQL_API; 
 
 const unauthedClient = new ApolloClient({
   uri: api
