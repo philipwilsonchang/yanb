@@ -1,6 +1,6 @@
 {
-  "name": "web",
-  "version": "0.1.0",
+  "name": "yanb-web",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
@@ -10,6 +10,7 @@
     "@types/react": "16.9.3",
     "@types/react-dom": "16.9.1",
     "apollo-boost": "^0.4.7",
+    "apollo-link-context": "^1.0.19",
     "bootstrap": "^4.3.1",
     "graphql": "^14.5.8",
     "handlebars": "^4.7.2",
@@ -20,6 +21,7 @@
     "react-bootstrap": "^1.0.0-beta.12",
     "react-datepicker": "^2.9.6",
     "react-dom": "^16.9.0",
+    "react-google-recaptcha": "^2.0.1",
     "react-icons": "^3.7.0",
     "react-scripts": "^3.3.0",
     "typescript": "3.6.3"
@@ -44,5 +46,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "Yet Another Budget web app",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "Philip Chang",
+  "license": "ISC"
 }
