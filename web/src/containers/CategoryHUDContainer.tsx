@@ -7,7 +7,8 @@ import {
 	GET_ALL_FLEX_CATEGORIES_BETWEEN_TIMES,
 	RollingCostCategoriesReturn,
 	GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, 
-} from '../graphql/queries'
+} from '../graphql/queries';
+
 
 const CategoryHUDContainer: React.FC = () => {
 	const today = new Date();
@@ -19,14 +20,14 @@ const CategoryHUDContainer: React.FC = () => {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
 		}
-	})
+	});
 
 	const { data: rollingCategories } = useQuery<RollingCostCategoriesReturn>(GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, {
 		variables: {
 			timeStart: firstDay.toISOString(),
 			timeEnd: lastDay.toISOString(),
 		}
-	})
+	});
 
 	return (
 		<div>

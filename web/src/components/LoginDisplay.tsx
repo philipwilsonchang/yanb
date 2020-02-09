@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { FormControl, FormControlProps } from 'react-bootstrap/FormContext';
+import { FormControl, FormControlProps } from 'react-bootstrap';
 
 interface ILoginDisplayProps {
   onNameChange: (name: string) => void,
@@ -19,7 +19,7 @@ const LoginDisplay: React.FC<ILoginDisplayProps> = ({ onNameChange, onPasswordCh
         <Form>
 			    <Form.Row>
 				    <Col>
-				        <Form.Control placeholder="Email" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => onNameChange(e.currentTarget.value as string)}/>
+				        <Form.Control placeholder="Username" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => onNameChange(e.currentTarget.value as string)}/>
 				    </Col>
 				    <Col>
 				        <Form.Control placeholder="Password" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => onPasswordChange(e.currentTarget.value as string)}/>

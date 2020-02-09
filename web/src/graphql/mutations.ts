@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { AuthPayload } from '../state/stateTypes'
 
 export const CREATE_COST = gql`
   mutation createCost($newcost: CostCreateInput!) {
@@ -55,3 +56,33 @@ export const UPDATE_MONTHLY_INCOME = gql`
     updateMonthlyIncome(newincome: $newincome)
   }
 `;
+
+export const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      user {
+        id
+      }
+      token
+    }
+  }
+`
+
+export interface LoginResult {
+  login: AuthPayload
+}
+
+export const SIGNUP = gql`
+  mutation signup($username: String!, $password: String!) {
+    signup(username: $username, password: $password) {
+      user {
+        id
+      }
+      token
+    }
+  }
+`
+
+export interface SignupResult {
+  signup: AuthPayload
+}

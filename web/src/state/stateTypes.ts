@@ -43,3 +43,10 @@ export interface FinancialMonth {
 	closed: boolean
 }
 
+export interface AuthPayload {
+	token: string
+	user: {
+		id: string
+	}
+}
+

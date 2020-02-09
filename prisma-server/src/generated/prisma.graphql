@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Sat Feb 08 2020 11:54:25 GMT-0500 (Eastern Standard Time)
+# timestamp: Sun Feb 09 2020 14:55:36 GMT-0500 (Eastern Standard Time)
 
 type AggregateCost {
   count: Int!
@@ -1135,8 +1135,7 @@ type Subscription {
 
 type User implements Node {
   id: ID!
-  name: String!
-  email: String!
+  username: String!
   password: String!
   costs(where: CostWhereInput, orderBy: CostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cost!]
   categories(where: CostCategoryWhereInput, orderBy: CostCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CostCategory!]
@@ -1155,8 +1154,7 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  name: String!
-  email: String!
+  username: String!
   password: String!
   monthlyIncome: Float
   costs: CostCreateManyWithoutUserInput
@@ -1175,8 +1173,7 @@ input UserCreateOneWithoutCostsInput {
 
 input UserCreateWithoutCategoriesInput {
   id: ID
-  name: String!
-  email: String!
+  username: String!
   password: String!
   monthlyIncome: Float
   costs: CostCreateManyWithoutUserInput
@@ -1184,8 +1181,7 @@ input UserCreateWithoutCategoriesInput {
 
 input UserCreateWithoutCostsInput {
   id: ID
-  name: String!
-  email: String!
+  username: String!
   password: String!
   monthlyIncome: Float
   categories: CostCategoryCreateManyWithoutUserInput
@@ -1203,10 +1199,8 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
+  username_ASC
+  username_DESC
   password_ASC
   password_DESC
   monthlyIncome_ASC
@@ -1215,8 +1209,7 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
-  name: String!
-  email: String!
+  username: String!
   password: String!
   monthlyIncome: Float
 }
@@ -1259,8 +1252,7 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  name: String
-  email: String
+  username: String
   password: String
   monthlyIncome: Float
   costs: CostUpdateManyWithoutUserInput
@@ -1268,8 +1260,7 @@ input UserUpdateInput {
 }
 
 input UserUpdateManyMutationInput {
-  name: String
-  email: String
+  username: String
   password: String
   monthlyIncome: Float
 }
@@ -1293,16 +1284,14 @@ input UserUpdateOneWithoutCostsInput {
 }
 
 input UserUpdateWithoutCategoriesDataInput {
-  name: String
-  email: String
+  username: String
   password: String
   monthlyIncome: Float
   costs: CostUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutCostsDataInput {
-  name: String
-  email: String
+  username: String
   password: String
   monthlyIncome: Float
   categories: CostCategoryUpdateManyWithoutUserInput
@@ -1367,86 +1356,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  username: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  username_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  username_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  username_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  username_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  username_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  username_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  username_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  username_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  username_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  username_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  username_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  username_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
+  username_not_ends_with: String
   password: String
 
   """All values that are not equal to given value."""
@@ -1519,5 +1468,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
-  email: String
+  username: String
 }

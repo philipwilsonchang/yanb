@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 import { IGlobalState } from './initialState';
 
 export enum ActionType {
@@ -20,12 +22,12 @@ export const reducer = (state: IGlobalState, action: IAction) => {
 
 		case ActionType.Login:
 			newState.isLoggedIn = true;
-			newState.loginToken = action.payload;
+			const inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+			Cookies.set("yanb-token", action.payload, { expires: inFifteenMinutes })
 			return newState;
 
 		case ActionType.Logout:
 			newState.isLoggedIn = false;
-			newState.loginToken = "";
 			return newState;
 
 		default:

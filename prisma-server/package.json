@@ -9,6 +9,7 @@
   "author": "Philip Chang",
   "license": "ISC",
   "dependencies": {
+    "apollo-link-context": "^1.0.19",
     "bcryptjs": "^2.4.3",
     "graphql-cli": "^3.0.14",
     "graphql-yoga": "^1.18.3",

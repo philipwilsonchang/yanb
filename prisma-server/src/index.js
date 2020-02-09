@@ -186,7 +186,7 @@ const resolvers = {
     login: async (_, args, context, info) => {
       const user = await context.prisma.query.user({ 
         where: {
-          email: args.email 
+          username: args.username 
         }
       });
       if (!user) {
