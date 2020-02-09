@@ -5,6 +5,8 @@ import LoginDisplay from '../components/LoginDisplay';
 import {
 	LOGIN,
 	LoginResult,
+	SIGNUP,
+	SignupResult
 } from '../graphql/mutations';
 
 export interface ILoginContainerProps {
@@ -15,9 +17,9 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ onLogin }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [login] = useMutation<LoginResult>(LOGIN, {
-		refetchQueries: ["getAllFlexCategoriesBetweenTimes", "getAllRollingCategoriesBetweenTimes"]
-  });
+  const [login] = useMutation<LoginResult>(LOGIN);
+	
+	const [signup] = useMutation<SignupResult>(SIGNUP);
   
   const handleLogin = async (): Promise<void> => {
 		if (username.length !== 0 && password.length !== 0) {
@@ -31,10 +33,24 @@ const LoginContainer: React.FC<ILoginContainerProps> = ({ onLogin }) => {
 				onLogin(loginResult.login.token)
 			}
 		}
-  };
+	};
+	
+	const handleSignup = async (): Promise<void> => {
+		if (username.length !== 0 && password.length !== 0) {
+			const { data: signupResult } = await signup({
+				variables: {
+					username: username,
+					password: password,
+				}
+			});
+			if (signupResult) {
+				onLogin(signupResult.signup.token)
+			}
+		}
+	}
 
   return (
-    <LoginDisplay onNameChange={setUsername} onPasswordChange={setPassword} onSubmit={handleLogin} />
+    <LoginDisplay onNameChange={setUsername} onPasswordChange={setPassword} onSubmit={handleLogin} onSignup={handleSignup} />
   );
 }
 

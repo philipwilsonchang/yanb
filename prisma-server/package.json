@@ -9,11 +9,13 @@
   "author": "Philip Chang",
   "license": "ISC",
   "dependencies": {
+    "@types/react-google-recaptcha": "^1.1.1",
     "apollo-link-context": "^1.0.19",
     "bcryptjs": "^2.4.3",
     "graphql-cli": "^3.0.14",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "prisma-binding": "^2.3.16"
+    "prisma-binding": "^2.3.16",
+    "react-google-recaptcha": "^2.0.1"
   }
 }
