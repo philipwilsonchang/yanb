@@ -62,7 +62,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
               </Tab>
-              <Tab id="flex-add" eventKey="flex-add" title="Add Spending">
+              <Tab id="flex-add" eventKey="flex-add" title="Spend">
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <div style={{ width: '90%' }}>
                     <br />
