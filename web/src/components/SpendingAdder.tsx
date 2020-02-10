@@ -54,12 +54,16 @@ const SpendingAdder: React.FC<ISpendingAdderProps> = ({ flexCategories, rollingC
 					    </Dropdown.Menu>
 					</Dropdown>
 					<Col>
+						{/* 
+						// @ts-ignore */}
 						<Form.Control placeholder="Amount" value={amount} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(e.currentTarget.value as string)} />
 					</Col>
 				</Row>
 				&nbsp;
 				<Row>
 					<Col>
+						{/* 
+						// @ts-ignore */}
 						<Form.Control placeholder="Description" value={description} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeDescription(e.currentTarget.value as string)} />
 					</Col>
 				</Row>

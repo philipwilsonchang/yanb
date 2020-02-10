@@ -20,6 +20,8 @@ const IncomeInput: React.FC<IIncomeInputProps> = ({ income, changeAmount, submit
 			<Card.Body className='card text-right'>
 				<Row>
 					<Col>
+						{/* 
+						// @ts-ignore */}
 						<Form.Control value={income ? income.toString() : ""} onChange={(e: React.FormEvent<FormControlProps & FormControl>) => changeAmount(parseFloat(e.currentTarget.value as string))} />
 					</Col>
 					<Button style={{ margin: '0px 15px 0px 0px' }} variant="success" onClick={submitIncome}>

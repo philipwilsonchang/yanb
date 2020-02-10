@@ -51,7 +51,7 @@
   },
   "description": "Yet Another Budget web app",
   "main": "index.js",
-  "homepage": "https://vpn.philchang.me",
+  "homepage": ".",
   "devDependencies": {},
   "author": "Philip Chang",
   "license": "ISC"

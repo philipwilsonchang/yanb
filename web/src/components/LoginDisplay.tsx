@@ -31,16 +31,22 @@ const LoginDisplay: React.FC<ILoginDisplayProps> = ({ onNameChange, onPasswordCh
         <Form>
 			    <Form.Row>
 				    <Col>
+								{/* 
+								// @ts-ignore */}
 				        <Form.Control placeholder="Username" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => onNameChange(e.currentTarget.value as string)}/>
 				    </Col>
 				    <Col>
+								{/* 
+								// @ts-ignore */}
 				        <Form.Control type="password" placeholder="Password" onChange={(e: React.FormEvent<FormControlProps & FormControl>) => onPasswordChange(e.currentTarget.value as string)}/>
 				    </Col>
-						<ReCAPTCHA sitekey={process.env.RECAPTCHA_SITE_KEY || ""} onChange={handleCaptcha} />
-				    <Button disabled={verified} style={{ margin: '0px 5px 0px 0px' }} variant="outline-primary" onClick={onSubmit}>
+						{/* 
+						// @ts-ignore */}
+						<ReCAPTCHA sitekey={window._env_.RECAPTCHA_SITE_KEY || ""} onChange={handleCaptcha} />
+				    <Button disabled={!verified} style={{ margin: '0px 5px 0px 0px' }} variant="outline-primary" onClick={onSubmit}>
 			      	Login
 			      </Button>
-						<Button disabled={verified} style={{ margin: '0px 5px 0px 0px' }} variant="outline-danger" onClick={onSignup}>
+						<Button disabled={!verified} style={{ margin: '0px 5px 0px 0px' }} variant="outline-danger" onClick={onSignup}>
 			      	Signup
 			      </Button>
 			    </Form.Row>
