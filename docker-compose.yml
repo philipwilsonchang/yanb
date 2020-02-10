@@ -1,0 +1,49 @@
+version: '3'
+services:
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    ports:
+    - "4466:4466"
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        # uncomment the next line and provide the env var PRISMA_MANAGEMENT_API_SECRET=my-secret to activate cluster security
+        # managementApiSecret: my-secret
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            user: prisma
+            password: prisma
+            rawAccess: true
+            port: 5432
+            migrations: true
+  postgres:
+    image: postgres
+    restart: always
+    # Uncomment the next two lines to connect to your your database from outside the Docker environment, e.g. using a database GUI like Postico
+    # ports:
+    # - "5432:5432"
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    volumes:
+      - ./prisma-data:/var/lib/postgresql/data
+  yanb-web:
+    image: pcheebs/yanb-web:1.0.0
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      YANB_GRAPHQL_API: http://budget.philchang.me:4000
+      RECAPTCHA_SITE_KEY: 6LckQ9cUAAAAAA6os_dvtJKfvQfgS5Yd0Z_NQSFW
+  yanb-graphql:
+    image: pcheebs/yanb-graphql:1.0.0
+    restart: always
+    ports:
+      - "4000:4000"
+    links:
+      - prisma
+    environment:
+      PRISMA_API: http://prisma:4466
