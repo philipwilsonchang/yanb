@@ -5,10 +5,12 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@types/jest": "24.0.18",
+    "@types/js-cookie": "^2.2.4",
     "@types/lodash": "^4.14.149",
     "@types/node": "12.7.8",
     "@types/react": "16.9.3",
     "@types/react-dom": "16.9.1",
+    "@types/react-google-recaptcha": "^1.1.1",
     "apollo-boost": "^0.4.7",
     "apollo-link-context": "^1.0.19",
     "bootstrap": "^4.3.1",
@@ -49,6 +51,7 @@
   },
   "description": "Yet Another Budget web app",
   "main": "index.js",
+  "homepage": "https://vpn.philchang.me",
   "devDependencies": {},
   "author": "Philip Chang",
   "license": "ISC"
