@@ -13,9 +13,7 @@ Node v12+
 2. Store your backend API URI in the env variable `YANB_GRAPHQL_API` in `docker-compose.yml`.
 3. Install the prisma npm package with `npm i -g prisma`.
 4. Start the web app stack with `docker-compose up -d`.
-    a. For the HTTPS enabled web app, edit `docker-compose-with-ssl.yml` and `init-letsencrypt.sh` with the correct domain names for your setup.
-    b. Run `./init-letsencrypt.sh`. Kill any containers that this script starts.
-    c. Run `docker-compose -f docker-compose-with-ssl.yml up -d` to start the web app stack.
+  * For the HTTPS enabled web app, edit `docker-compose-with-ssl.yml` and `init-letsencrypt.sh` with the correct domain names for your setup. Run `./init-letsencrypt.sh`. Kill any containers that this script starts. Run `docker-compose -f docker-compose-with-ssl.yml up -d` to start the web app stack.
 5. Navigate to `./prisma-server/prisma/` and run `prisma deploy`.
 6. Open your device's IP or hostname in your browser and enjoy the app!
 
