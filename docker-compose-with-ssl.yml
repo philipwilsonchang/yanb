@@ -37,7 +37,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      YANB_GRAPHQL_API: http://budget.philchang.me:4000
+      YANB_GRAPHQL_API: https://budget.philchang.me:4000
       RECAPTCHA_SITE_KEY: 6LckQ9cUAAAAAA6os_dvtJKfvQfgS5Yd0Z_NQSFW
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
@@ -53,6 +53,9 @@ services:
       - prisma
     environment:
       PRISMA_API: http://prisma:4466
+      DOMAIN: budget.philchang.me
+    volumes:
+        - ./data/certbot/conf:/etc/letsencrypt
   certbot:
     image: certbot/certbot
     volumes:

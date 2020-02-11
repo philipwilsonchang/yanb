@@ -3,6 +3,7 @@ const { Prisma } = require('prisma-binding')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const uuid = require('uuid/v4')
+const fs = require('fs');
 
 /* **** UTILS **** */
 const APP_SECRET = uuid();
@@ -217,4 +218,4 @@ const server = new GraphQLServer({
     }),
   }),
 })
-server.start(() => console.log(`GraphQL server is running on http://localhost:4000`))
+server.start({ https: { key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/privkey.pem`), cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/fullchain.pem`)}}, () => console.log(`GraphQL server is running on http://localhost:4000`))
