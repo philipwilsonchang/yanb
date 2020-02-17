@@ -14,11 +14,15 @@ jobs:
     - name: Get the version
       id: vars
       run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+    - name: Navigate to yanb-web folder
+      run: cd web
     - name: Build yanb-web tagged
-      run: docker build . --file web/Dockerfile --tag pcheebs/yanb-web:${{steps.vars.outputs.tag}}
+      run: docker build . --file Dockerfile --tag pcheebs/yanb-web:${{steps.vars.outputs.tag}}
     - name: Push yanb-web tagged
       run: docker push pcheebs/yanb-web:${{steps.vars.outputs.tag}}
+    - name: Navigate to yanb-web folder
+      run: cd ../prisma-server
     - name: Build yanb-graphql tagged
-      run: docker build . --file web/Dockerfile --tag pcheebs/yanb-graphql:${{steps.vars.outputs.tag}}
+      run: docker build . --file Dockerfile --tag pcheebs/yanb-graphql:${{steps.vars.outputs.tag}}
     - name: Push yanb-graphql tagged
       run: docker push pcheebs/yanb-graphql:${{steps.vars.outputs.tag}}
