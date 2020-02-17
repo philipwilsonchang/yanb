@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v1.0
       - uses: mr-smithers-excellent/docker-build-push@v2
         with:
           image: pcheebs/yanb-web
