@@ -8,4 +8,3 @@ credentials.json
 token.json
 apikeys/
 prisma-data/
-*.env
