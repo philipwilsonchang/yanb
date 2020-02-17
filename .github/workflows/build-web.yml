@@ -13,14 +13,14 @@ jobs:
       - uses: mr-smithers-excellent/docker-build-push@v2
         with:
           image: pcheebs/yanb-web
-          dockerfile: web/Dockerfile
+          dockerfile: ../../web/Dockerfile
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - uses: mr-smithers-excellent/docker-build-push@v2
         with:
           image: pcheebs/yanb-graphql
-          dockerfile: prisma-server/Dockerfile
+          dockerfile: ../../prisma-server/Dockerfile
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
