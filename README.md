@@ -2,7 +2,7 @@
 
 Simple, dockerized, envelope-based budget monitoring web application.
 
-![Build and Push YANB Docker](https://github.com/philipwilsonchang/yanb/workflows/Build%20and%20Push%20YANB%20Docker/badge.svg?branch=master)
+![Dockerize](https://github.com/philipwilsonchang/yanb/workflows/Build%20and%20Push%20YANB%20Docker/badge.svg?branch=master)
 
 ## Dependencies
 
