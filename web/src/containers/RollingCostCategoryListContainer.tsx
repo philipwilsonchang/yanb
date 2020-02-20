@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from "@apollo/react-hooks";
 
-import FlexCategoryList from '../components/FlexCategoryList';
+import RollingCategoryList from '../components/RollingCategoryList';
 import { CREATE_COST_CATEGORY, DELETE_COST_CATEGORY } from '../graphql/mutations';
 import { 
 	GET_MONTHLY_INCOME, 
@@ -60,7 +60,7 @@ const FlexCategoryListContainer: React.FC = () => {
 	};
 
 	return (
-		<FlexCategoryList
+		<RollingCategoryList
 			budgetedAmount={budgetedAmount}
 			categories={categories ? categories.getAllRollingCategoriesBetweenTimes : []}
 			monthlyIncome={(incomeReturn && incomeReturn.getMonthlyIncome) ? incomeReturn.getMonthlyIncome : 0}
