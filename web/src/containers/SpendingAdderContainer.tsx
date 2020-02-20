@@ -41,7 +41,7 @@ const SpendingAdderContainer: React.FC = () => {
 		}
 	});
 	const [addCost] = useMutation(CREATE_COST, {
-		refetchQueries: ["getAllFlexCategoriesBetweenTimes"]
+		refetchQueries: ["getAllFlexCategoriesBetweenTimes", "getAllRollingCategoriesBetweenTimes"]
 	});
 
 	useEffect(() => {
