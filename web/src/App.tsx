@@ -18,7 +18,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // @ts-ignore
-const api = window._env_.YANB_GRAPHQL_API; 
+const api = window._env_ ? window._env_.YANB_GRAPHQL_API : "http://localhost:4000"; 
 
 const unauthedClient = new ApolloClient({
   uri: api

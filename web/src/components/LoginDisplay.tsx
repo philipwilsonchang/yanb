@@ -7,6 +7,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { FormControl, FormControlProps } from 'react-bootstrap';
 
+// @ts-ignore
+const recaptchaKey = window._env_ ? window._env_.RECAPTCHA_SITE_KEY : false
+
 interface ILoginDisplayProps {
   onNameChange: (name: string) => void,
   onPasswordChange: (pw: string) => void,
@@ -15,7 +18,7 @@ interface ILoginDisplayProps {
 };
 
 const LoginDisplay: React.FC<ILoginDisplayProps> = ({ onNameChange, onPasswordChange, onSubmit, onSignup }) => {
-	const [verified, setVerified] = useState<boolean>(false);
+	const [verified, setVerified] = useState<boolean>(!recaptchaKey);
 
 	const handleCaptcha = (token: string | null) => {
 		if (token) {
@@ -42,7 +45,7 @@ const LoginDisplay: React.FC<ILoginDisplayProps> = ({ onNameChange, onPasswordCh
 				    </Col>
 						{/* 
 						// @ts-ignore */}
-						<ReCAPTCHA sitekey={window._env_.RECAPTCHA_SITE_KEY || ""} onChange={handleCaptcha} />
+						{recaptchaKey && (<ReCAPTCHA sitekey={recaptchaKey || ""} onChange={handleCaptcha} />)}
 				    <Button disabled={!verified} style={{ margin: '0px 5px 0px 0px' }} variant="outline-primary" onClick={onSubmit}>
 			      	Login
 			      </Button>

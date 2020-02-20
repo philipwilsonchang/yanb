@@ -214,8 +214,12 @@ const server = new GraphQLServer({
     ...req,
     prisma: new Prisma({
       typeDefs: 'src/generated/prisma.graphql',
-      endpoint: process.env.PRISMA_API,
+      endpoint: (process.env.PRISMA_API || "http://localhost:4466"),
     }),
   }),
 })
-server.start({ https: { key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/privkey.pem`), cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/fullchain.pem`)}}, () => console.log(`GraphQL server is running on http://localhost:4000`))
+if (process.env.DOMAIN) {
+  server.start({ https: { key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/privkey.pem`), cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.DOMAIN}/fullchain.pem`)}}, () => console.log(`GraphQL server is running on http://localhost:4000`))
+} else {
+  server.start(() => console.log(`GraphQL server is running on http://localhost:4000`))
+}
