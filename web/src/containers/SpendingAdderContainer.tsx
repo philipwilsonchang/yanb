@@ -9,7 +9,7 @@ import {
 	RollingCostCategoriesReturn,
 	GET_ALL_ROLLING_CATEGORIES_BETWEEN_TIMES, 
 } from '../graphql/queries'
-import { FlexCostCategory } from '../state/stateTypes';
+import { FlexCostCategory, RollingCostCategory } from '../state/stateTypes';
 
 const dummyCategory: FlexCostCategory = {
 	id: 'abc',
@@ -56,6 +56,18 @@ const SpendingAdderContainer: React.FC = () => {
 	// eslint-disable-next-line
 	}, [categories])
 
+	useEffect(() => {
+		if (rollingCategories && selectedCategory.id !== 'abc') {
+			const newSelectedCategory = rollingCategories.getAllRollingCategoriesBetweenTimes.find((cat: RollingCostCategory): boolean => (cat.id === selectedCategory.id));
+			if (newSelectedCategory) {
+				setSelectedCategory(newSelectedCategory);
+			} else {
+				setSelectedCategory(dummyCategory);
+			}
+		}
+	// eslint-disable-next-line
+	}, [rollingCategories])
+
 	const submitSpending = async () => {
 		if (isNaN(parseFloat(amount))) {
 			return;
@@ -79,7 +91,6 @@ const SpendingAdderContainer: React.FC = () => {
 	const clearInput = () => {
 		setAmount("");
 		setDescription("");
-		setSelectedCategory(categories ? categories.getAllFlexCategoriesBetweenTimes[0] : dummyCategory);
 	};
 
 	return (
