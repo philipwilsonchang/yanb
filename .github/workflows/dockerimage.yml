@@ -1,4 +1,4 @@
-name: Build and Push YANB Docker
+name: Dockerize
 
 on:
   release:
@@ -15,10 +15,10 @@ jobs:
       id: vars
       run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
     - name: Build yanb-web tagged
-      run: docker build ./web --tag pcheebs/yanb-web:${{steps.vars.outputs.tag}}
+      run: docker build ./web --tag pcheebs/yanb-web:${{steps.vars.outputs.tag}} pcheebs/yanb-web:latest
     - name: Push yanb-web tagged
       run: docker push pcheebs/yanb-web:${{steps.vars.outputs.tag}}
     - name: Build yanb-graphql tagged
-      run: docker build ./prisma-server --tag pcheebs/yanb-graphql:${{steps.vars.outputs.tag}}
+      run: docker build ./prisma-server --tag pcheebs/yanb-graphql:${{steps.vars.outputs.tag}} pcheebs/yanb-graphql:latest
     - name: Push yanb-graphql tagged
       run: docker push pcheebs/yanb-graphql:${{steps.vars.outputs.tag}}
